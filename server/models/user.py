@@ -1,19 +1,44 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.orm import validates
 from config import db, bcrypt
+from helpers import *
 
 class User(db.Model, SerializerMixin):
-    pass
+    
+    serialize_rules = (
+        '-_password_hash',
+    )
+    
     __tablename__ = 'users'
     
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, unique=True)
+    username = db.Column(db.String, nullable=False, unique=True)
+    email = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String)
     
+    @validates('first_name', 'last_name')
+    def validate_name(self, key, name):
+        if not is_non_empty_string(name):
+            raise ValueError(f"{key} must be a non-empty string.")
+        return name
+    
+    @validates('username')
+    def validate_username(self, key, username):
+        if not(is_non_empty_string(username) and User.query.filter_by(username=username).first() is None):
+            raise ValueError(f"{key} must be a unique, non-empty string.")
+        return username
+        
+    @validates('email')
+    def validate_email(self, key, email):
+        if ("@" not in email) or User.query.filter_by(email=email).first():
+            raise ValueError(f"{key} must be a valid email address.")
+        return email
+    
     def __repr__(self):
-        return f"<User {self.id}, {self.first_name}, {self.last_name}, {self.email}>"
+        return f"<User {self.id}, {self.first_name}, {self.last_name}, {self.username}, {self.email}>"
     
     @hybrid_property
     def password_hash(self):

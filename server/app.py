@@ -15,19 +15,21 @@ class Signup(Resource):
   
   def post(self):
     # Retrieve form inputs
-    new_user = User(
-      first_name=request.form.get('first_name'),
-      last_name=request.form.get('last_name'),
-      email=request.form.get('email')
-    )
-    new_user.password_hash = request.form.get('password')
     try:
+      new_user = User(
+        first_name=request.form.get('first_name'),
+        last_name=request.form.get('last_name'),
+        username=request.form.get('username'),
+        email=request.form.get('email')
+      )
+      new_user.password_hash = request.form.get('password')
       db.session.add(new_user)
       db.session.commit()
       session['user_id'] = new_user.id
       return new_user.to_dict(), 201
-    except IntegrityError as e:
-      return {'error': '422 Unprocessable Entity'}, 422
+    except (IntegrityError, ValueError) as e:
+      print(e)
+      return {'error': f'422 Unprocessable Entity:'}, 422
     
 api.add_resource(Signup, '/api/signup')
 
