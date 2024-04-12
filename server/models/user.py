@@ -22,19 +22,21 @@ class User(db.Model, SerializerMixin):
     @validates('first_name', 'last_name')
     def validate_name(self, key, name):
         if not is_non_empty_string(name):
-            raise ValueError(f"{key} must be a non-empty string.")
+            raise ValueError(f"{key.title()} must be a non-empty string.")
         return name
     
     @validates('username')
     def validate_username(self, key, username):
         if not(is_non_empty_string(username) and User.query.filter_by(username=username).first() is None):
-            raise ValueError(f"{key} must be a unique, non-empty string.")
+            raise ValueError(f"{key.title()} must be a unique, non-empty string.")
         return username
         
     @validates('email')
     def validate_email(self, key, email):
-        if ("@" not in email) or User.query.filter_by(email=email).first():
-            raise ValueError(f"{key} must be a valid email address.")
+        if ("@" not in email):
+            raise ValueError(f"{key.title()} must be a valid email address.")
+        elif User.query.filter_by(email=email).first():
+            raise ValueError(f"An account with the {key}, {email}, already exists.")
         return email
     
     def __repr__(self):

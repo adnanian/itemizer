@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import SignUpOldWay from './components/SignupOldWay'
 import Signup from './components/Signup'
 
 function App() {
