@@ -5,7 +5,7 @@ import Input from "../components/Input";
 /*
 * Video Reference: https://www.youtube.com/watch?v=7Ophfq0lEAY&list=PLsBCPpptQcroC7NxdpGNJTIG8x5jv_66G&index=2
 */
-const Signup = () => {
+function Signup() {
 
     const initialValues = {
         firstName: '',

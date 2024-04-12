@@ -1,16 +1,22 @@
 import { NavLink } from "react-router-dom";
 
-const NavBar = () => {
+function NavBar() {
+    const navLinkClassName = "nav-link"
+
     return (
         <nav className="navigation">
             <NavLink
                 to="/"
-                className="nav-link"
-            />
+                className={navLinkClassName}
+            >
+                Home
+            </NavLink>
             <NavLink
-                to="/api/signup"
-                className="nav-link"
-            />
+                to="/signup"
+                className={navLinkClassName}
+            >
+                Signup
+            </NavLink>
         </nav>
     );
 }

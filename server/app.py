@@ -30,17 +30,19 @@ class Signup(Resource):
     except (IntegrityError, ValueError) as e:
       print(e)
       return {'message': str(e)}, 422
-    
-api.add_resource(Signup, '/api/signup')
 
 class Login(Resource):
   def post(self):
-    user = User.query.filter_by(email=request.get_json().get('email')).first()
-    if user and user.authenticate(request.get_json()['password']):
-      session['user_id'] = user.id
+    login_name = request.get_json().get('username_or_email')
+    if login_name:
+      user = User.query.filter_by(username=login_name).first() or User.query.filter_by(email=request.get_json().get('email')).first()
+      if user and user.authenticate(request.get_json()['password']):
+        session['user_id'] = user.id
       return user.to_dict(), 200
-    else:
-      return {'error': '401 Unauthorized'}, 401
+    return {'error': '401 Unauthorized'}, 401
+
+api.add_resource(Signup, '/api/signup')
+api.add_resource(Login, '/api/login')
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)
