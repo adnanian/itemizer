@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
-import SignUpOldWay from './components/SignupOldWay'
+import SignUpOldWay from './oldcomponents/SignupOldWay'
+import SignupFormikBasic from './oldcomponents/SignupFormikBasic'
 import Signup from './components/Signup'
 
 function App() {

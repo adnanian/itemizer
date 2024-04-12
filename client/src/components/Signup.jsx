@@ -1,8 +1,21 @@
-import { useFormik } from "formik";
+import { Field, Form, Formik } from "formik";
 import * as yup from "yup";
-import InputErrorMessage from "./InputErrorMessage";
+import Input from "./reusables/Input";
 
-function Signup() {
+/*
+* Video Reference: https://www.youtube.com/watch?v=7Ophfq0lEAY&list=PLsBCPpptQcroC7NxdpGNJTIG8x5jv_66G&index=2
+*/
+const Signup = () => {
+
+    const initialValues = {
+        firstName: '',
+        lastName: '',
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    };
+
     const formSchema = yup.object().shape({
         firstName: yup.string().required("Must enter first name.").max(30),
         lastName: yup.string().required("Must enter last name.").max(30),
@@ -12,19 +25,8 @@ function Signup() {
         confirmPassword: yup.string().oneOf([yup.ref('password'), null], "Password must match").required("Must enter password again.")
     });
 
-    const { values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting } = useFormik({
-        initialValues: {
-            firstName: "",
-            lastName: "",
-            username: "",
-            email: "",
-            password: "",
-            confirmPassword: ""
-        },
-        validationSchema: formSchema,
-        onSubmit: async (values, actions) => {
-            console.log(values);
-            fetch("http://127.0.0.1:5555/api/signup", {
+    function handleSubmit(values, actions) {
+        fetch("http://127.0.0.1:5555/api/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -45,7 +47,6 @@ function Signup() {
                     if (status === 201) {
                         console.log('New user successfully created.');
                         alert('New user successfully created.');
-                        actions.resetForm();
                     } else {
                         console.error('Unexpected response:', data);
                         alert(data.message);
@@ -54,90 +55,68 @@ function Signup() {
                 .catch((error) => {
                     console.error('Network error:', error);
                     alert(error.message);
-                });
-        }
-    });
+                })
+                .finally(() => actions.resetForm());
+    }
 
     return (
-        <>
-            <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="firstName">First Name</label>
-                <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    placeholder="Enter your first name."
-                    value={values.firstName}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={errors.firstName && touched.firstName ? "input-error" : ""}
-                />
-                <InputErrorMessage errors={errors.firstName} touched={touched.firstName} />
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    placeholder="Enter your last name."
-                    value={values.lastName}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={errors.lastName && touched.lastName ? "input-error" : ""}
-                />
-                <InputErrorMessage errors={errors.lastName} touched={touched.lastName} />
-                <label htmlFor="Username">userame</label>
-                <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    placeholder="Enter your username."
-                    value={values.username}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={errors.username && touched.username ? "input-error" : ""}
-                />
-                <InputErrorMessage errors={errors.username} touched={touched.username} />
-                <label htmlFor="email">Email</label>
-                <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Enter your email address."
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={errors.email && touched.email ? "input-error" : ""}
-                />
-                <InputErrorMessage errors={errors.email} touched={touched.email} />
-                <label htmlFor="password">Password</label>
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Create a password."
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={errors.password && touched.password ? "input-error" : ""}
-                />
-                <InputErrorMessage errors={errors.password} touched={touched.password} />
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <input
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    type="password"
-                    placeholder="Enter your password again."
-                    value={values.confirmPassword}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={errors.confirmPassword && touched.confirmPassword ? "input-error" : ""}
-                />
-                <InputErrorMessage errors={errors.confirmPassword} touched={touched.confirmPassword} />
-                <button disabled={isSubmitting} type="submit">Signup</button>
-            </form>
-        </>
-    );
+        <div className="formik">
+            <h1>Signup</h1>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={formSchema}
+                onSubmit={handleSubmit}
+            >
+                {(props) => (
+                    <Form>
+                        <Input
+                            label="First Name"
+                            id="firstName"
+                            name="firstName"
+                            type="text"
+                            placeholder="Enter your first name."
+                        />
+                        <Input
+                            label="Last Name"
+                            id="lastName"
+                            name="lastName"
+                            type="text"
+                            placeholder="Enter your last name."
+                        />
+                        <Input
+                            label="Username"
+                            id="username"
+                            name="username"
+                            type="text"
+                            placeholder="Enter your username."
+                        />
+                        <Input
+                            label="Email"
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Enter your email address."
+                        />
+                        <Input
+                            label="Password"
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="Create a password."
+                        />
+                        <Input
+                            label="Confirm Password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            type="password"
+                            placeholder="Enter your password again."
+                        />
+                        <button disabled={props.isSubmitting} type="submit">Signup</button>
+                    </Form>
+                )}
+            </Formik>
+        </div>
+    )
 }
 
 export default Signup;
