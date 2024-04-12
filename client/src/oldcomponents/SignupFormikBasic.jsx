@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
-import InputErrorMessage from "../components/reusables/InputErrorMessage";
+import InputErrorMessage from "../components/InputErrorMessage";
 
 function SignupFormikBasic() {
     const formSchema = yup.object().shape({

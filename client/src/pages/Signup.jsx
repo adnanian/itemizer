@@ -1,6 +1,6 @@
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import * as yup from "yup";
-import Input from "./reusables/Input";
+import Input from "../components/Input";
 
 /*
 * Video Reference: https://www.youtube.com/watch?v=7Ophfq0lEAY&list=PLsBCPpptQcroC7NxdpGNJTIG8x5jv_66G&index=2
@@ -13,7 +13,8 @@ const Signup = () => {
         username: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        iAgree: false
     };
 
     const formSchema = yup.object().shape({
@@ -111,7 +112,13 @@ const Signup = () => {
                             type="password"
                             placeholder="Enter your password again."
                         />
-                        <button disabled={props.isSubmitting} type="submit">Signup</button>
+                        <Input
+                            label="I agree to the terms and conditions."
+                            id="iAgree"
+                            name="iAgree"
+                            type="checkbox"
+                        />
+                        <button disabled={props.isSubmitting || !props.values.iAgree} type="submit">Signup</button>
                     </Form>
                 )}
             </Formik>
