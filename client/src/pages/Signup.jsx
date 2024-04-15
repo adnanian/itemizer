@@ -1,6 +1,7 @@
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import Input from "../components/Input";
+import { Link } from "react-router-dom";
 
 /*
 * Video Reference: https://www.youtube.com/watch?v=7Ophfq0lEAY&list=PLsBCPpptQcroC7NxdpGNJTIG8x5jv_66G&index=2
@@ -61,7 +62,7 @@ function Signup() {
     }
 
     return (
-        <div className="formik">
+        <main id="signup" className="formik">
             <h1>Signup</h1>
             <Formik
                 initialValues={initialValues}
@@ -122,7 +123,14 @@ function Signup() {
                     </Form>
                 )}
             </Formik>
-        </div>
+            <Link 
+                id="login-instead" 
+                className="link-button"
+                to="/login"
+            >
+                Already have an account? Click here to login!
+            </Link>
+        </main>
     )
 }
 

@@ -1,20 +1,65 @@
 header {
   display: flex;
-  width: max-content;
+  justify-content: space-between;
+  align-items: center;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 60px;
   text-align: center;
-  align-items: right;
+  background: linear-gradient(45deg, red, blue, purple);
 }
 
-nav > a {
-  
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: darkslategray;
+}
+
+footer > * {
+  align-items: center;
+  text-align: center;
+}
+
+#site-logo {
+  text-decoration: none;
+  margin: 0 30px 0 30px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 100px;
+}
+
+.navigation a {
   display: inline-flex;
-  padding-left: 40px;
-  right: 0;
+  padding: 0 40px;
 }
 
-/*
+a.nav-link {
+  margin: 5px 30px;
+  background-color: silver;
+  border-radius: 6px;
+  border-color: #333;
+  border-top: 1px solid #666;
+  border-right: 3px solid black;
+  border-bottom: 2px solid #222;
+  border-left: 1px solid black;
+  color: #555;
+  font-size: 40px;
+  text-decoration: none;
+}
+
+a.nav-link:hover {
+  text-decoration: underline;
+  color: #111;
+  
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -30,6 +75,7 @@ nav > a {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/*
 a {
   font-weight: 500;
   color: #646cff;
@@ -38,10 +84,10 @@ a {
 a:hover {
   color: #535bf2;
 }
+*/
 
 body {
   margin: 0;
-  display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -70,6 +116,60 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+h1 {
+  text-align: center;
+}
+
+/*
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+}
+*/
+
+main#login, main#signup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form > * {
+  margin-bottom: 10px;
+}
+
+.link-button {
+  text-decoration: none;
+  background-color: aquamarine;
+  color: #242424;
+  padding: 15px;
+  border-radius: 10px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  font-size: 20px;
+}
+
+a.link-button:hover {
+  color: blue;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/*
+
 
 form > * {
   display: block;

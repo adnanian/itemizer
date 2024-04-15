@@ -6,12 +6,6 @@ function NavBar() {
     return (
         <nav className="navigation">
             <NavLink
-                to="/"
-                className={navLinkClassName}
-            >
-                Home
-            </NavLink>
-            <NavLink
                 to="/about"
                 className={navLinkClassName}
             >

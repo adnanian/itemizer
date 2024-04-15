@@ -5,11 +5,11 @@ export default function Layout() {
     return (
         <>
             <header>
-                <Link className="site-logo" to="/">#ITEMIZER</Link>
+                <Link id="site-logo" to="/">#ITEMIZER</Link>
                 <NavBar/>
             </header>
             <Outlet/>
-            <footer>&#169; 2024 #ITEMIZER</footer>
+            <footer><b>&#169; 2024 #ITEMIZER</b></footer>
         </>
     )
 }
