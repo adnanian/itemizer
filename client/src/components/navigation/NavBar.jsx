@@ -12,10 +12,16 @@ function NavBar() {
                 Home
             </NavLink>
             <NavLink
-                to="/signup"
+                to="/about"
                 className={navLinkClassName}
             >
-                Signup
+                About
+            </NavLink>
+            <NavLink
+                to="/login"
+                className={navLinkClassName}
+            >
+                Login
             </NavLink>
         </nav>
     );
