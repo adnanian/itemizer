@@ -11,6 +11,12 @@ from models.models import *
 def index():
   return '<h1>Hi, I\'m John</h1>'
 
+@app.before_request
+def check_if_logged_in():
+  endpoint_whitelist = ['signup', 'login', 'check_session']
+  if not (session.get('user_id') or request.endpoint in endpoint_whitelist):
+    return {'error': 'Unauthorized'}, 401
+
 class Signup(Resource):
   
   def post(self):
@@ -39,10 +45,17 @@ class Login(Resource):
       if user and user.authenticate(request.get_json()['password']):
         session['user_id'] = user.id
       return user.to_dict(), 200
-    return {'error': '401 Unauthorized'}, 401
+    return {'message': '401 Unauthorized'}, 401
+  
+class CheckSession(Resource):
+  def get(self):
+    if user := User.query.filter_by(id=session.get('user_id')).first():
+      return user.to_dict(), 200
+    return {'message': '401 Unauthorized'}, 401
 
-api.add_resource(Signup, '/api/signup')
-api.add_resource(Login, '/api/login')
+api.add_resource(Signup, '/api/signup', endpoint='signup')
+api.add_resource(Login, '/api/login', endpoint='login')
+api.add_resource(CheckSession, '/api/check_session', endpoint='check_session')
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)
