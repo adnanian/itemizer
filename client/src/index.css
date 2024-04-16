@@ -1,3 +1,22 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --left-color: hsla(0, 100%, 50%, 0.65);
+  --center-color: hsla(197, 71%, 73%, 0.65);
+  --right-color: hsla(275, 100%, 25%, 0.65);
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -5,7 +24,9 @@ header {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 60px;
   text-align: center;
-  background: linear-gradient(45deg, red, blue, purple);
+  background: linear-gradient(to right,red, blue, indigo);
+  /* background: linear-gradient(45deg, var(--left-color), var(--center-color), var(--right-color)), url('itemizer-banner.jpg') no-repeat center center;
+  background-size: cover; */
 }
 
 footer {
@@ -29,6 +50,37 @@ footer > * {
   margin: 0 30px 0 30px;
 }
 
+#site-logo div img {
+  width: 80px;
+  height: 40px;
+}
+
+.logo {
+  margin: 0 5px;
+  font-size: 40px;
+}
+
+div.logo {
+  border-top: 2px solid #333;
+  border-right: 7px solid black;
+  border-bottom: 2px solid #444;
+  border-left: 1px solid #111;
+  background-color: #bbb;
+  border-radius: 15px;
+  padding: 0 15px 0;
+}
+
+div.logo span {
+  color: #141
+}
+
+.logo:hover * {
+  text-decoration: underline;
+  font-weight: bold;
+  color: #1a1;
+}
+
+
 .navigation {
   display: flex;
   justify-content: flex-end;
@@ -45,8 +97,8 @@ a.nav-link {
   background-color: silver;
   border-radius: 6px;
   border-color: #333;
-  border-top: 1px solid #666;
-  border-right: 3px solid black;
+  border-top: 2px solid #666;
+  border-right: 5px solid black;
   border-bottom: 2px solid #222;
   border-left: 1px solid black;
   color: #555;
@@ -60,20 +112,7 @@ a.nav-link:hover {
   
 }
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
 /*
 a {
@@ -91,7 +130,11 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(45deg, var(--left-color), var(--center-color), var(--right-color)), url('itemizer-background.jpg') no-repeat center center;
+  background-size: cover;
 }
+
+
 
 h1 {
   font-size: 3.2em;
@@ -132,6 +175,37 @@ main {
 }
 */
 
+.main-ui {
+  border-radius: 15px;
+  border-top: 2px solid #333;
+  border-right: 6px solid black;
+  border-bottom: 1px solid #333;
+  border-left: 1px solid black;
+  height: max-content;
+  margin: 20px 0 80px;
+}
+
+#signup-div {
+  background-color: teal;
+  padding-bottom: 40px;
+}
+
+#login-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: mediumslateblue;
+  padding-bottom: 40px;
+}
+
+#login-div a {
+  display: block;
+  text-align: center;
+  width: fit-content;
+  margin: 10px;
+}
+
 main#login, main#signup {
   display: flex;
   flex-direction: column;
@@ -145,8 +219,27 @@ form {
   align-items: center;
 }
 
-form > * {
+form label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  padding-top: 5px;
+}
+
+form input {
+  width: 80%;
+  padding: 5px 30px;
+  border-radius: 10px;
+  border-style: groove;
+  border-color: #004;
+  border-width: 2px;
+}
+
+.main-ui * {
   margin-bottom: 10px;
+}
+
+#login-instead {
+  margin: 0 10px 30px;
 }
 
 .link-button {
@@ -155,10 +248,10 @@ form > * {
   color: #242424;
   padding: 15px;
   border-radius: 10px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
   font-size: 20px;
 }
 
@@ -166,6 +259,21 @@ a.link-button:hover {
   color: blue;
   text-decoration: underline;
   font-weight: bold;
+}
+
+input.input-error, select.input-error {
+  border-color: red;
+}
+
+.error {
+  color: maroon;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+button:disabled {
+  opacity: 0.35;
 }
 
 /*

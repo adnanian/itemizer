@@ -33,4 +33,4 @@ bcrypt = Bcrypt(app=app)
 
 api = Api(app=app)
 
-CORS(app, allow_methods=["GET", "POST", "PATCH", "DELETE"])
+CORS(app)

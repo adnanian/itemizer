@@ -4,7 +4,7 @@ function NavBar({ user, setUser }) {
     const navLinkClassName = "nav-link"
 
     async function handleLogoutClick() {
-        const response = await fetch("http://127.0.0.1:5555/api/logout", {
+        const response = await fetch("/api/logout", {
             method: "DELETE"
         });
         if (response.ok) {
@@ -28,6 +28,12 @@ function NavBar({ user, setUser }) {
                             className={navLinkClassName}
                         >
                             Organizations
+                        </NavLink>
+                        <NavLink
+                            to="/settings"
+                            className={navLinkClassName}
+                        >
+                            Settings
                         </NavLink>
                         <NavLink
                             to="/login"

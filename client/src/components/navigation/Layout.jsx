@@ -5,7 +5,12 @@ export default function Layout( {user, setUser} ) {
     return (
         <>
             <header>
-                <Link id="site-logo" to="/">#ITEMIZER</Link>
+                <Link id="site-logo" to="/">
+                    <div className="logo">
+                        <img className="logo" src="/itemizer-logo.jpg" alt="#ITEMIZER"/>
+                        <span className="logo">ITEMIZER</span>
+                    </div>
+                </Link>
                 <NavBar user={user} setUser={setUser} />
             </header>
             <Outlet/>

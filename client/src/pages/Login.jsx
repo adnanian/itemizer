@@ -4,11 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 function Login( {onLogin} ) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
-        fetch("http://127.0.0.1:5555/api/login", {
+        fetch("/api/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -21,7 +21,7 @@ function Login( {onLogin} ) {
                     return response.json().then((user) => {
                         alert(`Logged In! Welcome, ${user.first_name}!`);
                         onLogin(user);
-                        //navigate("/");
+                        navigate("/");
                     });
                 } else {
                     return response.json().then((error) => {
@@ -43,14 +43,15 @@ function Login( {onLogin} ) {
 
     return (
         <main id="login">
-            <h1>Log In</h1>
+           <div id="login-div" className="main-ui">
+           <h1>Log In</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username-or-email">Username or Email</label>
                 <input
                     id="username-or-email"
                     name="username-or-email"
                     type="text"
-                    placeholder="Enter your username or email address."
+                    placeholder="Enter your username or email."
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
@@ -79,6 +80,7 @@ function Login( {onLogin} ) {
             >
                 Don't have an account? Click here to signup!
             </Link>
+           </div>
         </main>
     )
 }
