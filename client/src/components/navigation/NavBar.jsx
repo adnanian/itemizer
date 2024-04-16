@@ -1,7 +1,16 @@
 import { NavLink } from "react-router-dom";
 
-function NavBar() {
+function NavBar({ user, setUser }) {
     const navLinkClassName = "nav-link"
+
+    async function handleLogoutClick() {
+        const response = await fetch("http://127.0.0.1:5555/api/logout", {
+            method: "DELETE"
+        });
+        if (response.ok) {
+            setUser(null);
+        }
+    }
 
     return (
         <nav className="navigation">
@@ -11,12 +20,32 @@ function NavBar() {
             >
                 About
             </NavLink>
-            <NavLink
-                to="/login"
-                className={navLinkClassName}
-            >
-                Login
-            </NavLink>
+            {
+                user ? (
+                    <>
+                        <NavLink
+                            to="/organizations"
+                            className={navLinkClassName}
+                        >
+                            Organizations
+                        </NavLink>
+                        <NavLink
+                            to="/login"
+                            className={navLinkClassName}
+                            onClick={handleLogoutClick}
+                        >
+                            Logout
+                        </NavLink>
+                    </>
+                ) : (
+                    <NavLink
+                        to="/login"
+                        className={navLinkClassName}
+                    >
+                        Login
+                    </NavLink>
+                )
+            }
         </nav>
     );
 }

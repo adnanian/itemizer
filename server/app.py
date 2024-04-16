@@ -4,16 +4,11 @@ from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 from models.models import *
 
-
-  
-
-@app.route('/api')
-def index():
-  return '<h1>Hi, I\'m John</h1>'
-
 @app.before_request
 def check_if_logged_in():
   endpoint_whitelist = ['signup', 'login', 'check_session']
+  print(request.endpoint)
+  print (session.get('user_id'))
   if not (session.get('user_id') or request.endpoint in endpoint_whitelist):
     return {'error': 'Unauthorized'}, 401
 
@@ -40,12 +35,21 @@ class Signup(Resource):
 class Login(Resource):
   def post(self):
     login_name = request.get_json().get('username_or_email')
+    print(login_name)
     if login_name:
-      user = User.query.filter_by(username=login_name).first() or User.query.filter_by(email=request.get_json().get('email')).first()
-      if user and user.authenticate(request.get_json()['password']):
+      user = User.query.filter_by(username=login_name).first() or User.query.filter_by(email=login_name).first()
+      if user and user.authenticate(request.get_json().get('password')):
+        print(user)
         session['user_id'] = user.id
-      return user.to_dict(), 200
+        return user.to_dict(), 200
     return {'message': '401 Unauthorized'}, 401
+  
+class Logout(Resource):
+  def delete(self):
+    print("About to log out.")
+    session['user_id'] = None
+    print("Logging out")
+    return {}, 204
   
 class CheckSession(Resource):
   def get(self):
@@ -55,6 +59,7 @@ class CheckSession(Resource):
 
 api.add_resource(Signup, '/api/signup', endpoint='signup')
 api.add_resource(Login, '/api/login', endpoint='login')
+api.add_resource(Logout, '/api/logout', endpoint='logout')
 api.add_resource(CheckSession, '/api/check_session', endpoint='check_session')
 
 if __name__ == "__main__":

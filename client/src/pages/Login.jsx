@@ -1,14 +1,14 @@
 import { useState } from "react";
-import Input from "../components/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login( {onLogin} ) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    //const navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
-        fetch("/api/login", {
+        fetch("http://127.0.0.1:5555/api/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -19,8 +19,9 @@ function Login( {onLogin} ) {
             .then((response) => {
                 if (response.ok) {
                     return response.json().then((user) => {
-                        onLogin(user);
                         alert(`Logged In! Welcome, ${user.first_name}!`);
+                        onLogin(user);
+                        //navigate("/");
                     });
                 } else {
                     return response.json().then((error) => {
@@ -60,7 +61,7 @@ function Login( {onLogin} ) {
                     type="password"
                     placeholder="Enter your password."
                     value={password}
-                    onChange={(e) => setPassword(e.target.password)}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit">Log In</button>
             </form>
