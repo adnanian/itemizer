@@ -75,6 +75,7 @@ api.add_resource(Logout, '/api/logout', endpoint='logout')
 api.add_resource(CheckSession, '/api/check_session', endpoint='check_session')
 api.add_resource(ItemResource, '/api/items', endpoint='items')
 api.add_resource(ItemById, '/api/items/<int:id>', endpoint='item_by_id')
+api.add_resource(OrganizationResource, '/api/organizations', endpoint='organizations')
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)
