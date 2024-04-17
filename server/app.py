@@ -56,11 +56,32 @@ class CheckSession(Resource):
     if user := User.query.filter_by(id=session.get('user_id')).first():
       return user.to_dict(), 200
     return {'message': '401 Unauthorized'}, 401
+  
+class ItemResource(Resource):
+  def get(self):
+    items = [item.to_dict() for item in Item.query.all()]
+    return items, 200
+  
+  def post(self):
+    try:
+      new_item = Item(
+        name=request.get_json().get('name'),
+        description=request.get_json().get('description'),
+        part_number=request.get_json().get('part_number'),
+        image_url=request.get_json().get('image_url')
+      )
+      db.session.add(new_item)
+      db.session.commit()
+      return new_item.to_dict(), 201
+    except ValueError as e:
+      print(e)
+      return {'message': '422 Unprocessable Entity'}, 422
 
 api.add_resource(Signup, '/api/signup', endpoint='signup')
 api.add_resource(Login, '/api/login', endpoint='login')
 api.add_resource(Logout, '/api/logout', endpoint='logout')
 api.add_resource(CheckSession, '/api/check_session', endpoint='check_session')
+api.add_resource(ItemResource, '/api/items', endpoint='items')
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)

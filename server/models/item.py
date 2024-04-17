@@ -11,7 +11,8 @@ class Item(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String)
-    db.part_number = db.Column(db.String)
+    part_number = db.Column(db.String)
+    image_url = db.Column(db.String)
 
     @validates('name')
     def validate_name(self, key, name):
