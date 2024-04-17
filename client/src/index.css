@@ -13,8 +13,13 @@
   -moz-osx-font-smoothing: grayscale;
 
   --left-color: hsla(0, 100%, 50%, 0.65);
-  --center-color: hsla(197, 71%, 73%, 0.65);
+  --center-color: hwb(240 0% 0% / 0.65);
   --right-color: hsla(275, 100%, 25%, 0.65);
+
+  --c1: rgba(0, 0, 0, 0.65);
+  --c2: rgba(128, 0, 0, 0.65);
+  --c3: rgba(0, 0, 255, 0.65);
+  --c4: rgba(76, 0, 130, 0.65);
 }
 
 header {
@@ -130,7 +135,16 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(45deg, var(--left-color), var(--center-color), var(--right-color)), url('itemizer-background.jpg') no-repeat center center;
+  background: 
+    linear-gradient(
+      135deg,
+      var(--c1),
+      var(--c2),
+      var(--c3),
+      var(--c4),
+      var(--c3),
+      var(--c2),
+      var(--c1)), url('itemizer-background.jpg') no-repeat center center;
   background-size: cover;
 }
 
@@ -139,6 +153,7 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  text-align: center;
 }
 
 button {
@@ -160,8 +175,14 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-h1 {
-  text-align: center;
+h1.title span.title-text {
+  background-color: #1a1;
+  padding: 8px 15px;
+  border-top: 3px solid #333;
+  border-right: 6px solid #000;
+  border-bottom: 2px bevel #222;
+  border-left: 1px bevel #111;
+  border-radius: 9px;
 }
 
 /*
