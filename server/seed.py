@@ -72,8 +72,7 @@ def seed_orgs():
     )
     orgs.append(org)
   
-  db.session.add_all(orgs)
-  db.session.commit
+  db.session.add_all
 
 if __name__ == "__main__":
     with app.app_context():
