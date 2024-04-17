@@ -2,11 +2,14 @@ from config import app, db
 from models.models import *
 from faker import Faker
 from seeds.item_seed import item_seed
+import random
+from datetime import datetime
 
 fake = Faker()
 
 USER_SEED_SIZE = 10
 ITEM_SEED_SIZE = 30
+ORG_SEED_SIZE = 4
 PASSWORD = "Green+1234"
 
 """
@@ -51,8 +54,29 @@ def seed_items():
     
   db.session.add_all(items)
   db.session.commit()
+  
+def seed_orgs():
+  Organization.query.delete()
+  orgs = []
+  users = User.query.all()
+  for n in range(ORG_SEED_SIZE):
+    name = fake.company()
+    description = fake.sentence()
+    created_by = random.choice(users).username
+    created_at = datetime.now()
+    org = Organization(
+      name=name,
+      description=description,
+      created_by=created_by,
+      created_at=created_at
+    )
+    orgs.append(org)
+  
+  db.session.add_all(orgs)
+  db.session.commit
 
 if __name__ == "__main__":
     with app.app_context():
-      seed_users()
-      seed_items()
+      #seed_users()
+      #seed_items()
+      seed_orgs()

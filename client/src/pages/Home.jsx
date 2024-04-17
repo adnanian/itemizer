@@ -1,4 +1,4 @@
-import StyledTitle from "../components/reusables/StyledTitle";
+import StyledTitle from "../components/StyledTitle";
 
 function Home( {user} ) {
 

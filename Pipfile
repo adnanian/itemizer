@@ -12,6 +12,7 @@ flask-restful = "*"
 flask-migrate = "*"
 flask-bcrypt = "*"
 python-dotenv = "*"
+faker-commerce = "*"
 
 [dev-packages]
 
