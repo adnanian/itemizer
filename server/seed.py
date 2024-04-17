@@ -67,15 +67,16 @@ def seed_orgs():
     org = Organization(
       name=name,
       description=description,
-      created_by=created_by,
-      created_at=created_at
+      creator=created_by,
+      created=created_at
     )
     orgs.append(org)
   
-  db.session.add_all
+  db.session.add_all(orgs)
+  db.session.commit()
 
 if __name__ == "__main__":
     with app.app_context():
-      #seed_users()
-      #seed_items()
+      seed_users()
+      seed_items()
       seed_orgs()
