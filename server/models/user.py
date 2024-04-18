@@ -1,8 +1,10 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
 from config import db, bcrypt
 from helpers import *
+from models.member import Member
 
 class User(db.Model, SerializerMixin):
     
@@ -19,6 +21,12 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String)
     created = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
+    
+    # Memberships
+    members = db.relationship('Member', back_populates='user', cascade='all, delete-orphan')
+    
+    # Organizations that a user is a part of
+    organizations = association_proxy('members', 'organization', creator=lambda org_obj: Member(organization=org_obj))
     
     @validates('first_name', 'last_name')
     def validate_name(self, key, name):
@@ -41,7 +49,7 @@ class User(db.Model, SerializerMixin):
         return email
     
     def __repr__(self):
-        return f"<User {self.id}, {self.first_name}, {self.last_name}, {self.username}, {self.email}>"
+        return f"<User {self.id}, {self.first_name}, {self.last_name}, {self.username}, {self.email}, {self.created}>"
     
     @hybrid_property
     def password_hash(self):

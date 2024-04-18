@@ -7,9 +7,9 @@ from datetime import datetime
 
 fake = Faker()
 
-USER_SEED_SIZE = 10
+USER_SEED_SIZE = 15
 ITEM_SEED_SIZE = 30
-ORG_SEED_SIZE = 4
+ORG_SEED_SIZE = 8
 PASSWORD = "Green+1234"
 
 """
@@ -71,8 +71,34 @@ def seed_orgs():
   db.session.add_all(orgs)
   db.session.commit()
 
+def seed_members():
+  Member.query.delete()
+  users = User.query.all()
+  orgs = Organization.query.all()
+  members = []
+  roles = ['owner', 'admin', 'regular']
+  for org in orgs:
+    member_size = random.randint(1, len(users))
+    print(org.id, member_size)
+    user_selection = users[:]
+    for n in range(member_size):
+      user = random.choice(user_selection)
+      user_selection.remove(user)
+      role = roles[0] if n == 0 else roles[random.randint(1,(len(roles)-1))]
+      member = Member(
+        user_id=user.id,
+        organization_id=org.id,
+        role=role
+      )
+      try:
+        db.session.add(member)
+        db.session.commit()
+      except ValueError as e:
+        print(e)
+
 if __name__ == "__main__":
     with app.app_context():
       seed_users()
       seed_items()
       seed_orgs()
+      seed_members()
