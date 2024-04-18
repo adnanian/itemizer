@@ -62,13 +62,9 @@ def seed_orgs():
   for n in range(ORG_SEED_SIZE):
     name = fake.company()
     description = fake.sentence()
-    created_by = random.choice(users).username
-    created_at = datetime.now()
     org = Organization(
       name=name,
-      description=description,
-      creator=created_by,
-      created=created_at
+      description=description
     )
     orgs.append(org)
   

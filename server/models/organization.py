@@ -11,8 +11,7 @@ class Organization(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     description = db.Column(db.String)
-    creator = db.Column(db.String, nullable=False)
-    created = db.Column(db.DateTime)
+    created = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
     
     @validates('name')
     def validate_name(self, key, name):

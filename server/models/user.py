@@ -18,6 +18,7 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String, nullable=False, unique=True)
     email = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String)
+    created = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
     
     @validates('first_name', 'last_name')
     def validate_name(self, key, name):
