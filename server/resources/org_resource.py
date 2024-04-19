@@ -20,3 +20,26 @@ class OrganizationResource(Resource):
         except ValueError as e:
             print(e)
             return {'message': '422 Unprocessable Entity'}, 422
+        
+class OrganizationById(Resource):
+  def get(self, id):
+    organization = g.record
+    return organization.to_dict(), 200
+  
+  def patch(self, id):
+    try:
+      organization = g.record
+      json = request.get_json()
+      for attr in json:
+        setattr(organization, attr, json.get(attr))
+      db.session.add(organization)
+      db.session.commit()
+      return organization.to_dict(), 200
+    except ValueError as e:
+      return {'error': 'Not Modified'}, 304
+
+  def delete(self, id):
+    organization = g.record
+    db.session.delete(organization)
+    db.session.commit()
+    return {'message': 'Organization successfully deleted.'}, 204

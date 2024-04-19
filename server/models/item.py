@@ -7,7 +7,7 @@ from models.assignment import Assignment
 
 class Item(db.Model, SerializerMixin):
     
-    serialize_rules = ('-items.assignments', '-items.organizations')
+    serialize_rules = ('-assignments', '-organizations')
 
     __tablename__ = 'items'
     

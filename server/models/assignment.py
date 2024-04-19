@@ -5,6 +5,13 @@ from helpers import *
 
 class Assignment(db.Model, SerializerMixin):
     
+    serialize_rules = (
+        '-organization.assignments',
+        '-organization.items',
+        '-organization.memberships',
+        '-organization.users'
+    )
+    
     __tablename__ = 'assignments'
     id = db.Column(db.Integer, primary_key=True)
     item_id = db.Column(db.Integer, db.ForeignKey('items.id'))

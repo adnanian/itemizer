@@ -7,6 +7,14 @@ ROLES = ['OWNER', 'ADMIN', 'REGULAR']
 
 class Membership(db.Model, SerializerMixin):
     
+    serialize_rules = (
+        '-user.memberships',
+        '-user.organizations',
+        '-organization.memberships',
+        '-organization.users',
+        '-organization.assignments'
+    )
+    
     __tablename__ = 'memberships'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))

@@ -7,7 +7,15 @@ from models.membership import Membership
 from models.assignment import Assignment
 
 class Organization(db.Model, SerializerMixin):
-    pass
+    
+    serialize_rules = (
+        '-memberships.user',
+        '-memberships.organization',
+        '-users.memberships',
+        '-users.organizations',
+        '-assignments.organization'
+        '-items'
+    )
 
     __tablename__ = 'organizations'
     
