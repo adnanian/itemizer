@@ -3,7 +3,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from config import db
 from sqlalchemy.orm import validates
 from helpers import *
-from models.member import Member
+from models.membership import Membership
 
 class Organization(db.Model, SerializerMixin):
     pass
@@ -15,10 +15,10 @@ class Organization(db.Model, SerializerMixin):
     description = db.Column(db.String)
     created = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
     
-    members = db.relationship('Member', back_populates='organization', cascade='all, delete-orphan')
+    memberships = db.relationship('Membership', back_populates='organization', cascade='all, delete-orphan')
     
     # List of users in the organization.
-    users = association_proxy('members', 'user', creator=lambda user_obj: Member(user=user_obj))
+    users = association_proxy('memberships', 'user', creator=lambda user_obj: Membership(user=user_obj))
     
     def __repr__(self):
         return f"<Organization {self.id}, {self.name}, {self.description}, {self.created}>"

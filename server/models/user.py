@@ -4,7 +4,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
 from config import db, bcrypt
 from helpers import *
-from models.member import Member
+from models.membership import Membership
 
 class User(db.Model, SerializerMixin):
     
@@ -23,10 +23,10 @@ class User(db.Model, SerializerMixin):
     created = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
     
     # Memberships
-    members = db.relationship('Member', back_populates='user', cascade='all, delete-orphan')
+    memberships = db.relationship('Membership', back_populates='user', cascade='all, delete-orphan')
     
     # Organizations that a user is a part of
-    organizations = association_proxy('members', 'organization', creator=lambda org_obj: Member(organization=org_obj))
+    organizations = association_proxy('memberships', 'organization', creator=lambda org_obj: Membership(organization=org_obj))
     
     @validates('first_name', 'last_name')
     def validate_name(self, key, name):

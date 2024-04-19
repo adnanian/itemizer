@@ -72,7 +72,7 @@ def seed_orgs():
   db.session.commit()
 
 def seed_members():
-  Member.query.delete()
+  Membership.query.delete()
   users = User.query.all()
   orgs = Organization.query.all()
   members = []
@@ -85,7 +85,7 @@ def seed_members():
       user = random.choice(user_selection)
       user_selection.remove(user)
       role = roles[0] if n == 0 else roles[random.randint(1,(len(roles)-1))]
-      member = Member(
+      member = Membership(
         user_id=user.id,
         organization_id=org.id,
         role=role
