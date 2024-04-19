@@ -12,16 +12,22 @@ def check_if_logged_in():
   #print (session.get('user_id'))
   if not (session.get('user_id') or request.endpoint in endpoint_whitelist):
     return {'error': 'Unauthorized'}, 401
-  
+    
 @app.before_request
-def get_item_by_id():
-  if request.endpoint == 'item_by_id':
+def get_record_by_id():
+  endpoint_model_map = {
+    'user_by_id': User,
+    'item_by_id': Item,
+    'organization_by_id': Organization,
+    'membership_by_id': Membership,
+    'assignment_by_id': Assignment
+  }
+  if model := endpoint_model_map.get(request.endpoint):
     id = request.view_args.get('id')
-    item = Item.query.filter_by(id=id).first()
-    if item:
-      g.item = item
+    if record := model.query.filter_by(id=id).first():
+      g.record = record
     else:
-      return {'error': 'Item record does not exist. Please try again later.'}, 404
+      return {'error': f'{model.__name__} record of id, {id}, does not exist. Please try again later.'}, 404
   
 
 class Signup(Resource):

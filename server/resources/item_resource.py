@@ -25,12 +25,12 @@ class ItemResource(Resource):
     
 class ItemById(Resource):
   def get(self, id):
-    item = g.item
+    item = g.record
     return item.to_dict(), 200
   
   def patch(self, id):
     try:
-      item = g.item
+      item = g.record
       json = request.get_json()
       for attr in json:
         setattr(item, attr, json.get(attr))
@@ -42,7 +42,7 @@ class ItemById(Resource):
     
 
   def delete(self, id):
-    item = g.item
+    item = g.record
     db.session.delete(item)
     db.session.commit()
     return {'message': 'Item successfully deleted.'}, 204
