@@ -4,6 +4,7 @@ from config import db
 from sqlalchemy.orm import validates
 from helpers import *
 from models.membership import Membership
+from models.assignment import Assignment
 
 class Organization(db.Model, SerializerMixin):
     pass
@@ -16,9 +17,14 @@ class Organization(db.Model, SerializerMixin):
     created = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
     
     memberships = db.relationship('Membership', back_populates='organization', cascade='all, delete-orphan')
-    
     # List of users in the organization.
     users = association_proxy('memberships', 'user', creator=lambda user_obj: Membership(user=user_obj))
+    
+    # Assignments
+    assignments = db.relationship('Assignment', back_populates='organization', cascade='all, delete-orphan')
+    
+    # Items that an organization tracks.
+    items = association_proxy('assignments', 'item', creator=lambda item_obj: Assignment(item=item_obj))
     
     def __repr__(self):
         return f"<Organization {self.id}, {self.name}, {self.description}, {self.created}>"

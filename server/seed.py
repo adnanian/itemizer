@@ -71,34 +71,56 @@ def seed_orgs():
   db.session.add_all(orgs)
   db.session.commit()
 
-def seed_members():
+def seed_memberships():
   Membership.query.delete()
   users = User.query.all()
   orgs = Organization.query.all()
-  members = []
+  #members = []
   roles = ['owner', 'admin', 'regular']
   for org in orgs:
-    member_size = random.randint(1, len(users))
-    print(org.id, member_size)
+    membership_size = random.randint(1, len(users))
+    #print(org.id, membership_size)
     user_selection = users[:]
-    for n in range(member_size):
+    for n in range(membership_size):
       user = random.choice(user_selection)
       user_selection.remove(user)
       role = roles[0] if n == 0 else roles[random.randint(1,(len(roles)-1))]
-      member = Membership(
+      membership = Membership(
         user_id=user.id,
         organization_id=org.id,
         role=role
       )
       try:
-        db.session.add(member)
+        db.session.add(membership)
         db.session.commit()
       except ValueError as e:
         print(e)
+        
+def seed_assignments():
+  Assignment.query.delete()
+  items = Item.query.all()
+  orgs = Organization.query.all()
+  assignments = []
+  for org in orgs:
+    item_type_count = random.randint(1, len(items))
+    item_selection = items[:]
+    for n in range(item_type_count):
+      item = random.choice(item_selection)
+      item_selection.remove(item)
+      count = random.randint(0, 10)
+      assignment = Assignment(
+        item_id = item.id,
+        organization_id = org.id,
+        count = count
+      )
+      assignments.append(assignment)
+  db.session.add_all(assignments)
+  db.session.commit()
 
 if __name__ == "__main__":
     with app.app_context():
       seed_users()
       seed_items()
       seed_orgs()
-      seed_members()
+      seed_memberships()
+      seed_assignments()
