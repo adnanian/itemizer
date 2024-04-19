@@ -79,7 +79,14 @@ div.logo span {
   color: #141
 }
 
-.logo:hover * {
+div.logo:hover {
+  border-top: 2px solid darkolivegreen;
+  border-right: 5px solid darkgreen;
+  border-bottom: 2px solid darkolivegreen;
+  border-left: 1px solid darkgreen;
+}
+
+div.logo:hover * {
   text-decoration: underline;
   font-weight: bold;
   color: #1a1;
@@ -114,7 +121,10 @@ a.nav-link {
 a.nav-link:hover {
   text-decoration: underline;
   color: #111;
-  
+  border-top: 2px solid darksalmon;
+  border-right: 5px solid maroon;
+  border-bottom: 2px solid darksalmon;
+  border-left: 1px solid maroon;
 }
 
 
@@ -299,26 +309,6 @@ button:disabled {
 
 /*
 
-
-form > * {
-  display: block;
-  margin-top: 5px;
-  justify-content: left;
-}
-
-input.input-error, select.input-error {
-  border-color: red;
-}
-
-.error {
-  color: orangered;
-  font-size: 12px;
-}
-
-button:disabled {
-  opacity: 0.35;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -332,16 +322,73 @@ button:disabled {
   }
 }
 
-header {
-  margin: 0 100px;
-  width: stretch;
-  height: 100px;
+*/
+
+#item-list-container {
   display: flex;
-  background-color: #535bf2;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  border-style: solid;
+  border-color: #141;
+  border-width: 10px;
+  border-radius: 6px;
+  background: linear-gradient(to bottom right, #020, #141, darkolivegreen, olive, darkolivegreen, #141, #020);
+  margin-bottom: 50px;
 }
 
-.nav-link {
-  display: inline-block;
-  gap: 80px;
+div.item-card {
+  width: 300px;
+  height: 275px;
+  border-top: 2px solid darkslategray;
+  border-right: 5px solid black;
+  border-bottom: 2px solid darkslategray;
+  border-left: 1px solid black;
+  margin: 5px 10px;
+  padding: 5px 10px;
 }
-*/
+
+div.item-card img.item-image {
+  width: 100px;
+  height: 100px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkblue;
+  padding: 3px;
+}
+
+h4#item-list-title {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 40px;
+  margin: 4px;
+  padding: 0 10px;
+  background-color: skyblue;
+  color: #004;
+  width: fit-content;
+  border-radius: 8px;
+  border-top: 3px solid darkslategray;
+  border-right: 6px solid black;
+  border-bottom: 2px solid darkslategray;
+  border-left: 1px solid black;
+}
+
+#item-list {
+  list-style: none;
+  width: 1100px;
+  height: 500px;
+  overflow-y: scroll;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-count: 4;
+  text-align: justify;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  padding: 5px;
+  border-top: 3px solid black;
+  border-right: 6px solid darkslategray;
+  border-bottom: 2px solid black;
+  border-left: 1px solid darkslategray;
+}

@@ -61,7 +61,7 @@ item_seed = {
     },
     "Metal Pizza": {
         "description": "A pizza made with metal ingredients.",
-        "image_url": "https://example.com/metal_pizza.jpg",
+        "image_url": "https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg",
     },
     "Licensed Steel Pizza": {
         "description": "A pizza with a license made from steel.",
@@ -69,7 +69,7 @@ item_seed = {
     },
     "Generic Frozen Pants": {
         "description": "Pants that are frozen and have a generic design.",
-        "image_url": "https://example.com/generic_frozen_pants.jpg",
+        "image_url": "https://cdn.pixabay.com/photo/2020/12/01/13/58/apple-5794354_1280.jpg",
     },
     "New Hat": {
         "description": "A newly made hat.",
