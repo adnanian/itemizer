@@ -11,7 +11,7 @@ class User(db.Model, SerializerMixin):
     serialize_rules = (
         '-_password_hash',
         '-memberships.user',
-        '-memberships.organization',
+        #'-memberships.organization',
         '-organizations.memberships',
         '-organizations.users',
         '-organizations.assignments',

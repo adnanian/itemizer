@@ -7,6 +7,8 @@ import Signup from './pages/Signup';
 import Organizations from './pages/Organizations';
 import { BrowserRouter, Routes as RouteList, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import OrgLayout from './components/navigation/OrgLayout';
+import Memberships from './pages/Memberships';
 
 
 function App() {
@@ -28,10 +30,12 @@ function App() {
         <Route path="/" element={<Layout user={user} setUser={setUser} />}>
           <Route index element={<Home user={user}/>}/>
           <Route path="about" element={<About/>}/>
-          <Route path="organizations" element={<Organizations/>}/>
+          <Route path="organizations" element={<OrgLayout/>}>
+            <Route index element={<Organizations/>}/>
+            <Route path="/:id" element={<Memberships/>}/>
+          </Route>
           <Route exact path="login" element={<Login onLogin={setUser}/>}/>
           <Route path="signup" element={<Signup/>}/>
-          
         </Route>
       </RouteList>
     </BrowserRouter>

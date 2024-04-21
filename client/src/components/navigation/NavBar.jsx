@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
+import { navLinkClassName } from "../../helpers";
 
 function NavBar({ user, setUser }) {
-    const navLinkClassName = "nav-link"
 
     async function handleLogoutClick() {
         const response = await fetch("/api/logout", {

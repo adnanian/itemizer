@@ -7,7 +7,7 @@ from resources.resources import *
 
 @app.before_request
 def check_if_logged_in():
-  endpoint_whitelist = ['signup', 'login', 'check_session', 'items', 'item_by_id', 'organizations']
+  endpoint_whitelist = ['signup', 'login', 'check_session', 'items', 'item_by_id', 'organizations','users', 'user_by_id']
   #print(request.endpoint)
   #print (session.get('user_id'))
   if not (session.get('user_id') or request.endpoint in endpoint_whitelist):
@@ -79,6 +79,8 @@ api.add_resource(Signup, '/api/signup', endpoint='signup')
 api.add_resource(Login, '/api/login', endpoint='login')
 api.add_resource(Logout, '/api/logout', endpoint='logout')
 api.add_resource(CheckSession, '/api/check_session', endpoint='check_session')
+api.add_resource(UserResource, '/api/users', endpoint='users')
+api.add_resource(UserById, '/api/users/<int:id>', endpoint='user_by_id')
 api.add_resource(ItemResource, '/api/items', endpoint='items')
 api.add_resource(ItemById, '/api/items/<int:id>', endpoint='item_by_id')
 api.add_resource(ItemByNameOrPartNo, '/api/items/<string:item_name>', endpoint='item_by_name_or_part_no')
