@@ -12,9 +12,9 @@ class Item(db.Model, SerializerMixin):
     __tablename__ = 'items'
     
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, unique=True, nullable=False)
     description = db.Column(db.String)
-    part_number = db.Column(db.String)
+    part_number = db.Column(db.String, unique=True)
     image_url = db.Column(db.String)
     
     # We do not need to list the organizations that use this item, since this is sensitive information.

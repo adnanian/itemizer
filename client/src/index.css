@@ -21,8 +21,22 @@
   --c3: rgba(0, 0, 255, 0.65);
   --c4: rgba(76, 0, 130, 0.65);
 
-  --width-scale: calc(1920px / 1366px);
-  --height-scale: calc(1080px / 768px);
+  --width-scale: 100vh / 1920px;
+  --height-scale: 100vh / 1080px;
+  --base-font-size: 16px;
+
+  /* Set constants */
+  --item-card-image-width: 100px;
+  --item-card-image-height: 100px;
+
+  --item-list-width: 1100px;
+  --item-list-height: 500px;
+}
+
+* {
+  width: calc(100% * var(--width-scale));
+  height: calc(100% * var(--height-scale));
+  font-size: calc(var(--base-font-size) * (var(--width-scale) + var(--height-scale)));
 }
 
 header {
@@ -310,23 +324,6 @@ button:disabled {
   opacity: 0.35;
 }
 
-/*
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
-*/
-
 #item-list-container {
   display: flex;
   flex-direction: column;
@@ -352,8 +349,8 @@ div.item-card {
 }
 
 div.item-card img.item-image {
-  width: 100px;
-  height: 100px;
+  width: var(--item-card-image-width);
+  height: var(--item-card-image-height);
   border-style: solid;
   border-width: 2px;
   border-color: darkblue;
@@ -372,13 +369,12 @@ h4#item-list-title {
   border-top: 3px solid darkslategray;
   border-right: 6px solid black;
   border-bottom: 2px solid darkslategray;
-  border-left: 1px solid black;
 }
 
 #item-list {
   list-style: none;
-  width: 1100px;
-  height: 500px;
+  width: var(--item-list-width);
+  height: var(--item-list-height);
   overflow-y: scroll;
   overflow-x: auto;
   display: flex;
@@ -396,31 +392,61 @@ h4#item-list-title {
   border-left: 1px solid darkslategray;
 }
 
+#home-page > div{
+  display: inline-flex;
+  margin-right: 50px;
+}
+
+#report-form {
+  background-color: orchid;
+  border-radius: 8px;
+  border-top: 4px solid darkslategray;
+  border-right: 8px solid black;
+  border-bottom: 2px solid darkslategray;
+  border-left: 1px solid black;
+  color: indigo;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 10px 0 10px 10px;
+  width: fit-content;
+}
+
+#report-form * {
+  display: block;
+  padding: 5px 0 5px 5px;
+}
+
+#report-form textarea {
+  width: 80%;
+  height: 50%;
+  margin-bottom: 10px;
+  border-style: groove;
+  border-color: #004;
+  border-width: 2px;
+  border-radius: 8px;
+}
+
 @media screen and (max-width: 1366px) {
-  body * {
-    font-size: 0.71em;
+
+  :root {
+    --small-width-scale: 100vw / 1366px;
+    --small-height-scale: 100vh / 768px;
   }
 
-  div.item-card {
-    width: 213px;
-    height: 196px;
-  }
-
-  div.item-card * {
-    font-size: 11px;
-  }
-
-  div.item-card img.item-image {
-    width: 71px;
-    height: 71px;
+   /* Reset font size for all elements */
+  #root * {
+    font-size: inherit;
+    width: calc(100% * var(--small-width-scale));
+    height: calc(100% * var(--small-height-scale));
   }
 
   #item-list {
-    width: 783px;
-    height: 391px;
+    width: calc(var(--item-list-width) * var(--small-width-scale));
+    height: calc(var(--item-list-height) var(--small-height-scale));
   }
 
-  #item-list-container {
-    width: fit-content;
+  div.item-card img.item-image {
+    width: calc(var(--item-card-image-width) * var(--small-width-scale));
+    height: calc(var(--item-card-image-height) * var(--small-height-scale));
   }
+
 }

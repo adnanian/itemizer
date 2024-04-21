@@ -68,7 +68,7 @@ item_seed = {
         "image_url": "https://cdn.pixabay.com/photo/2021/09/02/13/36/pizza-6593504_1280.jpg",
     },
     "Generic Frozen Pants": {
-        "description": "Pants that are frozen and have a generic design.",
+        "description": "Plants that are frozen and have a generic design.",
         "image_url": "https://cdn.pixabay.com/photo/2020/12/01/13/58/apple-5794354_1280.jpg",
     },
     "New Hat": {

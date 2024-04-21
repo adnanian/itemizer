@@ -46,3 +46,9 @@ class ItemById(Resource):
     db.session.delete(item)
     db.session.commit()
     return {'message': 'Item successfully deleted.'}, 204
+  
+class ItemByNameOrPartNo(Resource):
+  def get(self, item_name):
+    if (item := Item.query.filter(db.or_(Item.name == item_name, Item.part_number == item_name)).first()):
+      return item.to_dict(), 200
+    return {'error': '404 Not Found'}, 404
