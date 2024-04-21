@@ -39,7 +39,7 @@ class Membership(db.Model, SerializerMixin):
         if not is_non_empty_string(role):
              raise ValueError(f"{key.title()} must be a non-empty string.")
         role = role.upper()
-        print(role, self.organization_id)
+        #print(role, self.organization_id)
         if role not in ROLES:
             raise ValueError(f"{key.title()} must be one of the following values: {ROLES}")
         if role == ROLES[0] and Membership.query.filter(Membership.organization_id==self.organization_id, Membership.role==ROLES[0]).first():
