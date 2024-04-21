@@ -16,7 +16,7 @@ MIN_USERNAME_LENGTH = 8
   Each username will have a certain number of digits after their first initial and last name.
   The default is 4, but may have more digits if the user's name is too short.
 """
-DEFAULT_NUMBER_LENGTH = MIN_USERNAME_LENGTH / 2
+DEFAULT_NUMBER_LENGTH = int(MIN_USERNAME_LENGTH / 2)
 
 """Number of items that will be generated. See seeds/item_seed.py"""
 ITEM_SEED_SIZE = 30
@@ -39,16 +39,18 @@ def seed_users():
     for i in range(USER_SEED_SIZE):
         first_name = fake.first_name()
         last_name = fake.last_name()
-        username = (initials := (first_name[0] + last_name).lower()) + str(
-            number := fake.random_number(
-                digits=(
-                    DEFAULT_NUMBER_LENGTH
-                    if len(initials) >= DEFAULT_NUMBER_LENGTH
-                    else MIN_USERNAME_LENGTH - len(initials)
+        username = (initials := (first_name[0] + last_name).lower()) + (
+            number := str(
+                fake.random_number(
+                    digits=(
+                        DEFAULT_NUMBER_LENGTH
+                        if len(initials) >= DEFAULT_NUMBER_LENGTH
+                        else MIN_USERNAME_LENGTH - len(initials)
+                    )
                 )
-            )
+            ).rjust(DEFAULT_NUMBER_LENGTH, '0')
         )
-        email = (first_name + "." + last_name).lower() + str(number) + "@itemizer.com"
+        email = (first_name + "." + last_name).lower() + number + "@itemizer.com"
         user = User(
             first_name=first_name, last_name=last_name, username=username, email=email
         )
@@ -85,7 +87,6 @@ def seed_items():
 def seed_orgs():
     Organization.query.delete()
     orgs = []
-    users = User.query.all()
     for n in range(ORG_SEED_SIZE):
         name = fake.company()
         description = fake.sentence()
