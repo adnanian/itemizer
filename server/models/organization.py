@@ -13,7 +13,9 @@ class Organization(db.Model, SerializerMixin):
         '-memberships.organization',
         '-users.memberships',
         '-users.organizations',
-        '-assignments.organization'
+        '-assignments.organization',
+        '-assignments.item_id',
+        '-assignments.organization_id'
         '-items'
     )
 

@@ -20,6 +20,10 @@
   --c2: rgba(128, 0, 0, 0.65);
   --c3: rgba(0, 0, 255, 0.65);
   --c4: rgba(76, 0, 130, 0.65);
+  --c5: rgba(165, 42, 42, 0.65);
+  --c6: rgba(128, 128, 0, 0.65);
+  --c7: rgba(85, 107, 47, 0.65);
+  --c8: rgba(0, 100, 0, 0.65);
 
   --width-scale: 100vh / 1920px;
   --height-scale: 100vh / 1080px;
@@ -46,9 +50,20 @@ header {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 60px;
   text-align: center;
-  background: linear-gradient(to right,red, blue, indigo);
+  /* background: linear-gradient(to right,red, blue, indigo); */
   /* background: linear-gradient(45deg, var(--left-color), var(--center-color), var(--right-color)), url('itemizer-banner.jpg') no-repeat center center;
   background-size: cover; */
+  background: 
+    linear-gradient(
+      135deg,
+      var(--c5),
+      var(--c6),
+      var(--c7),
+      var(--c8),
+      var(--c7),
+      var(--c6),
+      var(--c5)), url('itemizer-banner.jpg') no-repeat center center;
+  background-size: cover;
 }
 
 footer {

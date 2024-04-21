@@ -7,7 +7,7 @@ from resources.resources import *
 
 @app.before_request
 def check_if_logged_in():
-  endpoint_whitelist = ['signup', 'login', 'check_session', 'items', 'item_by_id', 'organizations','users', 'user_by_id']
+  endpoint_whitelist = ['signup', 'login', 'check_session', 'items', 'item_by_id', 'organizations', 'organization_by_id','users', 'user_by_id']
   #print(request.endpoint)
   #print (session.get('user_id'))
   if not (session.get('user_id') or request.endpoint in endpoint_whitelist):

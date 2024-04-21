@@ -1,8 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { navLinkClassName } from "../../helpers";
 
-export default function OrgLayout() {
+export default function OrgLayout( {user} ) {
     return (
+        <>
         <nav>
             <NavLink
                 to="/organizations"
@@ -12,12 +13,14 @@ export default function OrgLayout() {
                 All Organizations
             </NavLink>
             <NavLink
-                to="/organizations/:id"
+                to={`/organizations/${user.id}`}
                 end
                 className={navLinkClassName}
             >
                 My Organizations
             </NavLink>
         </nav>
+        <Outlet/>
+        </>
     )
 }

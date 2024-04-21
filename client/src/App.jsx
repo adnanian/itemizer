@@ -22,7 +22,7 @@ function App() {
     })
   }, [])
 
-  console.log(user);
+  console.log(`${user ? user.id : null} -- printed at ${new Date()}`);
 
   return (
     <BrowserRouter>
@@ -30,9 +30,9 @@ function App() {
         <Route path="/" element={<Layout user={user} setUser={setUser} />}>
           <Route index element={<Home user={user}/>}/>
           <Route path="about" element={<About/>}/>
-          <Route path="organizations" element={<OrgLayout/>}>
+          <Route path="organizations" element={<OrgLayout user={user}/>}>
             <Route index element={<Organizations/>}/>
-            <Route path="/:id" element={<Memberships/>}/>
+            <Route path=":id" element={<Memberships/>}/>
           </Route>
           <Route exact path="login" element={<Login onLogin={setUser}/>}/>
           <Route path="signup" element={<Signup/>}/>
