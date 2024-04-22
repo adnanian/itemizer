@@ -9,7 +9,7 @@ from models.assignment import Assignment
 class Organization(db.Model, SerializerMixin):
     
     serialize_rules = (
-        '-memberships.user',
+        #'-memberships.user',
         '-memberships.organization',
         '-users.memberships',
         '-users.organizations',

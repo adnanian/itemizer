@@ -24,7 +24,7 @@ function NavBar({ user, setUser }) {
                 user ? (
                     <>
                         <NavLink
-                            to="/organizations"
+                            to={`/organizations/user/${user.id}`}
                             className={navLinkClassName}
                         >
                             Organizations

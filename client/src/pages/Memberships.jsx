@@ -1,24 +1,7 @@
-import { useParams } from "react-router-dom";
 import StyledTitle from "../components/StyledTitle";
-import { useEffect, useState } from "react";
 import JoinedOrgTile from "../components/JoinedOrgTile";
 
-export default function Memberships() {
-    const params = useParams();
-    const [memberships, setMemberships] = useState([]);
-
-    useEffect(() => {
-        if (params !== null) {
-            fetch(`/api/users/${params.id}`)
-            .then((response) => response.json())
-            .then((user) => {
-                console.log(user);
-                setMemberships(user.memberships);
-            });
-        } else {
-            setMemberships(null);
-        }
-    }, [params]);
+export default function Memberships( {memberships} ) {
 
     const usersOrganizations = memberships.map((membership) => {
         return (
@@ -36,12 +19,11 @@ export default function Memberships() {
     })
 
     return (
-        <main>
-            <button id="org-create">Create an organization</button>
+        <div>
             <StyledTitle text="The list of organizations that you belong to."/>
             <ul id="users-org-list">
                 {usersOrganizations}
             </ul>
-        </main>
+        </div>
     )
 }
