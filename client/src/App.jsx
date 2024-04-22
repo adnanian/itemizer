@@ -32,7 +32,7 @@ function App() {
           <Route path="about" element={<About/>}/>
           <Route path="organizations" element={<OrgLayout user={user}/>}>
             <Route index element={<Organizations/>}/>
-            <Route path=":id" element={<Memberships/>}/>
+            <Route path="users-memberships/:id" element={<Memberships/>}/>
           </Route>
           <Route exact path="login" element={<Login onLogin={setUser}/>}/>
           <Route path="signup" element={<Signup/>}/>

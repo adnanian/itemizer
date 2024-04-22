@@ -1,10 +1,16 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { navLinkClassName } from "../../helpers";
+import StyledTitle from "../StyledTitle";
 
 export default function OrgLayout( {user} ) {
+
+    if (!user) {
+        return <StyledTitle text="Loading..."/>;
+    }
+
     return (
         <>
-        <nav>
+        <nav id="org-nav">
             <NavLink
                 to="/organizations"
                 end
@@ -13,7 +19,7 @@ export default function OrgLayout( {user} ) {
                 All Organizations
             </NavLink>
             <NavLink
-                to={`/organizations/${user.id}`}
+                to={`/organizations/users-memberships/${user.id}`}
                 end
                 className={navLinkClassName}
             >

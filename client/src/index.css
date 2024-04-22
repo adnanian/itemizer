@@ -62,7 +62,7 @@ header {
       var(--c8),
       var(--c7),
       var(--c6),
-      var(--c5)), url('itemizer-banner.jpg') no-repeat center center;
+      var(--c5)), url('itemizer-banner.jpg?v=1234') no-repeat center center;
   background-size: cover;
 }
 
@@ -186,7 +186,7 @@ body {
       var(--c4),
       var(--c3),
       var(--c2),
-      var(--c1)), url('itemizer-background.jpg') no-repeat center center;
+      var(--c1)), url('itemizer-background.jpg?v=1234') no-repeat center center;
   background-size: cover;
 }
 
@@ -438,6 +438,66 @@ h4#item-list-title {
   border-color: #004;
   border-width: 2px;
   border-radius: 8px;
+}
+
+#users-org-list {
+  list-style: none;
+  text-align: center;
+  margin: 5px auto;
+}
+
+#users-org-list li {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+}
+
+.membership-tile {
+  background: linear-gradient(to bottom right, darkslategray, darkgray, silver, skyblue, silver, darkgray, darkslategray);
+  margin: 20px;
+  padding: 5px 10px;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 10px;
+  border-top: 3px solid darkslategray;
+  border-right: 6px solid black;
+  border-bottom: 2px solid darkslategray;
+  border-left: 1px solid black;
+}
+
+.membership-tile * {
+  color: black;
+}
+
+.membership-tile h5 {
+  text-align: center;
+}
+
+.membership-tile a {
+  text-decoration: none;
+}
+
+.membership-tile a:hover {
+  text-decoration: underline;
+}
+
+#org-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+#org-nav a {
+  padding: 0 10px;
+}
+
+#org-create {
+  position: relative;
+  left: 40%;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  font-size: 30px;
 }
 
 @media screen and (max-width: 1366px) {

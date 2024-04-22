@@ -7,7 +7,11 @@ export default function Organizations() {
     
     useEffect(() => {
         fetch('/api/organizations')
+        .then((response) => response.json())
+        .then((data) => setOrganizations(data));
     }, [])
+
+    console.log(organizations);
 
     return <StyledTitle text="Organizations Go Here"/>
 }
