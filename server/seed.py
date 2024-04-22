@@ -7,7 +7,7 @@ import random
 fake = Faker()
 
 """ Number of users that will be generated."""
-USER_SEED_SIZE = 20
+USER_SEED_SIZE = 100
 
 """Usernames must be at least eight characters in length."""
 MIN_USERNAME_LENGTH = 8
@@ -22,7 +22,7 @@ DEFAULT_NUMBER_LENGTH = int(MIN_USERNAME_LENGTH / 2)
 ITEM_SEED_SIZE = 30
 
 """Number of organizations that will be generated."""
-ORG_SEED_SIZE = 8
+ORG_SEED_SIZE = 53
 
 """All seeded users will have the same password for the purposes of testing this application in the development phase."""
 PASSWORD = "Green+1234"
@@ -60,6 +60,7 @@ def seed_users():
 
     db.session.add_all(users)
     db.session.commit()
+    print("User seed complete.")
 
 
 def seed_items():
@@ -82,6 +83,7 @@ def seed_items():
 
     db.session.add_all(items)
     db.session.commit()
+    print("Item seed complete.")
 
 
 def seed_orgs():
@@ -95,6 +97,7 @@ def seed_orgs():
 
     db.session.add_all(orgs)
     db.session.commit()
+    print("Organization seed complete.")
 
 
 def seed_memberships():
@@ -117,6 +120,7 @@ def seed_memberships():
                 db.session.commit()
             except ValueError as e:
                 print(e)
+    print("Membership seed complete.")
 
 
 def seed_assignments():
@@ -137,12 +141,21 @@ def seed_assignments():
             assignments.append(assignment)
     db.session.add_all(assignments)
     db.session.commit()
+    print("Assignment seed complete.")
 
 
 if __name__ == "__main__":
     with app.app_context():
-        seed_users()
-        seed_items()
-        seed_orgs()
-        seed_memberships()
-        seed_assignments()
+        done = False
+        while (not done):
+            try:
+                seed_users()
+                seed_items()
+                seed_orgs()
+                seed_memberships()
+                seed_assignments()
+                done = True
+            except Exception as e:
+                print(e)
+                print("An error occurred. Trying again.")
+        print("Seeding complete!")
