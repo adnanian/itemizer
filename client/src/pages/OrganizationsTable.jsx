@@ -1,4 +1,5 @@
 import StyledTitle from "../components/StyledTitle";
+import { tableRowClassName } from "../helpers";
 
 export default function Organizations( {user, organizations} ) {
 
@@ -14,7 +15,7 @@ export default function Organizations( {user, organizations} ) {
         //console.log(owner);
 
         return (
-          <tr key={organization.id}>
+          <tr key={organization.id} className={tableRowClassName(orgIndex + 1)}>
             <td>{orgIndex + 1}</td>
             <td>{organization.name}</td>
             <td>{owner}</td>
@@ -42,7 +43,7 @@ export default function Organizations( {user, organizations} ) {
                     <th>Admins</th>
                     <th>Members</th>
                     <th>About</th>
-                    <th></th>
+                    <th>Are you a member?</th>
                 </tr>
             </thead>
             <tbody>

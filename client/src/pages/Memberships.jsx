@@ -19,8 +19,7 @@ export default function Memberships( {memberships} ) {
     })
 
     return (
-        <div>
-            <StyledTitle text="The list of organizations that you belong to."/>
+        <div id="user-orgs-div">
             <ul id="users-org-list">
                 {usersOrganizations}
             </ul>
