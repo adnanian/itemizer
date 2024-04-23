@@ -87,6 +87,8 @@ api.add_resource(ItemById, '/api/items/<int:id>', endpoint='item_by_id')
 api.add_resource(ItemByNameOrPartNo, '/api/items/<string:item_name>', endpoint='item_by_name_or_part_no')
 api.add_resource(OrganizationResource, '/api/organizations', endpoint='organizations')
 api.add_resource(OrganizationById, '/api/organizations/<int:id>', endpoint='organization_by_id')
+api.add_resource(AssignmentResource, '/api/assignments', endpoint='assignments')
+api.add_resource(AssignmentById, '/api/assignments/<int:id>', endpoint='assignment_by_id')
 
 
 if __name__ == "__main__":

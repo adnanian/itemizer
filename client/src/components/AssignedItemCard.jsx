@@ -1,9 +1,18 @@
-export default function AssignedItemCard( {item, addedAt, lastUpdated, quantity, onUpdate} ) {
+export default function AssignedItemCard( {item, addedAt, lastUpdated, quantity, assignmentId, onUpdate} ) {
     const minusButtonClassName = "minus-button";
     const plusButtonClassName = "plus-button";
     
     function handleClick(e) {
-        console.log(e.target.className);
+        const newQuantity = e.target.className === minusButtonClassName ? (quantity - 1) : (quantity + 1);
+        fetch(`/api/assignments/${assignmentId}`, {
+            method: "PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                count: newQuantity
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => onUpdate(data));
     }
     
     return (

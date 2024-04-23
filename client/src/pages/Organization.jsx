@@ -49,8 +49,16 @@ export default function Organization() {
         return <StyledTitle text="Loading..." />
     }
 
-    function updateItem(updatedItem) {
-
+    function updateAssignment(updatedItemAssignment) {
+        const updatedAssignments = organization.assignments.map((assignment) => {
+            return assignment.id === updatedItemAssignment.id ? updatedItemAssignment : assignment
+        });
+        //alert(updatedItemAssignment.count);
+        setOrganization((oldOrganization) => {
+            const newOrganization = {...oldOrganization};
+            newOrganization["assignments"] = updatedAssignments;
+            return newOrganization;
+        });
     }
 
     const itemCards = organization.assignments.map((assignment) => {
@@ -61,7 +69,8 @@ export default function Organization() {
                     addedAt={assignment.added_at}
                     lastUpdated={assignment.last_updated}
                     quantity={assignment.count}
-                    onUpdate={updateItem}
+                    assignmentId={assignment.id}
+                    onUpdate={updateAssignment}
                 />
             </li>
         )
