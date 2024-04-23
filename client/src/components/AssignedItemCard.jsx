@@ -1,8 +1,7 @@
 export default function AssignedItemCard( {item, addedAt, lastUpdated, quantity, onUpdate} ) {
-    // count
-    // last updated
-    // added at
-    // item    
+    const minusButtonClassName = "minus-button";
+    const plusButtonClassName = "plus-button";
+    
     function handleClick(e) {
         console.log(e.target.className);
     }
@@ -24,11 +23,11 @@ export default function AssignedItemCard( {item, addedAt, lastUpdated, quantity,
             </textarea>
             <div className="item-button-group">
                 <button 
-                    className="minus-button" 
+                    className={minusButtonClassName} 
                     onClick={handleClick}
                     disabled={quantity === 0}
                 >-</button>
-                <button className="plust-button" onClick={handleClick}>+</button>
+                <button className={plusButtonClassName} onClick={handleClick}>+</button>
             </div>
         </div>
     )

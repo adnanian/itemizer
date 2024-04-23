@@ -43,7 +43,7 @@ export default function Organizations( {user, organizations} ) {
         <table>
             <thead>
                 <tr>
-                    <th>Org #</th> {/** ROW # IN TABLE; NOT THE ID  */}
+                    <th>Org #</th>{/** ROW # IN TABLE; NOT THE ID  */}
                     <th>Name</th>
                     <th>Owner</th>
                     <th>Admins</th>

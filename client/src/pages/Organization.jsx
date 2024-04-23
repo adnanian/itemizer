@@ -95,9 +95,11 @@ export default function Organization() {
             </Grid>
             <StyledTitle text={organization.name}/>
             <h2 id="org-subtitle">{organization.description}</h2>
-            <ul id="assigned-item-list">
-                {itemCards}
-            </ul>
+            <Grid blockId="assigned-items-container" intermediateId={undefined}>
+                <ul id="assigned-item-list">
+                    {itemCards}
+                </ul>
+            </Grid>
         </main>
 
     );
