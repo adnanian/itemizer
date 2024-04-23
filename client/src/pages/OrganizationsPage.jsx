@@ -35,7 +35,7 @@ export default function OrganizationsPage() {
         return <StyledTitle text="Loading user..." />
     }
 
-    console.log(user);
+    //console.log(user);
 
     return (
         <main>

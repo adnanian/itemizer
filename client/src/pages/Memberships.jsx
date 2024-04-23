@@ -18,7 +18,8 @@ export default function Memberships( {memberships} ) {
                     created={membership.organization.created}
                     joined={membership.joined}
                     role={membership.role}
-                    id={membership.organization_id}
+                    orgId={membership.organization_id}
+                    userId={membership.user_id}
                 />
             </li>
         )

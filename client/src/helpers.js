@@ -15,4 +15,14 @@ function tableRowClassName(row) {
     return row % 2 == 0 ? evenRow : oddRow;
 }
 
-export {navLinkClassName, tableRowClassName}
+/**
+ * TODO
+ * 
+ * @param  {...any} values 
+ * @returns 
+ */
+function hasNothingness(...values) {
+    return values.some((value) => value === null || value === undefined);
+}
+
+export {navLinkClassName, tableRowClassName, hasNothingness}

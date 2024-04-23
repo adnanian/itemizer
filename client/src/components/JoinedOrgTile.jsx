@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 export default function JoinedOrgTile(props) {
     return (
         <div className="membership-tile">
-            <Link to={`/organizations/${props.organization_id}`} >
+            <Link to={`/organizations/${props.orgId}/users/${props.userId}`} >
                 <div>
                     <h5>{props.name}</h5>
                     <p>{props.description}</p>

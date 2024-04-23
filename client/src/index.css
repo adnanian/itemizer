@@ -533,7 +533,7 @@ table {
   height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
-  margin: 0 auto 70px;
+  margin: 0 auto;
 }
 
 thead {
@@ -594,6 +594,60 @@ tr.even-row-num :not(span) {
   font-weight: bolder;
 }
 
+h2#org-subtitle {
+  text-align: center;
+  background-color: skyblue;
+  color: black;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+#org-controls-grid {
+  display: grid ;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+#org-controls-grid button {
+  margin: 0 5px;
+  grid-row: 1 / 1 ;
+  grid-column: 1 / auto ;
+  width: max-content;
+}
+
+#assigned-item-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#assigned-item-list li {
+  background-color: orchid;
+  margin: 0 20px;
+}
+
+#assigned-item-list * {
+  margin: 5px auto;
+}
+
+.assigned-item {
+  align-items: center;
+  justify-content: center;
+}
+
+.assigned-item img {
+  background-color: silver;
+  width: 200px;
+  height: 200px;
+  
+  margin: 0 auto;
+}
+
+/*
 @media screen and (max-width: 1366px) {
 
   :root {
@@ -601,7 +655,6 @@ tr.even-row-num :not(span) {
     --small-height-scale: 100vh / 768px;
   }
 
-   /* Reset font size for all elements */
   #root * {
     font-size: inherit;
     width: calc(100% * var(--small-width-scale));
@@ -618,4 +671,6 @@ tr.even-row-num :not(span) {
     height: calc(var(--item-card-image-height) * var(--small-height-scale));
   }
 
+
 }
+*/
