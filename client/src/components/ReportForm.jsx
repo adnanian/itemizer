@@ -1,11 +1,21 @@
 import { useState } from "react";
 
+/**
+ * TODO
+ * 
+ * @returns 
+ */
 export default function ReportForm() {
     const [formData, setFormData] = useState({
         itemName: "",
         reason: ""
     })
 
+    /**
+     * TODO
+     * 
+     * @param {*} e 
+     */
     function handleChange(e) {
         setFormData({
             ...formData,
@@ -13,6 +23,12 @@ export default function ReportForm() {
         })
     }
 
+    /**
+     * TODO
+     * 
+     * @param {*} e 
+     * @returns 
+     */
     function handleSubmit(e) {
         e.preventDefault();
         for (const key in formData) {

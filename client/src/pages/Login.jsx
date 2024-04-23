@@ -1,11 +1,22 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 function Login( {onLogin} ) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    /**
+     * TODO
+     * 
+     * @param {*} e 
+     */
     function handleSubmit(e) {
         e.preventDefault();
         fetch("/api/login", {

@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
 
+/**
+ * TODO
+ * 
+ * @param {*} props 
+ * @returns 
+ */
 export default function JoinedOrgTile(props) {
     return (
         <div className="membership-tile">

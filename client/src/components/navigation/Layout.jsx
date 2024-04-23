@@ -1,6 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
 
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 export default function Layout( {user, setUser} ) {
     return (
         <>

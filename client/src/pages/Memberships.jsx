@@ -1,8 +1,14 @@
-import StyledTitle from "../components/StyledTitle";
 import JoinedOrgTile from "../components/JoinedOrgTile";
 
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 export default function Memberships( {memberships} ) {
 
+    // TODO
     const usersOrganizations = memberships.map((membership) => {
         return (
             <li key={membership.id}>

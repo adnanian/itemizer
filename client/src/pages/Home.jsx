@@ -3,6 +3,12 @@ import StyledTitle from "../components/StyledTitle";
 import ItemCard from "../components/ItemCard";
 import ReportForm from "../components/ReportForm";
 
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 function Home({ user }) {
     const [items, setItems] = useState([])
     const welcomeTitle = user ? `Welcome, ${user.first_name}!` : "Welcome to Itemizer!";

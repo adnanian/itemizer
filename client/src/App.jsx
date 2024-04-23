@@ -8,7 +8,11 @@ import { BrowserRouter, Routes as RouteList, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import OrganizationsPage from './pages/OrganizationsPage';
 
-
+/**
+ * TODO
+ * 
+ * @returns 
+ */
 function App() {
   const [user, setUser] = useState(null);
 

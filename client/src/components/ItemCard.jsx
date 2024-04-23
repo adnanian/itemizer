@@ -1,3 +1,9 @@
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 export default function ItemCard( {item} ) {
     return (
         <div className="item-card">

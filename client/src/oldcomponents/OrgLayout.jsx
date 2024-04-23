@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { navLinkClassName } from "../../helpers";
-import StyledTitle from "../StyledTitle";
+import { navLinkClassName } from "../helpers";
+import StyledTitle from "../components/StyledTitle";
 
 export default function OrgLayout( {user} ) {
 

@@ -1,6 +1,9 @@
 import { useField } from "formik";
 import InputErrorMessage from "./InputErrorMessage";
 
+/**
+ * TODO
+ */
 const Input = ({label, id, ...props}) => {
     // field - info about the input fields
     // meta - info about input interactions and errors

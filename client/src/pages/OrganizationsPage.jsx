@@ -4,6 +4,11 @@ import Memberships from "./Memberships";
 import OrganizationsTable from "./OrganizationsTable"
 import StyledTitle from "../components/StyledTitle";
 
+/**
+ * TODO
+ * 
+ * @returns 
+ */
 export default function OrganizationsPage() {
     const params = useParams();
     const [user, setUser] = useState(null);

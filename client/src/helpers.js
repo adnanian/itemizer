@@ -2,6 +2,12 @@ const navLinkClassName = "nav-link";
 const oddRow = "odd-row-num";
 const evenRow = "even-row-num";
 
+/**
+ * TODO
+ * 
+ * @param {*} row 
+ * @returns 
+ */
 function tableRowClassName(row) {
     if (!Number.isInteger(row)) {
         throw new Error("Argument, row, must be a number.");

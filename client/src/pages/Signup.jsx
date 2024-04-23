@@ -6,6 +6,12 @@ import { Link } from "react-router-dom";
 /*
 * Video Reference: https://www.youtube.com/watch?v=7Ophfq0lEAY&list=PLsBCPpptQcroC7NxdpGNJTIG8x5jv_66G&index=2
 */
+
+/**
+ * TODO
+ * 
+ * @returns 
+ */
 function Signup() {
 
     const initialValues = {
@@ -27,6 +33,12 @@ function Signup() {
         confirmPassword: yup.string().oneOf([yup.ref('password'), null], "Password must match").required("Must enter password again.")
     });
 
+    /**
+     * TODO
+     * 
+     * @param {*} values 
+     * @param {*} actions 
+     */
     function handleSubmit(values, actions) {
         fetch("/api/signup", {
             method: "POST",

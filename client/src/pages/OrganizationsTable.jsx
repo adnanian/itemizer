@@ -1,6 +1,12 @@
 import StyledTitle from "../components/StyledTitle";
 import { tableRowClassName } from "../helpers";
 
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 export default function Organizations( {user, organizations} ) {
 
     if (!organizations) {
