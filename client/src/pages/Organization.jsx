@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { hasNothingness } from "../helpers";
 import AssignedItemCard from "../components/AssignedItemCard";
 import Grid from "../components/Grid";
-import MembersTableModal from "../components/modal-children/MembersTable";
+import MembersTable from "../components/modal-children/MembersTable";
 import ItemFormModal from "../components/modal-children/ItemForm";
 import Modal from "../components/Modal";
 
@@ -60,9 +60,27 @@ export default function Organization() {
         });
         //alert(updatedItemAssignment.count);
         setOrganization((oldOrganization) => {
-            const newOrganization = {...oldOrganization};
+            const newOrganization = { ...oldOrganization };
             newOrganization["assignments"] = updatedAssignments;
             return newOrganization;
+        });
+    }
+
+    function updateMembership(membershipToUpdate) {
+        setOrganization((oldOrgData) => {
+            const updatedOrg = { ...oldOrgData }
+            updatedOrg["memberships"] = oldOrgData.memberships.map((membership) => {
+                return membership.id === membershipToUpdate.id ? membershipToUpdate : membership
+            });
+            return updatedOrg;
+        });
+    }
+
+    function deleteMembership(membershipToDelete) {
+        setOrganization((oldOrgData) => {
+            const updatedOrg = { ...oldOrgData }
+            updatedOrg["memberships"] = oldOrgData.memberships.filter((membership) => membership.id !== membershipToDelete.id);
+            return updatedOrg;
         });
     }
 
@@ -94,8 +112,8 @@ export default function Organization() {
     }
 
     const modalOpeners = {
-        [buttonIds.viewMembers]: <MembersTableModal members={organization.memberships} userMember={userMembership}/>,
-        [buttonIds.add]: <ItemFormModal onAdd={null}/>
+        [buttonIds.viewMembers]: <MembersTable members={organization.memberships} userMember={userMembership} onDelete={deleteMembership} onUpdate={updateMembership} />,
+        [buttonIds.add]: <ItemFormModal onAdd={null} />
     }
 
     function handleClick(e) {
@@ -116,36 +134,36 @@ export default function Organization() {
     return (
         <main id="inside-org">
             <Grid blockId="org-controls-grid" intermediateId="intermediate">
-                <button 
-                    id={buttonIds.back} 
-                    className="org-controls" 
+                <button
+                    id={buttonIds.back}
+                    className="org-controls"
                     onClick={handleClick}
                 >
                     ← Back
                 </button>
-                <button 
-                    id={buttonIds.leave} 
+                <button
+                    id={buttonIds.leave}
                     className="org-controls"
                     onClick={handleClick}
                 >
                     Leave Org.
                 </button>
-                <button 
-                    id={buttonIds.viewMembers} 
-                    className="org-controls" 
+                <button
+                    id={buttonIds.viewMembers}
+                    className="org-controls"
                     onClick={handleClick}
                 >
                     View List of Members
                 </button>
-                <button 
-                    id={buttonIds.sendUpdate} 
+                <button
+                    id={buttonIds.sendUpdate}
                     className="org-controls"
                     onClick={handleClick}
                 >
                     Send Update
                 </button>
-                <button 
-                    id={buttonIds.add} 
+                <button
+                    id={buttonIds.add}
                     onClick={handleClick}
                 >
                     Add Item
@@ -153,15 +171,15 @@ export default function Organization() {
                 {
                     userMembership.role === "REGULAR" ? null : (
                         <>
-                            <button 
-                                id={buttonIds.remove} 
+                            <button
+                                id={buttonIds.remove}
                                 className="org-controls"
                                 onClick={handleClick}
                             >
                                 Remove Item
                             </button>
-                            <button 
-                                id={buttonIds.requests} 
+                            <button
+                                id={buttonIds.requests}
                                 className="org-controls"
                                 onClick={handleClick}
                             >
@@ -173,15 +191,15 @@ export default function Organization() {
                 {
                     userMembership.role !== "OWNER" ? null : (
                         <>
-                            <button 
-                                id={buttonIds.edit} 
+                            <button
+                                id={buttonIds.edit}
                                 className="org-controls"
                                 onClick={handleClick}
                             >
                                 Edit Org.
                             </button>
-                            <button 
-                                id={buttonIds.delete} 
+                            <button
+                                id={buttonIds.delete}
                                 className="org-controls"
                                 onClick={handleClick}
                             >
@@ -191,7 +209,7 @@ export default function Organization() {
                     )
                 }
             </Grid>
-            <StyledTitle text={organization.name}/>
+            <StyledTitle text={organization.name} />
             <h2 id="org-subtitle">{organization.description}</h2>
             <Grid blockId="assigned-items-container" intermediateId={undefined}>
                 <ul id="assigned-item-list">
@@ -204,7 +222,7 @@ export default function Organization() {
                         {modalOpeners[modalKey]}
                     </Modal>
                 ) :
-                null
+                    null
             }
         </main>
     );
