@@ -2,6 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from config import db
 from sqlalchemy.orm import validates
 from helpers import *
+import inspect
 
 ROLES = ['OWNER', 'ADMIN', 'REGULAR']
 
@@ -35,7 +36,10 @@ class Membership(db.Model, SerializerMixin):
     @validates('role')
     def validate_role(self, key, role):
         if Membership.query.filter(Membership.user_id == self.user_id, Membership.organization_id == self.organization_id).first():
-            raise ValueError(f"User {self.user_id} already belongs to organization {self.organization_id}.")
+            #print(stack_trace())
+            print(get_model_invoker())
+            if (get_model_invoker() != 'patch'):
+                raise ValueError(f"User {self.user_id} already belongs to organization {self.organization_id}.")
         if not is_non_empty_string(role):
              raise ValueError(f"{key.title()} must be a non-empty string.")
         role = role.upper()

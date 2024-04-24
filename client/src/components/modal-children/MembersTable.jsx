@@ -1,20 +1,23 @@
 import { tableRowClassName } from "../../helpers";
 
+
 export default function MembersTable({ members, userMember, onDelete, onUpdate }) {
 
-    function handleExpel(id) {
+    async function handleExpel(id) {
         const memberToDelete = members.find((member) => member.id === id);
-        fetch(`/api/memberships/${id}`, {
+        const response = await fetch(`/api/memberships/${id}`, {
             method: "DELETE"
-        })
-        .then((response) => response.json())
-        .then((message) => {
-            console.log(message);
-            onDelete(memberToDelete);
         });
+        if (response.ok) {
+            onDelete(memberToDelete);
+            //console.log(response);
+            //notify("User removed!");
+            alert(`User, ${memberToDelete.user.username} has been removed from the organization!`);
+        }
     }
 
-    function handleRoleChange(id, newRole) {
+    function handleRoleChange(id, oldRole, newRole) {
+        const verb = newRole === "ADMIN" ? "promoted" : "demoted";
         fetch(`/api/memberships/${id}`, {
             method: "PATCH",
             headers: {"Content-Type": "Application/json"},
@@ -23,7 +26,10 @@ export default function MembersTable({ members, userMember, onDelete, onUpdate }
             })
         })
         .then((response) => response.json())
-        .then((member) => onUpdate(member))
+        .then((member) => {
+            onUpdate(member);
+            alert(`User, ${member.user.username}, has been ${verb} from ${oldRole} to ${newRole}!`);
+        })
         .catch((error) => {
             console.error('Network error:', error);
         })
@@ -68,7 +74,7 @@ export default function MembersTable({ members, userMember, onDelete, onUpdate }
                                         </button>
                                         <button
                                             className="access-control"
-                                            onClick={() => handleRoleChange(member.id, oppositeRole)}
+                                            onClick={() => handleRoleChange(member.id, member.role, oppositeRole)}
                                             title={roleChangteTooltip}
                                         >
                                             {roleChangeText}

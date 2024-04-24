@@ -25,4 +25,18 @@ function hasNothingness(...values) {
     return values.some((value) => value === null || value === undefined);
 }
 
-export {navLinkClassName, tableRowClassName, hasNothingness}
+function notify(text) {
+    if ("Notification" in window) {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                new Notification(text);
+            } else {
+                console.log("Notification permission denied.");
+            }
+        });
+    } else {
+        console.log("Notification NOT in window! :(")
+    }
+}
+
+export {navLinkClassName, tableRowClassName, hasNothingness, notify}
