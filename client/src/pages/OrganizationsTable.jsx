@@ -40,7 +40,8 @@ export default function Organizations( {user, organizations} ) {
     });
 
     return (
-        <table id="org-table">
+        <div className="table-container">
+            <table id="org-table">
             <thead>
                 <tr>
                     <th>Org #</th>{/** ROW # IN TABLE; NOT THE ID  */}
@@ -55,6 +56,7 @@ export default function Organizations( {user, organizations} ) {
             <tbody>
                 {orgRows}
             </tbody>
-        </table>
+            </table>
+        </div>
     );
 }

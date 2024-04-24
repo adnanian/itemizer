@@ -25,7 +25,7 @@ function App() {
     })
   }, [])
 
-  console.log(`${user ? user.id : null} -- printed at ${new Date()}`);
+  //console.log(`${user ? user.id : null} -- printed at ${new Date()}`);
 
   return (
     <BrowserRouter>

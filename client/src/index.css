@@ -582,6 +582,23 @@ tr.even-row-num :not(span) {
   background-color: silver;
 }
 
+tr.owner {
+  background: linear-gradient(to right bottom, red, yellow);
+}
+
+tr.you {
+  background: linear-gradient(to right bottom, green, lime);
+}
+
+tr.youre-the-owner {
+  background: linear-gradient(to right bottom, red, lime);
+}
+
+tr:is(.owner, .you, .youre-the-owner) {
+  font-weight: bold;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
 :is(tr.odd-row-num, tr.even-row-num) .is-member {
   background: linear-gradient(to right bottom, olive, lime, lightgreen);
   display: flex;
@@ -595,6 +612,11 @@ tr.even-row-num :not(span) {
   background: linear-gradient(to right bottom, lime, lightgreen cyan);
   color: #020;
   font-weight: bolder;
+}
+
+table .access-control {
+  background-color: black !important;
+  color: silver;
 }
 
 dialog {
@@ -619,6 +641,7 @@ dialog button:hover {
 }
 
 .table-container {
+  width: fit-content;
   height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -626,6 +649,7 @@ dialog button:hover {
   border-width: 8px;
   border-color: silver;
   padding: 5px;
+  margin: 0 auto;
 }
 
 h2#org-subtitle {

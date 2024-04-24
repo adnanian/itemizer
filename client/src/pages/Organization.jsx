@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 import { hasNothingness } from "../helpers";
 import AssignedItemCard from "../components/AssignedItemCard";
 import Grid from "../components/Grid";
-import MembersTableModal from "../components/modals/MembersTableModal";
+import MembersTableModal from "../components/modal-children/MembersTable";
+import ItemFormModal from "../components/modal-children/ItemForm";
+import Modal from "../components/Modal";
 
 export default function Organization() {
     const { orgId, userId } = useParams();
     const [organization, setOrganization] = useState(null);
     const [userMembership, setUserMembership] = useState(null);
     const [modal, setModal] = useState(false);
+    const [modalKey, setModaKey] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,7 +41,7 @@ export default function Organization() {
                 //return superbool;
                 return membership.organization_id == orgId && membership.user_id == userId;
             });
-            console.log(userMember);
+            //console.log(userMember);
             setUserMembership(userMember);
         }
     }, [orgId, userId, organization]);
@@ -85,44 +88,105 @@ export default function Organization() {
         sendUpdate: "update-button",
         add: "add-button",
         remove: "remove-button", // for admins to remove managed items from the organization.
-        access: "access-button",
         requests: "requests-button",
         edit: "edit-button",
         delete: "delete-button" // for owners to delete the entire organization.
     }
 
-    function confirmLeave(e) {
-
+    const modalOpeners = {
+        [buttonIds.viewMembers]: <MembersTableModal members={organization.memberships} userMember={userMembership}/>,
+        [buttonIds.add]: <ItemFormModal onAdd={null}/>
     }
 
-    function viewMembers(e) {
-        if (e.target.id === buttonIds.viewMembers) {
-            setModal(true);
+    function handleClick(e) {
+        switch (e.target.id) {
+            case buttonIds.back:
+                navigate(-1, { replace: true });
+                break;
+            case buttonIds.sendUpdate:
+                alert(`All members of ${organization.name} have been notified.`);
+                break;
+            default:
+                setModaKey(e.target.id);
+                setModal(true);
+                break;
         }
     }
 
     return (
         <main id="inside-org">
             <Grid blockId="org-controls-grid" intermediateId="intermediate">
-                <button id={buttonIds.back} className="org-controls" onClick={() => navigate(-1, { replace: true })}>← Back</button>
-                <button id={buttonIds.leave} className="org-controls">Leave Org.</button>
-                <button id={buttonIds.viewMembers} className="org-controls" onClick={viewMembers}>View List of Members</button>
-                <button id={buttonIds.sendUpdate} className="org-controls">Send Update</button>
-                <button id={buttonIds.add} className="org-controls">Add Item</button>
+                <button 
+                    id={buttonIds.back} 
+                    className="org-controls" 
+                    onClick={handleClick}
+                >
+                    ← Back
+                </button>
+                <button 
+                    id={buttonIds.leave} 
+                    className="org-controls"
+                    onClick={handleClick}
+                >
+                    Leave Org.
+                </button>
+                <button 
+                    id={buttonIds.viewMembers} 
+                    className="org-controls" 
+                    onClick={handleClick}
+                >
+                    View List of Members
+                </button>
+                <button 
+                    id={buttonIds.sendUpdate} 
+                    className="org-controls"
+                    onClick={handleClick}
+                >
+                    Send Update
+                </button>
+                <button 
+                    id={buttonIds.add} 
+                    onClick={handleClick}
+                >
+                    Add Item
+                </button>
                 {
                     userMembership.role === "REGULAR" ? null : (
                         <>
-                            <button id={buttonIds.remove} className="org-controls">Remove Item</button>
-                            <button id={buttonIds.access} className="org-controls">Manage Access</button>
-                            <button id={buttonIds.requests} className="org-controls">Request Queue</button>
+                            <button 
+                                id={buttonIds.remove} 
+                                className="org-controls"
+                                onClick={handleClick}
+                            >
+                                Remove Item
+                            </button>
+                            <button 
+                                id={buttonIds.requests} 
+                                className="org-controls"
+                                onClick={handleClick}
+                            >
+                                Request Queue
+                            </button>
                         </>
                     )
                 }
                 {
                     userMembership.role !== "OWNER" ? null : (
                         <>
-                            <button id={buttonIds.edit} className="org-controls">Edit Org.</button>
-                            <button id={buttonIds.delete} className="org-controls">Delete Org.</button>
+                            <button 
+                                id={buttonIds.edit} 
+                                className="org-controls"
+                                onClick={handleClick}
+                            >
+                                Edit Org.
+                            </button>
+                            <button 
+                                id={buttonIds.delete} 
+                                className="org-controls"
+                                onClick={handleClick}
+                            >
+                                Delete Org.
+                            </button>
                         </>
                     )
                 }
@@ -134,8 +198,14 @@ export default function Organization() {
                     {itemCards}
                 </ul>
             </Grid>
-            <MembersTableModal members={organization.memberships} modal={modal} setModal={setModal}/>
+            {
+                modalKey ? (
+                    <Modal openModal={modal} closeModal={() => setModal(false)}>
+                        {modalOpeners[modalKey]}
+                    </Modal>
+                ) :
+                null
+            }
         </main>
-
     );
 }
