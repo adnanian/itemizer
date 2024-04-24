@@ -529,11 +529,14 @@ table {
   align-items: center;
   justify-content: center;
   background: radial-gradient(black, brown, olive, gold, yellow, gold, olive, brown, black);
-  width: 1200px;
-  height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
   margin: 0 auto;
+}
+
+table#org-table {
+  width: 1200px;
+  height: 400px;
 }
 
 thead {
@@ -594,6 +597,37 @@ tr.even-row-num :not(span) {
   font-weight: bolder;
 }
 
+dialog {
+  width: fit-content;
+  height: fit-content;
+  background-color: #222;
+}
+
+dialog button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto 0;
+  background-color: skyblue;
+  font-weight: bold;
+  color: black;
+  font-size: 18px;
+}
+
+dialog button:hover {
+  background: linear-gradient(cyan, blue);
+}
+
+.table-container {
+  height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-style: double;
+  border-width: 8px;
+  border-color: silver;
+  padding: 5px;
+}
+
 h2#org-subtitle {
   text-align: center;
   background-color: skyblue;
@@ -626,6 +660,8 @@ h2#org-subtitle {
   width: fit-content;
   background: linear-gradient(to right bottom, black, white);
   margin: 10px auto;
+  border: 10px double maroon;
+  border-radius: 8px;
 }
 
 #assigned-item-list {
@@ -691,7 +727,7 @@ h2#org-subtitle {
   background-color: #0f0;
 }
 
-:is(.minus-button, .plus-button):hover {
+:is(.minus-button, .plus-button, dialog button):hover {
   border-width: 4px;
   border-color: blue;
   background-color: none;

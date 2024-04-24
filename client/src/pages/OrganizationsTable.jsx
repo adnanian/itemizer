@@ -40,7 +40,7 @@ export default function Organizations( {user, organizations} ) {
     });
 
     return (
-        <table>
+        <table id="org-table">
             <thead>
                 <tr>
                     <th>Org #</th>{/** ROW # IN TABLE; NOT THE ID  */}

@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { hasNothingness } from "../helpers";
 import AssignedItemCard from "../components/AssignedItemCard";
 import Grid from "../components/Grid";
+import MembersTableModal from "../components/modals/MembersTableModal";
 
 export default function Organization() {
     const { orgId, userId } = useParams();
     const [organization, setOrganization] = useState(null);
     const [userMembership, setUserMembership] = useState(null);
+    const [modal, setModal] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -76,28 +78,51 @@ export default function Organization() {
         )
     });
 
+    const buttonIds = {
+        back: "back-button",
+        leave: "leave-button",
+        viewMembers: "member-list-button",
+        sendUpdate: "update-button",
+        add: "add-button",
+        remove: "remove-button", // for admins to remove managed items from the organization.
+        access: "access-button",
+        requests: "requests-button",
+        edit: "edit-button",
+        delete: "delete-button" // for owners to delete the entire organization.
+    }
+
+    function confirmLeave(e) {
+
+    }
+
+    function viewMembers(e) {
+        if (e.target.id === buttonIds.viewMembers) {
+            setModal(true);
+        }
+    }
+
     return (
         <main id="inside-org">
             <Grid blockId="org-controls-grid" intermediateId="intermediate">
-                <button id="back-button" className="org-controls" onClick={() => navigate(-1, { replace: true })}>← Back</button>
-                <button id="leave-button" className="org-controls">Leave Org.</button>
-                <button className="org-controls">View List of Members</button>
-                <button className="org-controls">Send Update</button>
-                <button className="org-controls">Add Item</button>
+                <button id={buttonIds.back} className="org-controls" onClick={() => navigate(-1, { replace: true })}>← Back</button>
+                <button id={buttonIds.leave} className="org-controls">Leave Org.</button>
+                <button id={buttonIds.viewMembers} className="org-controls" onClick={viewMembers}>View List of Members</button>
+                <button id={buttonIds.sendUpdate} className="org-controls">Send Update</button>
+                <button id={buttonIds.add} className="org-controls">Add Item</button>
                 {
                     userMembership.role === "REGULAR" ? null : (
                         <>
-                            <button className="org-controls">Remove Item</button>
-                            <button className="org-controls">Manage Access</button>
-                            <button className="org-controls">Request Queue</button>
+                            <button id={buttonIds.remove} className="org-controls">Remove Item</button>
+                            <button id={buttonIds.access} className="org-controls">Manage Access</button>
+                            <button id={buttonIds.requests} className="org-controls">Request Queue</button>
                         </>
                     )
                 }
                 {
                     userMembership.role !== "OWNER" ? null : (
                         <>
-                            <button className="org-controls">Edit Org.</button>
-                            <button className="org-controls">Delete Org.</button>
+                            <button id={buttonIds.edit} className="org-controls">Edit Org.</button>
+                            <button id={buttonIds.delete} className="org-controls">Delete Org.</button>
                         </>
                     )
                 }
@@ -109,6 +134,7 @@ export default function Organization() {
                     {itemCards}
                 </ul>
             </Grid>
+            <MembersTableModal members={organization.memberships} modal={modal} setModal={setModal}/>
         </main>
 
     );
