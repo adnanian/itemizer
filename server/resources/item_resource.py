@@ -1,5 +1,6 @@
 from flask import request, g
 from flask_restful import Resource
+from sqlalchemy.exc import IntegrityError
 from config import db
 from models.models import Item
 
@@ -19,9 +20,9 @@ class ItemResource(Resource):
       db.session.add(new_item)
       db.session.commit()
       return new_item.to_dict(), 201
-    except ValueError as e:
+    except (ValueError, IntegrityError) as e:
       print(e)
-      return {'message': '422 Unprocessable Entity'}, 422
+      return {'message': str(e)}, 422
     
 class ItemById(Resource):
   def get(self, id):

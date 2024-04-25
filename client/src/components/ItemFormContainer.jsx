@@ -9,20 +9,39 @@ export default function ItemFormContainer( { orgId, items, onAdd, onClose } ) {
         existing: "existing-item-form"
     };
 
-    const formRadio = {
-        [formRadioValues.new]: <NewItemForm onAdd={onAdd}/>,
-        [formRadioValues.existing]: <ExistingItemForm items={items} onAdd={onAdd}/>
-    };
-
-    const [form, setForm] = useState(formRadioValues.new);
-
     function handleChange(e) {
         setForm(e.target.value);
     }
 
-    function createAssignment(itemId, count) {
-        // TODO
+    function createAssignment(item, count, addItem) {
+        fetch(`/api/assignments`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                item_id: item.id,
+                organization_id: orgId,
+                count: count
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (addItem) {
+                onAdd(data, item);
+            } else {
+                onAdd(data);
+            }
+        })
+        .finally(() => onClose());
     }
+
+    const formRadio = {
+        [formRadioValues.new]: <NewItemForm onAdd={createAssignment}/>,
+        [formRadioValues.existing]: <ExistingItemForm items={items} onAdd={createAssignment}/>
+    };
+
+    const [form, setForm] = useState(formRadioValues.new);
 
     return (
         <>

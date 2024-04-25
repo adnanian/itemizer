@@ -3,7 +3,7 @@ import * as yup from "yup";
 import Input from "../../formik-reusable/Input";
 import TextAreaInput from "../../formik-reusable/TextArea";
 
-export default function NewItemForm({ onAddAssignment }) {
+export default function NewItemForm({ onAdd }) {
     const initialValues = {
         name: "",
         description: "",
@@ -16,18 +16,11 @@ export default function NewItemForm({ onAddAssignment }) {
         name: yup.string().required("Item name required").max(200),
         description: yup.string().optional().max(500),
         partNumber: yup.string().optional(),
-        image: yup.mixed().required('required').test('fileFormat', 'Only JPEG or PNG files are allowed', value => {
-            if (value) {
-                const supportedFormats = ['jpg', 'jpeg', 'png'];
-                return supportedFormats.includes(value.name.split('.').pop());
-            }
-            return true;
-        }),
+        imageUrl: yup.string().optional("RECOMMENDED"),
         count: yup.number().integer().min(0).required("Must be a non-negative integer.")
     });
 
-    function handleSubmit(e, values, actions) {
-        e.preventDefault();
+    function handleSubmit(values, actions) {
         fetch("/api/items", {
             method: "POST",
             headers: {
@@ -45,17 +38,20 @@ export default function NewItemForm({ onAddAssignment }) {
         )))
         .then(({data, status}) => {
             if (status === 201) {
-                onAddAssignment(data.id, count);
+                onAdd(data, values.count, true);
                 alert("New item added to the system.");
-                onClose();
             } else {
-                throw new Error(data);
+                throw new Error(data.message);
             }
         })
         .catch((error) => {
             console.error(error);
+            alert(error);
         })
-        .finally(() => actions.resetForm());
+        .finally(() => {
+            actions.resetForm();
+            return false;
+        });
     }
 
     return (
@@ -93,8 +89,8 @@ export default function NewItemForm({ onAddAssignment }) {
                             />
                             <Input
                                 label="Image URL"
-                                id="partNumber"
-                                name="partNumber"
+                                id="imageUrl"
+                                name="imageUrl"
                                 type="text"
                                 placeholder="Paste the image address here."
                             />

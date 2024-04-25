@@ -23,7 +23,7 @@ function tableRowClassName(row) {
  * @returns 
  */
 function hasNothingness(...values) {
-    return values.some((value) => value === null || value === undefined);
+    return values.some((value) => !value);
 }
 
 function notify(text) {

@@ -53,6 +53,10 @@ export default function Organization() {
             .then((data) => setItems(data))
     }, []);
 
+    const addItem = (item) => {
+        setItems([...items, item]);
+    }
+
     //console.log(organization);
     //console.log(userMembership);
     //console.log(!(organization && userMembership))
@@ -63,6 +67,21 @@ export default function Organization() {
 
     function closeModal() {
         setModal(false);
+    }
+
+    // CRUD for ASSIGNMENTS
+
+
+    function addAssignment(assignment, item = null) {
+        if (item) {
+            addItem(item);
+        }
+        const newAssignments = [...organization.assignments, assignment];
+        setOrganization(oldOrganization => {
+            const newOrganization = {...oldOrganization}
+            newOrganization["assignments"] = newAssignments;
+            return newOrganization;
+        });
     }
 
     function updateAssignment(updatedItemAssignment) {
@@ -77,6 +96,12 @@ export default function Organization() {
         });
     }
 
+    // CRUD for MEMBERSHIPS
+
+    /**
+     * 
+     * @param {*} membershipToUpdate 
+     */
     function updateMembership(membershipToUpdate) {
         setOrganization((oldOrgData) => {
             const updatedOrg = { ...oldOrgData }
@@ -95,9 +120,7 @@ export default function Organization() {
         });
     }
 
-    function addItem(item) {
-        // TODO
-    }
+    
 
     const nonAssignedItems = () => {
         const assignedItemIds = organization.assignments.map(assignment => assignment.item.id);
@@ -135,7 +158,7 @@ export default function Organization() {
 
     const modalOpeners = {
         [buttonIds.viewMembers]: <MembersTable members={organization.memberships} userMember={userMembership} onDelete={deleteMembership} onUpdate={updateMembership} />,
-        [buttonIds.add]: <ItemFormContainer orgId={organization.id} items={nonAssignedItems()} onAddAssignment={addItem} onClose={closeModal} />
+        [buttonIds.add]: <ItemFormContainer orgId={organization.id} items={nonAssignedItems()} onAdd={addAssignment} onClose={closeModal} />
     }
 
     function handleClick(e) {

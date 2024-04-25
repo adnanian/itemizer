@@ -29,6 +29,8 @@ class Item(db.Model, SerializerMixin):
     def validate_name(self, key, name):
         if not is_non_empty_string(name):
             raise ValueError(f"{key.title()} must be a non-empty string.")
+        if Item.query.filter_by(name=name).first():
+            raise ValueError(f"An item with name, {name}, already exists.")
         return name
     
     def __repr__(self):

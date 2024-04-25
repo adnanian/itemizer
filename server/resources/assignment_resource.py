@@ -9,18 +9,18 @@ class AssignmentResource(Resource):
         return assignments, 200
     
     def post(self):
-        pass
-        # try:
-        #     new_org = Assignment(
-        #         name=request.get_json().get('name'),
-        #         description=request.get_json().get('description')
-        #     )
-        #     db.session.add(new_org)
-        #     db.session.commit()
-        #     return new_org.to_dict(), 201
-        # except ValueError as e:
-        #     print(e)
-        #     return {'message': '422 Unprocessable Entity'}, 422
+        try:
+            new_org = Assignment(
+                item_id=request.get_json().get('item_id'),
+                organization_id=request.get_json().get('organization_id'),
+                count=request.get_json().get('count')
+            )
+            db.session.add(new_org)
+            db.session.commit()
+            return new_org.to_dict(), 201
+        except ValueError as e:
+            print(e)
+            return {'message': '422 Unprocessable Entity'}, 422
         
 class AssignmentById(Resource):
   def get(self, id):
