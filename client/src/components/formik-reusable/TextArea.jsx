@@ -4,7 +4,7 @@ import InputErrorMessage from "../InputErrorMessage";
 /**
  * TODO
  */
-const TextAreaInput = ({label, id, ...props}) => {
+const TextArea = ({label, id, ...props}) => {
     // field - info about the input fields
     // meta - info about input interactions and errors
     // helpers - functions
@@ -23,4 +23,4 @@ const TextAreaInput = ({label, id, ...props}) => {
     );
 }
 
-export default TextAreaInput;
+export default TextArea;

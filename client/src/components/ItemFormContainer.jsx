@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ExistingItemForm from "./ExistingItemForm";
-import NewItemForm from "./NewItemForm";
+import ExistingItemForm from "./modal-children/item-form/ExistingItemForm";
+import NewItemForm from "./modal-children/item-form/NewItemForm";
 
 export default function ItemFormContainer( { orgId, items, onAdd, onClose } ) {
 
@@ -26,7 +26,7 @@ export default function ItemFormContainer( { orgId, items, onAdd, onClose } ) {
 
     return (
         <>
-            <div>
+            <div className="radio-group">
                 <input
                     id="new-item"
                     name="new-item"

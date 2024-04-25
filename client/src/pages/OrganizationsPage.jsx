@@ -39,7 +39,7 @@ export default function OrganizationsPage() {
 
     return (
         <main>
-            <div id="org-radio">
+            <div id="org-radio" className="radio-group">
                 <input
                     id="table"
                     name="table"

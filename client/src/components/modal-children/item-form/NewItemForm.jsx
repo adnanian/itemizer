@@ -1,7 +1,7 @@
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import Input from "../../formik-reusable/Input";
-import TextAreaInput from "../../formik-reusable/TextAreaInput";
+import TextAreaInput from "../../formik-reusable/TextArea";
 
 export default function NewItemForm({ onAddAssignment }) {
     const initialValues = {

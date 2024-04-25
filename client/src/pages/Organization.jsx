@@ -6,7 +6,7 @@ import AssignedItemCard from "../components/AssignedItemCard";
 import Grid from "../components/Grid";
 import MembersTable from "../components/modal-children/MembersTable";
 import Modal from "../components/Modal";
-import ItemFormContainer from "../components/modal-children/item-form/ItemFormContainer";
+import ItemFormContainer from "../components/ItemFormContainer";
 
 export default function Organization() {
     const { orgId, userId } = useParams();
