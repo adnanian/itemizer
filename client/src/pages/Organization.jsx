@@ -5,8 +5,8 @@ import { hasNothingness } from "../helpers";
 import AssignedItemCard from "../components/AssignedItemCard";
 import Grid from "../components/Grid";
 import MembersTable from "../components/modal-children/MembersTable";
-import ItemFormModal from "../components/modal-children/ItemForm";
 import Modal from "../components/Modal";
+import ItemFormContainer from "../components/modal-children/item-form/ItemFormContainer";
 
 export default function Organization() {
     const { orgId, userId } = useParams();
@@ -14,6 +14,7 @@ export default function Organization() {
     const [userMembership, setUserMembership] = useState(null);
     const [modal, setModal] = useState(false);
     const [modalKey, setModaKey] = useState("");
+    const [items, setItems] = useState([])
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -46,12 +47,22 @@ export default function Organization() {
         }
     }, [orgId, userId, organization]);
 
+    useEffect(() => {
+        fetch('/api/items')
+            .then((response) => response.json())
+            .then((data) => setItems(data))
+    }, []);
+
     //console.log(organization);
     //console.log(userMembership);
     //console.log(!(organization && userMembership))
 
     if (hasNothingness(organization, userMembership)) {
         return <StyledTitle text="Loading..." />
+    }
+
+    function closeModal() {
+        setModal(false);
     }
 
     function updateAssignment(updatedItemAssignment) {
@@ -84,6 +95,17 @@ export default function Organization() {
         });
     }
 
+    function addItem(item) {
+        // TODO
+    }
+
+    const nonAssignedItems = () => {
+        const assignedItemIds = organization.assignments.map(assignment => assignment.item.id);
+        //console.log(assignedItemIds);
+        const nonAssignedItemsArray = items.filter(item => !assignedItemIds.includes(item.id));
+        return nonAssignedItemsArray;
+    }
+
     const itemCards = organization.assignments.map((assignment) => {
         return (
             <li key={assignment.id}>
@@ -113,7 +135,7 @@ export default function Organization() {
 
     const modalOpeners = {
         [buttonIds.viewMembers]: <MembersTable members={organization.memberships} userMember={userMembership} onDelete={deleteMembership} onUpdate={updateMembership} />,
-        [buttonIds.add]: <ItemFormModal onAdd={null} />
+        [buttonIds.add]: <ItemFormContainer orgId={organization.id} items={nonAssignedItems()} onAddAssignment={addItem} onClose={closeModal} />
     }
 
     function handleClick(e) {
@@ -218,7 +240,7 @@ export default function Organization() {
             </Grid>
             {
                 modalKey ? (
-                    <Modal openModal={modal} closeModal={() => setModal(false)}>
+                    <Modal openModal={modal} closeModal={closeModal}>
                         {modalOpeners[modalKey]}
                     </Modal>
                 ) :

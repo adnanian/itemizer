@@ -1,10 +1,10 @@
 import { useField } from "formik";
-import InputErrorMessage from "./InputErrorMessage";
+import InputErrorMessage from "../InputErrorMessage";
 
 /**
  * TODO
  */
-const Input = ({label, id, ...props}) => {
+const TextAreaInput = ({label, id, ...props}) => {
     // field - info about the input fields
     // meta - info about input interactions and errors
     // helpers - functions
@@ -13,14 +13,14 @@ const Input = ({label, id, ...props}) => {
     return (
         <>
             <label htmlFor={id}>{label}</label>
-            <input 
+            <textarea 
                 className={meta.error && meta.touched ? "input-error" : ""}
                 {...field}
                 {...props} 
-            />
+            ></textarea>
             <InputErrorMessage errors={meta.error} touched={meta.touched}/>
         </>
     );
 }
 
-export default Input;
+export default TextAreaInput;

@@ -17,7 +17,7 @@ function Home({ user }) {
         fetch('/api/items')
             .then((response) => response.json())
             .then((data) => setItems(data))
-    }, [])
+    }, []);
 
     const itemList = items.map((item) => {
         return (

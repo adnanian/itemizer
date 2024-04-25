@@ -1,6 +1,7 @@
 const navLinkClassName = "nav-link";
 const oddRow = "odd-row-num";
 const evenRow = "even-row-num";
+const itemImagePlaceholder ='/placeholder-item-image.jpg';
 
 /**
  * TODO
@@ -39,4 +40,4 @@ function notify(text) {
     }
 }
 
-export {navLinkClassName, tableRowClassName, hasNothingness, notify}
+export {navLinkClassName, tableRowClassName, hasNothingness, notify, itemImagePlaceholder}
