@@ -13,7 +13,6 @@ import ConfirmRemoveItem from "../components/modal-children/ConfirmRemoveItem";
 /**
  * Buttons TODO
  * 
- * Remove Item (Assignment)
  * Request Queue
  * Edit Org.
  * Delete Org.
