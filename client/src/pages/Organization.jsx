@@ -25,7 +25,7 @@ export default function Organization() {
     const [userMembership, setUserMembership] = useState(null);
     const [modal, setModal] = useState(false);
     const [modalKey, setModaKey] = useState("");
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {

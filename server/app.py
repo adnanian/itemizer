@@ -21,7 +21,8 @@ def get_record_by_id():
     'item_by_id': Item,
     'organization_by_id': Organization,
     'membership_by_id': Membership,
-    'assignment_by_id': Assignment
+    'assignment_by_id': Assignment,
+    'request_by_id': Request
   }
   if model := endpoint_model_map.get(request.endpoint):
     id = request.view_args.get('id')
@@ -91,6 +92,8 @@ api.add_resource(MembershipResource, '/api/memberships', endpoint='membership')
 api.add_resource(MembershipById, '/api/memberships/<int:id>', endpoint='membership_by_id')
 api.add_resource(AssignmentResource, '/api/assignments', endpoint='assignments')
 api.add_resource(AssignmentById, '/api/assignments/<int:id>', endpoint='assignment_by_id')
+api.add_resource(RequestResource, '/api/requests', endpoint='request')
+api.add_resource(RequestById, '/api/requests/<int:id>', endpoint='request_by_id')
 
 
 if __name__ == "__main__":

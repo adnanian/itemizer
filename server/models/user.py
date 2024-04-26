@@ -34,6 +34,8 @@ class User(db.Model, SerializerMixin):
     # Organizations that a user is a part of
     organizations = association_proxy('memberships', 'organization', creator=lambda org_obj: Membership(organization=org_obj))
     
+    requests = db.relationship('Request', back_populates='user', cascade='all, delete-orphan')
+    
     @validates('first_name', 'last_name')
     def validate_name(self, key, name):
         if not is_non_empty_string(name):

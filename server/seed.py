@@ -6,33 +6,37 @@ import random
 
 fake = Faker()
 
-""" Number of users that will be generated."""
 USER_SEED_SIZE = 100
+""" Number of users that will be generated."""
 
-"""Usernames must be at least eight characters in length."""
 MIN_USERNAME_LENGTH = 8
+"""Usernames must be at least eight characters in length."""
 
+DEFAULT_NUMBER_LENGTH = int(MIN_USERNAME_LENGTH / 2)
 """
   Each username will have a certain number of digits after their first initial and last name.
   The default is 4, but may have more digits if the user's name is too short.
 """
-DEFAULT_NUMBER_LENGTH = int(MIN_USERNAME_LENGTH / 2)
 
-"""Number of items that will be generated. See seeds/item_seed.py"""
 ITEM_SEED_SIZE = 30
+"""Number of items that will be generated. See seeds/item_seed.py"""
 
-"""Number of organizations that will be generated."""
 ORG_SEED_SIZE = 53
+"""Number of organizations that will be generated."""
 
-"""All seeded users will have the same password for the purposes of testing this application in the development phase."""
+REQUEST_SEED_LIMIT = 10
+""" Maximum number of requests that will be generated per organization.
+    This is only for the seed. This limit is not applied in actual run time of
+    the web application.
+"""
+
 PASSWORD = "Green+1234"
-
-"""
-  Seeds 10 users; all users will have the same password for easier code testing.
-"""
-
+"""All seeded users will have the same password for the purposes of testing this application in the development phase."""
 
 def seed_users():
+    """
+        Seeds 10 users; all users will have the same password for easier code testing.
+    """
     User.query.delete()
     users = []
 
@@ -142,8 +146,17 @@ def seed_assignments():
     db.session.add_all(assignments)
     db.session.commit()
     print("Assignment seed complete.")
-
-
+    
+def seed_requests():
+    Request.query.delete()
+    users = User.query.all()
+    orgs = Organization.query.all()
+    requests = []
+    for org in orgs:
+        request_count = random.randint(1, REQUEST_SEED_LIMIT)
+        members = [membership.user for membership in  org.memberships]
+        non_members = filter(lambda user: user not in members, users)
+        
 if __name__ == "__main__":
     with app.app_context():
         done = False

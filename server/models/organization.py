@@ -36,6 +36,8 @@ class Organization(db.Model, SerializerMixin):
     # Items that an organization tracks.
     items = association_proxy('assignments', 'item', creator=lambda item_obj: Assignment(item=item_obj))
     
+    requests = db.relationship('Request', back_populates='organization', cascade='all, delete-orphan')
+    
     def __repr__(self):
         return f"<Organization {self.id}, {self.name}, {self.description}, {self.created}>"
     
