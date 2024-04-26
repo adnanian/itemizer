@@ -15,7 +15,7 @@ export default function ExistingItemForm( { items, onAdd } ) {
         eCount: yup.number().integer().min(0).required("Must be a non-negative integer.")
     });
 
-    const itemOptions = items.map((item) => {
+    const itemOptions = [...items].sort((a,b) => a.name.localeCompare(b.name)).map((item) => {
         return (
             <option key={item.id} value={item.id}>{item.name}</option>
         )

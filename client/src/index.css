@@ -631,6 +631,10 @@ dialog {
   background-color: #222;
 }
 
+dialog div {
+  text-align: center;
+}
+
 dialog button {
   display: flex;
   align-items: center;

@@ -8,11 +8,12 @@ import MembersTable from "../components/modal-children/MembersTable";
 import Modal from "../components/Modal";
 import ItemFormContainer from "../components/modal-children/ItemFormContainer";
 import ConfirmLeave from "../components/modal-children/ConfirmLeave";
+import ConfirmRemoveItem from "../components/modal-children/ConfirmRemoveItem";
 
 /**
  * Buttons TODO
  * 
- * Remove Item
+ * Remove Item (Assignment)
  * Request Queue
  * Edit Org.
  * Delete Org.
@@ -107,6 +108,16 @@ export default function Organization() {
         });
     }
 
+    function deleteAssignment(assignmentToDelete) {
+        setOrganization((oldOrgData) => {
+            const newOrgData = {...oldOrgData};
+            newOrgData["assignments"] = organization.assignments.filter((assignment) => {
+                return assignment.id !== assignmentToDelete.id;
+            });
+            return newOrgData;
+        });
+    }
+
     // CRUD for MEMBERSHIPS
 
     /**
@@ -172,7 +183,8 @@ export default function Organization() {
     const modalOpeners = {
         [buttonIds.leave]: <ConfirmLeave userMember={userMembership} admins={admins} onUpdate={updateMembership} onClose={closeModal}/>,
         [buttonIds.viewMembers]: <MembersTable members={organization.memberships} userMember={userMembership} onDelete={deleteMembership} onUpdate={updateMembership} />,
-        [buttonIds.add]: <ItemFormContainer orgId={organization.id} items={nonAssignedItems()} onAdd={addAssignment} onClose={closeModal} />
+        [buttonIds.add]: <ItemFormContainer orgId={organization.id} items={nonAssignedItems()} onAdd={addAssignment} onClose={closeModal} />,
+        [buttonIds.remove]: <ConfirmRemoveItem assignments={organization.assignments} onDelete={deleteAssignment} onClose={closeModal} />
     }
 
     function handleClick(e) {
@@ -234,6 +246,7 @@ export default function Organization() {
                                 id={buttonIds.remove}
                                 className="org-controls"
                                 onClick={handleClick}
+                                disabled={!itemCards.length}
                             >
                                 Remove Item
                             </button>
