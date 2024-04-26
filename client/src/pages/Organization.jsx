@@ -6,7 +6,18 @@ import AssignedItemCard from "../components/AssignedItemCard";
 import Grid from "../components/Grid";
 import MembersTable from "../components/modal-children/MembersTable";
 import Modal from "../components/Modal";
-import ItemFormContainer from "../components/ItemFormContainer";
+import ItemFormContainer from "../components/modal-children/ItemFormContainer";
+import ConfirmLeave from "../components/modal-children/ConfirmLeave";
+
+/**
+ * Buttons TODO
+ * 
+ * Remove Item
+ * Request Queue
+ * Edit Org.
+ * Delete Org.
+ * 
+ */
 
 export default function Organization() {
     const { orgId, userId } = useParams();
@@ -144,6 +155,8 @@ export default function Organization() {
         )
     });
 
+    const admins = userMembership.role !== "OWNER" ? null : organization.memberships.filter((membership) => membership.role === "ADMIN");
+
     const buttonIds = {
         back: "back-button",
         leave: "leave-button",
@@ -157,6 +170,7 @@ export default function Organization() {
     }
 
     const modalOpeners = {
+        [buttonIds.leave]: <ConfirmLeave userMember={userMembership} admins={admins} onUpdate={updateMembership} onClose={closeModal}/>,
         [buttonIds.viewMembers]: <MembersTable members={organization.memberships} userMember={userMembership} onDelete={deleteMembership} onUpdate={updateMembership} />,
         [buttonIds.add]: <ItemFormContainer orgId={organization.id} items={nonAssignedItems()} onAdd={addAssignment} onClose={closeModal} />
     }

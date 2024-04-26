@@ -4,6 +4,14 @@ import Memberships from "./Memberships";
 import OrganizationsTable from "./OrganizationsTable"
 import StyledTitle from "../components/StyledTitle";
 
+
+/**
+ * TODO
+ * 
+ * Create an Organization
+ * 
+ */
+
 /**
  * TODO
  * 

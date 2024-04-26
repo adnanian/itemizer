@@ -1,3 +1,5 @@
+import { itemImagePlaceholder } from "../helpers";
+
 export default function AssignedItemCard( {item, addedAt, lastUpdated, quantity, assignmentId, onUpdate} ) {
     const minusButtonClassName = "minus-button";
     const plusButtonClassName = "plus-button";
@@ -17,7 +19,7 @@ export default function AssignedItemCard( {item, addedAt, lastUpdated, quantity,
     
     return (
         <div className="assigned-item">
-            <img src={item.image_url} alt={item.name}/>
+            <img src={item.image_url || itemImagePlaceholder} alt={item.name}/>
             <h4>{item.name}</h4>
             <h5>{item.partNumber}</h5>
             <p><b>{quantity}</b> Left</p>

@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import InputErrorMessage from "../InputErrorMessage";
+import InputErrorMessage from "./InputErrorMessage";
 
 /**
  * TODO

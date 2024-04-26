@@ -1,13 +1,21 @@
 import StyledTitle from "../components/StyledTitle";
 import { tableRowClassName } from "../helpers";
 
+
+/**
+ * TODO
+ * 
+ * Request to join!
+ * 
+ */
+
 /**
  * TODO
  * 
  * @param {*} param0 
  * @returns 
  */
-export default function Organizations( {user, organizations} ) {
+export default function OrganizationsTable( {user, organizations} ) {
 
     if (!organizations) {
         return <StyledTitle text="Loading organizations..."/>;
