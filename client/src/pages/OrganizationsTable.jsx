@@ -1,5 +1,5 @@
 import StyledTitle from "../components/StyledTitle";
-import { tableRowClassName } from "../helpers";
+import { hasNothingness, tableRowClassName } from "../helpers";
 
 
 /**
@@ -17,15 +17,31 @@ import { tableRowClassName } from "../helpers";
  */
 export default function OrganizationsTable( {user, organizations} ) {
 
-    if (!organizations) {
+    if (hasNothingness(user, organizations)) {
         return <StyledTitle text="Loading organizations..."/>;
     }
 
-    const orgRows = organizations.map((organization, orgIndex) => {
-        const owner = organization.memberships.filter((member) => member.role === "OWNER")[0].user.username;
-        const admins = organization.memberships.filter((member) => member.role === "ADMIN");
-        const userIsMember = organization.memberships.filter((member) => member.user_id === user.id).length;
+    const requestForOrgIds = user.requests.map((request) => request.organization_id);
 
+    const orgRows = organizations.map((organization, orgIndex) => {
+        const owner = organization.memberships.find((member) => member.role === "OWNER").user.username;
+        let adminCount = 0;
+        organization.memberships.forEach((membership) => {
+            if (membership.role === "ADMIN") {
+                adminCount++;
+            }
+        });
+        //const userIsMember = organization.memberships.filter((member) => member.user_id === user.id).length;
+        const membershipStatus = () => {
+            const userMember = organization.memberships.find((membership) => membership.user_id === user.id);
+            if (userMember) {
+                return <span className="is-member">You are a member!</span>
+            }
+            if (requestForOrgIds.includes(organization.id)) {
+                return <span className="pending">Membership Request Pending</span>
+            }
+            return <button className="join-button">Request to join!</button>
+        };
         //console.log(owner);
 
         return (
@@ -33,16 +49,10 @@ export default function OrganizationsTable( {user, organizations} ) {
             <td>{orgIndex + 1}</td>
             <td>{organization.name}</td>
             <td>{owner}</td>
-            <td>{admins.length}</td>
+            <td>{adminCount}</td>
             <td>{organization.memberships.length}</td>
             <td>{organization.description}</td>
-            <td>
-                {
-                    userIsMember
-                    ? <span className="is-member">You are a member!</span>
-                    : <button className="join-button">Request to join!</button>
-                }
-            </td>
+            <td>{membershipStatus()}</td>
           </tr>  
         );
     });
