@@ -15,7 +15,8 @@ class User(db.Model, SerializerMixin):
         '-organizations.memberships',
         '-organizations.users',
         '-organizations.assignments',
-        '-organizations.items'
+        '-organizations.items',
+        '-requests.user'
     )
     
     __tablename__ = 'users'

@@ -16,7 +16,8 @@ class Organization(db.Model, SerializerMixin):
         '-assignments.organization',
         '-assignments.item_id',
         '-assignments.organization_id'
-        '-items'
+        '-items',
+        '-requests.organization'
     )
 
     __tablename__ = 'organizations'

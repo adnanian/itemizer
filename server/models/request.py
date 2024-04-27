@@ -7,6 +7,16 @@ from models.membership import Membership
 # Requests to join an organization.
 class Request(db.Model, SerializerMixin):
     
+    serialize_rules = (
+        '-user.requests',
+        '-user.memberships',
+        '-user.organizations',
+        '-organization.requests',
+        '-organization.memberships',
+        '-organization.assignments',
+        '-organization.users'
+    )
+    
     __tablename__ = 'requests'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)

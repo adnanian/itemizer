@@ -8,7 +8,7 @@ from resources.resources import *
 @app.before_request
 def check_if_logged_in():
   #endpoint_whitelist = ['signup', 'login', 'check_session']
-  endpoints_for_postman = ['signup', 'login', 'check_session', 'items', 'item_by_id', 'organizations', 'organization_by_id','users', 'user_by_id']
+  endpoints_for_postman = ['signup', 'login', 'check_session', 'items', 'item_by_id', 'organizations', 'organization_by_id','users', 'user_by_id', 'requests', 'request_by_id']
   #print(request.endpoint)
   #print (session.get('user_id'))
   if not (session.get('user_id') or request.endpoint in endpoints_for_postman):
@@ -92,7 +92,7 @@ api.add_resource(MembershipResource, '/api/memberships', endpoint='membership')
 api.add_resource(MembershipById, '/api/memberships/<int:id>', endpoint='membership_by_id')
 api.add_resource(AssignmentResource, '/api/assignments', endpoint='assignments')
 api.add_resource(AssignmentById, '/api/assignments/<int:id>', endpoint='assignment_by_id')
-api.add_resource(RequestResource, '/api/requests', endpoint='request')
+api.add_resource(RequestResource, '/api/requests', endpoint='requests')
 api.add_resource(RequestById, '/api/requests/<int:id>', endpoint='request_by_id')
 
 
