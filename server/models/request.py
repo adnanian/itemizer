@@ -11,12 +11,13 @@ class Request(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
+    submitted = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
     
     user = db.relationship('User', back_populates='requests')
     organization = db.relationship('Organization', back_populates='requests')
     
     def __repr__(self):
-        return f"<Request {self.id}, {self.user_id}, {self.organization_id}>"
+        return f"<Request {self.id}, {self.user_id}, {self.organization_id}, {self.submitted}>"
     
     @validates('organization_id')
     def validate_request(self, key, organization_id):

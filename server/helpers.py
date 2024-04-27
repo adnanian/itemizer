@@ -16,3 +16,9 @@ def stack_trace():
         
 def get_model_invoker():
     return inspect.stack()[MODEL_INVOKER_INDEX][INVOKED_METHOD_NAME_INDEX]
+
+def print_starting_seed(model_name):
+    print(f"Seeding {model_name}: ", end="")
+
+def print_progress(condition):
+    print('.', end='' if condition else '\n')

@@ -2,7 +2,9 @@ from config import app, db
 from models.models import *
 from faker import Faker
 from seeds.item_seed import item_seed
+from helpers import print_starting_seed, print_progress
 import random
+import traceback
 
 fake = Faker()
 
@@ -39,7 +41,7 @@ def seed_users():
     """
     User.query.delete()
     users = []
-
+    print_starting_seed("users")
     for i in range(USER_SEED_SIZE):
         first_name = fake.first_name()
         last_name = fake.last_name()
@@ -61,6 +63,7 @@ def seed_users():
         user.password_hash = PASSWORD
         users.append(user)
         # print(user)
+        print_progress(i < USER_SEED_SIZE - 1)
 
     db.session.add_all(users)
     db.session.commit()
@@ -68,9 +71,13 @@ def seed_users():
 
 
 def seed_items():
+    """
+        Seeds 30 items, which are pre-defined in a separate module.
+    """
     Item.query.delete()
     items = []
-    for key, value in item_seed.items():
+    print_starting_seed("items")
+    for key, value in (my_items := item_seed.items()):
         part_number = (
             "".join([fake.random_uppercase_letter() for n in range(4)])
             + "-"
@@ -84,20 +91,26 @@ def seed_items():
         )
         # print(item)
         items.append(item)
-
+        print(".", end="")
+    print()
     db.session.add_all(items)
     db.session.commit()
     print("Item seed complete.")
 
 
 def seed_orgs():
+    """
+        Seeds 53 organizations.
+    """
     Organization.query.delete()
     orgs = []
+    print_starting_seed("organizations")
     for n in range(ORG_SEED_SIZE):
         name = fake.company()
         description = fake.sentence()
         org = Organization(name=name, description=description)
         orgs.append(org)
+        print_progress(n < ORG_SEED_SIZE - 1)
 
     db.session.add_all(orgs)
     db.session.commit()
@@ -105,11 +118,16 @@ def seed_orgs():
 
 
 def seed_memberships():
+    """
+        For each organization, a random number of memberships will be assigned to
+        a random selection of users.
+    """
     Membership.query.delete()
     users = User.query.all()
     orgs = Organization.query.all()
     # members = []
     roles = ["owner", "admin", "regular"]
+    print_starting_seed("memberships")
     for org in orgs:
         membership_size = random.randint(1, len(users))
         # print(org.id, membership_size)
@@ -124,14 +142,21 @@ def seed_memberships():
                 db.session.commit()
             except ValueError as e:
                 print(e)
+            finally:
+                print_progress(n < membership_size - 1)
     print("Membership seed complete.")
 
 
 def seed_assignments():
+    """
+        For each organization, a random selection of items will be assigned to it,
+        seeding the item assignments in the process.
+    """
     Assignment.query.delete()
     items = Item.query.all()
     orgs = Organization.query.all()
     assignments = []
+    print_starting_seed("assignments")
     for org in orgs:
         item_type_count = random.randint(1, len(items))
         item_selection = items[:]
@@ -143,32 +168,69 @@ def seed_assignments():
                 item_id=item.id, organization_id=org.id, count=count
             )
             assignments.append(assignment)
+            print_progress(n < item_type_count - 1)
     db.session.add_all(assignments)
     db.session.commit()
     print("Assignment seed complete.")
     
 def seed_requests():
+    """
+        For each organization, a random number of membership requests will be generated
+        for a random selection of users.
+    """
     Request.query.delete()
     users = User.query.all()
+    user_ids = [user.id for user in users]
     orgs = Organization.query.all()
-    requests = []
+    # requests = []
+    print_starting_seed("requests")
     for org in orgs:
-        request_count = random.randint(1, REQUEST_SEED_LIMIT)
-        members = [membership.user for membership in  org.memberships]
-        non_members = filter(lambda user: user not in members, users)
+        member_user_ids = [membership.user_id for membership in  org.memberships]
+        non_member_user_ids = list(filter(lambda user_id: user_id not in member_user_ids, user_ids))
+        #print(len(non_member_user_ids))
+        #print(non_members)
+        if not len(non_member_user_ids):
+            continue
+        request_count = random.randint(1, min(REQUEST_SEED_LIMIT, len(non_member_user_ids)))
+        #print(f"Org Id={org.id}, RequestSize={request_count}, NonMembers={len(non_member_user_ids)}")
+        for n in range(request_count):
+            #print(f"({n},{len(non_member_user_ids)})")
+            user_id = random.choice(non_member_user_ids)
+            non_member_user_ids.remove(user_id)
+            #print(user_id)
+            request = Request(
+                user_id=user_id,
+                organization_id=org.id
+            )
+            try:
+                db.session.add(request)
+                db.session.commit()
+            except ValueError as e:
+                print(e)
+            finally:
+                pass
+                print_progress(n < request_count - 1)
         
+    print("Request seed complete.")
+    
 if __name__ == "__main__":
     with app.app_context():
+        print("BEGIN SEED")
         done = False
-        while (not done):
+        limit = 1
+        attempt_number = 0
+        while (not done and attempt_number < limit):
             try:
                 seed_users()
                 seed_items()
                 seed_orgs()
                 seed_memberships()
                 seed_assignments()
+                seed_requests()
                 done = True
             except Exception as e:
-                print(e)
-                print("An error occurred. Trying again.")
+                traceback.print_exc()
+                print("An error occurred.")
+            finally:
+                attempt_number += 1
         print("Seeding complete!")
