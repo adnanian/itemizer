@@ -35,11 +35,25 @@ REQUEST_SEED_LIMIT = 10
 PASSWORD = "Green+1234"
 """All seeded users will have the same password for the purposes of testing this application in the development phase."""
 
+
+def clear_tables():
+    """
+        Delete all items from the tables before recreating the seeds.
+    """
+    print("Deleting old data.")
+    User.query.delete()
+    Item.query.delete()
+    Organization.query.delete()
+    Membership.query.delete()
+    Assignment.query.delete()
+    Request.query.delete()
+    print("Old data deletion complete.")
+
 def seed_users():
     """
         Seeds 10 users; all users will have the same password for easier code testing.
     """
-    User.query.delete()
+    #User.query.delete()
     users = []
     print_starting_seed("users")
     for i in range(USER_SEED_SIZE):
@@ -74,7 +88,7 @@ def seed_items():
     """
         Seeds 30 items, which are pre-defined in a separate module.
     """
-    Item.query.delete()
+    #Item.query.delete()
     items = []
     print_starting_seed("items")
     for key, value in (my_items := item_seed.items()):
@@ -102,7 +116,7 @@ def seed_orgs():
     """
         Seeds 53 organizations.
     """
-    Organization.query.delete()
+    #Organization.query.delete()
     orgs = []
     print_starting_seed("organizations")
     for n in range(ORG_SEED_SIZE):
@@ -122,7 +136,7 @@ def seed_memberships():
         For each organization, a random number of memberships will be assigned to
         a random selection of users.
     """
-    Membership.query.delete()
+    #Membership.query.delete()
     users = User.query.all()
     orgs = Organization.query.all()
     # members = []
@@ -152,7 +166,7 @@ def seed_assignments():
         For each organization, a random selection of items will be assigned to it,
         seeding the item assignments in the process.
     """
-    Assignment.query.delete()
+    #Assignment.query.delete()
     items = Item.query.all()
     orgs = Organization.query.all()
     assignments = []
@@ -178,7 +192,7 @@ def seed_requests():
         For each organization, a random number of membership requests will be generated
         for a random selection of users.
     """
-    Request.query.delete()
+    #Request.query.delete()
     users = User.query.all()
     user_ids = [user.id for user in users]
     orgs = Organization.query.all()
@@ -200,7 +214,8 @@ def seed_requests():
             #print(user_id)
             request = Request(
                 user_id=user_id,
-                organization_id=org.id
+                organization_id=org.id,
+                reason_to_join=fake.sentence()
             )
             try:
                 db.session.add(request)
@@ -221,6 +236,7 @@ if __name__ == "__main__":
         attempt_number = 0
         while (not done and attempt_number < limit):
             try:
+                clear_tables()
                 seed_users()
                 seed_items()
                 seed_orgs()

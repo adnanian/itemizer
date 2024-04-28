@@ -21,8 +21,8 @@ class Request(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
-    reason_to_join = db.Column(db.String, nullable=False)
-    submitted = db.Column(db.DateTime, server_default=db.func.now(), default="Reason", nullable=False)
+    reason_to_join = db.Column(db.String, default="Reason", nullable=False)
+    submitted = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
     
     user = db.relationship('User', back_populates='requests')
     organization = db.relationship('Organization', back_populates='requests')
