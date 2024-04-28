@@ -605,7 +605,8 @@ tr:is(.owner, .you, .youre-the-owner) {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
-:is(tr.odd-row-num, tr.even-row-num) :is(.is-member, .pending) {
+:is(tr.odd-row-num, tr.even-row-num) .is-member {
+  background: linear-gradient(to right bottom, olive, lime, lightgreen);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -613,25 +614,10 @@ tr:is(.owner, .you, .youre-the-owner) {
   font-weight: bold;
 }
 
-:is(tr.odd-row-num, tr.even-row-num) .is-member {
-  background: linear-gradient(to right bottom, olive, lime, lightgreen);
-  
-}
-
-:is(tr.odd-row-num, tr.even-row-num) .pending {
-  background: linear-gradient(to right bottom, gold, yellow);
-}
-
 :is(tr.odd-row-num, tr.even-row-num) .is-member:hover {
   background: linear-gradient(to right bottom, lime, lightgreen cyan);
   color: #020;
   font-weight: bolder;
-}
-
-:is(tr.odd-row-num, tr.even-row-num) .pending:hover {
-  background: radial-gradient(gold, yellow);
-  color: brown;
-  font-weight: italic;
 }
 
 table .access-control {
