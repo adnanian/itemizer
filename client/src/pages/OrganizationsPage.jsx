@@ -43,6 +43,14 @@ export default function OrganizationsPage() {
         return <StyledTitle text="Loading user..." />
     }
 
+    function addRequest(request) {
+        setUser((oldUserData) => {
+            const newUserData = {...oldUserData}
+            newUserData["requests"] = [...user.requests, request];
+            return newUserData;
+        });
+    }
+
     //console.log(user);
 
     return (
@@ -71,7 +79,7 @@ export default function OrganizationsPage() {
             {
                 orgFilter 
                 ? <Memberships memberships={user.memberships}/>
-                : <OrganizationsTable user={user} organizations={organizations}/>
+                : <OrganizationsTable user={user} organizations={organizations} onAddRequest={addRequest}/>
             }
         </main>
     );

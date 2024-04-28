@@ -1,11 +1,15 @@
 import StyledTitle from "../components/StyledTitle";
-import { tableRowClassName } from "../helpers";
+import { hasNothingness, tableRowClassName, ModalOpener } from "../helpers";
+import RequestForm from "../components/modal-children/RequestForm";
+import { useState } from "react";
+import Modal from "../components/Modal";
 
 
 /**
  * TODO
  * 
  * Request to join!
+ * Create Organization
  * 
  */
 
@@ -15,17 +19,69 @@ import { tableRowClassName } from "../helpers";
  * @param {*} param0 
  * @returns 
  */
-export default function OrganizationsTable( {user, organizations} ) {
+export default function OrganizationsTable( {user, organizations, onAddRequest} ) {
 
-    if (!organizations) {
+    if (hasNothingness(user, organizations)) {
         return <StyledTitle text="Loading organizations..."/>;
+    }
+    const [orgId, setOrgId] = useState(null);
+    const [orgName, setOrgName] = useState(null);
+    const [modal, setModal] = useState(false);
+    const [oldModalOpener, setOldModalOpener] = useState(false);
+    const [modalOpener, setModalOpener] = useState({
+        orgId: 0,
+        orgName: "",
+        modal: false,
+
+    })
+    const requestForOrgIds = user.requests.map((request) => request.organization_id);
+
+    function closeModal() {
+        setModal(false);
+    }
+
+    function handleRequestClick(e, newOrgId, newOrgName) {
+        console.log(`${orgId} --- ${orgName}`);
+        if (e.target.id.includes(modalButtonMap.request.key)) {
+            setOrgId(newOrgId);
+            setOrgName(newOrgName);
+            setOldModalOpener(modalButtonMap.request);
+            setModal(true);
+        }
+    }
+    
+    const modalButtonMap = {
+        create: new ModalOpener("create-org", null),
+        request: new ModalOpener("request-to-join", <RequestForm userId={user.id} orgId={orgId} orgName={orgName} onAdd={onAddRequest} onClose={closeModal}/>)
     }
 
     const orgRows = organizations.map((organization, orgIndex) => {
-        const owner = organization.memberships.filter((member) => member.role === "OWNER")[0].user.username;
-        const admins = organization.memberships.filter((member) => member.role === "ADMIN");
-        const userIsMember = organization.memberships.filter((member) => member.user_id === user.id).length;
-
+        const owner = organization.memberships.find((member) => member.role === "OWNER").user.username;
+        let adminCount = 0;
+        organization.memberships.forEach((membership) => {
+            if (membership.role === "ADMIN") {
+                adminCount++;
+            }
+        });
+        //const userIsMember = organization.memberships.filter((member) => member.user_id === user.id).length;
+        const membershipStatus = () => {
+            const userMember = organization.memberships.find((membership) => membership.user_id === user.id);
+            if (userMember) {
+                return <span className="is-member">You are a member!</span>
+            }
+            if (requestForOrgIds.includes(organization.id)) {
+                return <span className="pending">Membership Request Pending</span>
+            }
+            return (
+                <button 
+                    id={`${modalButtonMap.request.key}-${orgIndex}`}
+                    className="join-button"
+                    onClick={(e) => handleRequestClick(e, organization.id, organization.name)}
+                >
+                    Request to join!
+                </button>
+            );
+        };
         //console.log(owner);
 
         return (
@@ -33,16 +89,10 @@ export default function OrganizationsTable( {user, organizations} ) {
             <td>{orgIndex + 1}</td>
             <td>{organization.name}</td>
             <td>{owner}</td>
-            <td>{admins.length}</td>
+            <td>{adminCount}</td>
             <td>{organization.memberships.length}</td>
             <td>{organization.description}</td>
-            <td>
-                {
-                    userIsMember
-                    ? <span className="is-member">You are a member!</span>
-                    : <button className="join-button">Request to join!</button>
-                }
-            </td>
+            <td>{membershipStatus()}</td>
           </tr>  
         );
     });
@@ -65,6 +115,9 @@ export default function OrganizationsTable( {user, organizations} ) {
                 {orgRows}
             </tbody>
             </table>
+            <Modal openModal={modal} closeModal={closeModal}>
+                {oldModalOpener.modal}
+            </Modal>
         </div>
     );
 }

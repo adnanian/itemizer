@@ -40,4 +40,11 @@ function notify(text) {
     }
 }
 
-export {navLinkClassName, tableRowClassName, hasNothingness, notify, itemImagePlaceholder}
+class ModalOpener {
+    constructor(key, modal) {
+        this.key = key;
+        this.modal = modal;
+    }
+}
+
+export {navLinkClassName, tableRowClassName, hasNothingness, notify, itemImagePlaceholder, ModalOpener}
