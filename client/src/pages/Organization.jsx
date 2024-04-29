@@ -10,6 +10,7 @@ import ItemFormContainer from "../components/modal-children/ItemFormContainer";
 import ConfirmLeave from "../components/modal-children/ConfirmLeave";
 import ConfirmRemoveItem from "../components/modal-children/ConfirmRemoveItem";
 import RequestQueue from "../components/modal-children/RequestQueue";
+import ConfirmDeleteOrg from "../components/ConfirmDeleteOrg";
 
 /**
  * Buttons TODO
@@ -201,11 +202,53 @@ export default function Organization() {
     }
 
     const modalOpeners = {
-        [buttonIds.leave]: <ConfirmLeave userMember={userMembership} admins={admins} onUpdate={updateMembership} onClose={toggle}/>,
-        [buttonIds.viewMembers]: <MembersTable members={organization.memberships} userMember={userMembership} onDelete={deleteMembership} onUpdate={updateMembership} />,
-        [buttonIds.add]: <ItemFormContainer orgId={organization.id} items={nonAssignedItems()} onAdd={addAssignment} onClose={toggle} />,
-        [buttonIds.remove]: <ConfirmRemoveItem assignments={organization.assignments} onDelete={deleteAssignment} onClose={toggle} />,
-        [buttonIds.requests]: <RequestQueue modalOpen={modalActive} requests={organization.requests} orgName={organization.name} onWelcome={welcomeNewMember} onDeny={denyMembership}/>
+        [buttonIds.leave]: (
+            <ConfirmLeave 
+                userMember={userMembership} 
+                admins={admins} 
+                onUpdate={updateMembership} 
+                onClose={toggle}
+            />
+        ),
+        [buttonIds.viewMembers]: (
+            <MembersTable 
+                members={organization.memberships} 
+                userMember={userMembership} 
+                onDelete={deleteMembership} 
+                onUpdate={updateMembership} 
+            />
+        ),
+        [buttonIds.add]: (
+            <ItemFormContainer 
+                orgId={organization.id} 
+                items={nonAssignedItems()} 
+                onAdd={addAssignment} 
+                onClose={toggle} 
+            />
+        ),
+        [buttonIds.remove]: (
+            <ConfirmRemoveItem 
+                assignments={organization.assignments} 
+                onDelete={deleteAssignment} 
+                onClose={toggle} 
+            />
+        ),
+        [buttonIds.requests]: (
+            <RequestQueue 
+                modalOpen={modalActive} 
+                requests={organization.requests} 
+                orgName={organization.name} 
+                onWelcome={welcomeNewMember} 
+                onDeny={denyMembership}
+            />
+        ),
+        [buttonIds.delete]: (
+            <ConfirmDeleteOrg
+                orgId={organization.id}
+                orgName={organization.name}
+                onClose={toggle}
+            />
+        )
     }
 
     function handleClick(e) {
