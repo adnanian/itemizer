@@ -3,6 +3,8 @@ import * as yup from "yup";
 import TextArea from "../formik-reusable/TextArea";
 
 export default function RequestForm({ userId, orgId, orgName, onAdd, onClose }) {
+    console.log(`OrgId = ${orgId}, OrgName = ${orgName}`);
+
     const initialValues = {
         reasonToJoin: ""
     }

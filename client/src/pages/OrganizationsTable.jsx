@@ -24,35 +24,30 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
     if (hasNothingness(user, organizations)) {
         return <StyledTitle text="Loading organizations..."/>;
     }
-    const [orgId, setOrgId] = useState(null);
-    const [orgName, setOrgName] = useState(null);
+    //const [orgId, setOrgId] = useState(null);
+    //const [orgName, setOrgName] = useState(null);
     const [modal, setModal] = useState(false);
-    const [oldModalOpener, setOldModalOpener] = useState(false);
-    const [modalOpener, setModalOpener] = useState({
-        orgId: 0,
-        orgName: "",
-        modal: false,
-
-    })
+    const [modalChild, setModalChild] = useState(null);
     const requestForOrgIds = user.requests.map((request) => request.organization_id);
 
     function closeModal() {
         setModal(false);
     }
 
-    function handleRequestClick(e, newOrgId, newOrgName) {
+    function handleRequestClick(e, orgId, orgName) {
         console.log(`${orgId} --- ${orgName}`);
-        if (e.target.id.includes(modalButtonMap.request.key)) {
-            setOrgId(newOrgId);
-            setOrgName(newOrgName);
-            setOldModalOpener(modalButtonMap.request);
+        if (e.target.id.includes(modalButtonMap.request)) {
+            setModalChild(
+                <RequestForm userId={user.id} orgId={orgId} orgName={orgName} onAdd={onAddRequest} onClose={closeModal}/>
+            )
             setModal(true);
+            console.log("State updated.");
         }
     }
     
     const modalButtonMap = {
-        create: new ModalOpener("create-org", null),
-        request: new ModalOpener("request-to-join", <RequestForm userId={user.id} orgId={orgId} orgName={orgName} onAdd={onAddRequest} onClose={closeModal}/>)
+        create: "create-org",
+        request: "request-to-join"
     }
 
     const orgRows = organizations.map((organization, orgIndex) => {
@@ -74,7 +69,7 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
             }
             return (
                 <button 
-                    id={`${modalButtonMap.request.key}-${orgIndex}`}
+                    id={`${modalButtonMap.request}-${orgIndex}`}
                     className="join-button"
                     onClick={(e) => handleRequestClick(e, organization.id, organization.name)}
                 >
@@ -116,7 +111,7 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
             </tbody>
             </table>
             <Modal openModal={modal} closeModal={closeModal}>
-                {oldModalOpener.modal}
+                {modalChild}
             </Modal>
         </div>
     );
