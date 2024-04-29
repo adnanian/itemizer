@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const navLinkClassName = "nav-link";
 const oddRow = "odd-row-num";
 const evenRow = "even-row-num";
@@ -64,4 +66,16 @@ class ModalOpener {
     }
 }
 
-export {navLinkClassName, tableRowClassName, hasNothingness, notify, itemImagePlaceholder, ModalOpener, DotProgress}
+/**
+ * Reference: https://betterprogramming.pub/create-a-custom-usemodal-react-hook-449b5909cc09
+ * 
+ * 
+ * @returns 
+ */
+const useModal = () => {
+    const [modalActive, setModalActive] = useState(false);
+    const toggle = () => setModalActive(!modalActive);
+    return [modalActive, toggle];
+}
+
+export {navLinkClassName, tableRowClassName, hasNothingness, notify, itemImagePlaceholder, ModalOpener, DotProgress, useModal}

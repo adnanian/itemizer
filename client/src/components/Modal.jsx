@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 export default function Modal( { openModal, closeModal, children } ) {
     const ref = useRef();
+    //console.log(console.log(`Open Modal: ${openModal}`));
 
     /**
      * "?." - known as the optional chaning operator.

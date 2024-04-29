@@ -1,8 +1,11 @@
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Memberships from "./Memberships";
 import OrganizationsTable from "./OrganizationsTable"
 import StyledTitle from "../components/StyledTitle";
+import Modal from "../components/Modal";
+import OrganizationForm from "../components/modal-children/OrganizationForm";
+import { useModal } from "../helpers";
+
 
 
 /**
@@ -20,6 +23,7 @@ import StyledTitle from "../components/StyledTitle";
 export default function OrganizationsPage( {user, setUser} ) {
     const [organizations, setOrganizations] = useState([]);
     const [orgFilter, setOrgFilter] = useState(false);
+    const [modalActive, toggle] = useModal();
 
     // Takes on average 1.5 to 2 seconds to run.
     useEffect(() => {
@@ -45,7 +49,18 @@ export default function OrganizationsPage( {user, setUser} ) {
         });
     }
 
+    function addOrganization(org, membership) {
+        org.memberships = [membership];
+        setOrganizations([...organizations, org]);
+        setUser((oldUserData) => {
+            const newUserData = {...oldUserData}
+            newUserData.memberships = [...oldUserData.memberships, membership];
+            return newUserData;
+        })
+    }
+
     //console.log(user);
+    //console.log(modalActive);
 
     return (
         <main>
@@ -69,12 +84,15 @@ export default function OrganizationsPage( {user, setUser} ) {
                 />
                 <span>My Organizations</span>
             </div>
-            <button id="org-create">Create an organization</button>
+            <button id="org-create" onClick={toggle}>Create an organization</button>
             {
                 orgFilter 
                 ? <Memberships memberships={user.memberships}/>
                 : <OrganizationsTable user={user} organizations={organizations} onAddRequest={addRequest}/>
             }
+            <Modal openModal={modalActive} closeModal={toggle}>
+                <OrganizationForm userId={user.id} onAdd={addOrganization} onclose={toggle}/>
+            </Modal>
         </main>
     );
 }

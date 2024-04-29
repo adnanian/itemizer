@@ -9,18 +9,18 @@ class MembershipResource(Resource):
         return memberships, 200
     
     def post(self):
-        pass
-        # try:
-        #     new_org = Membership(
-        #         name=request.get_json().get('name'),
-        #         description=request.get_json().get('description')
-        #     )
-        #     db.session.add(new_org)
-        #     db.session.commit()
-        #     return new_org.to_dict(), 201
-        # except ValueError as e:
-        #     print(e)
-        #     return {'message': '422 Unprocessable Entity'}, 422
+        try:
+            new_membership = Membership(
+                user_id=request.get_json().get('user_id'),
+                organization_id=request.get_json().get('organization_id'),
+                role=request.get_json().get('role')
+            )
+            db.session.add(new_membership)
+            db.session.commit()
+            return new_membership.to_dict(), 201
+        except ValueError as e:
+            print(e)
+            return {'message': '422 Unprocessable Entity'}, 422
         
 class MembershipById(Resource):
   def get(self, id):

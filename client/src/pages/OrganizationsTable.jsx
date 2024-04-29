@@ -22,30 +22,26 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
     if (hasNothingness(user, organizations)) {
         return <StyledTitle text="Loading organizations..."/>;
     }
-    //const [orgId, setOrgId] = useState(null);
-    //const [orgName, setOrgName] = useState(null);
+    const [orgId, setOrgId] = useState(null);
+    const [orgName, setOrgName] = useState(null);
     const [modal, setModal] = useState(false);
     const [modalChild, setModalChild] = useState(null);
     const requestForOrgIds = user.requests.map((request) => request.organization_id);
+
+    function openModal() {
+        setModal(true);
+    }
 
     function closeModal() {
         setModal(false);
     }
 
-    function handleRequestClick(e, orgId, orgName) {
+    function handleRequestClick(newOrgId, newOrgName) {
         //console.log(`${orgId} --- ${orgName}`);
-        if (e.target.id.includes(modalButtonMap.request)) {
-            setModalChild(
-                <RequestForm userId={user.id} orgId={orgId} orgName={orgName} onAdd={onAddRequest} onClose={closeModal}/>
-            )
-            setModal(true);
-            console.log("State updated.");
-        }
-    }
-    
-    const modalButtonMap = {
-        create: "create-org",
-        request: "request-to-join"
+        setOrgId(newOrgId);
+        setOrgName(newOrgName);
+        openModal();
+        console.log("State updated.");
     }
 
     //const tableProgress = new DotProgress(organizations.length);
@@ -77,9 +73,9 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
             }
             return (
                 <button 
-                    id={`${modalButtonMap.request}-${orgIndex}`}
+                    id={`join-button-${orgIndex}`}
                     className="join-button"
-                    onClick={(e) => handleRequestClick(e, organization.id, organization.name)}
+                    onClick={() => handleRequestClick(organization.id, organization.name)}
                 >
                     Request to join!
                 </button>
@@ -117,7 +113,7 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
             </tbody>
             </table>
             <Modal openModal={modal} closeModal={closeModal}>
-                {modalChild}
+                <RequestForm userId={user.id} orgId={orgId} orgName={orgName} onAdd={onAddRequest} onClose={closeModal}/>
             </Modal>
         </div>
     );
