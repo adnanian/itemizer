@@ -11,12 +11,14 @@ class User(db.Model, SerializerMixin):
     serialize_rules = (
         '-_password_hash',
         '-memberships.user',
+        '-memberships.requests',
         #'-memberships.organization',
         '-organizations.memberships',
         '-organizations.users',
         '-organizations.assignments',
         '-organizations.items',
-        '-requests.user'
+        '-requests.user',
+        '-requests.organization'
     )
     
     __tablename__ = 'users'

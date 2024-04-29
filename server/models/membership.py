@@ -13,7 +13,8 @@ class Membership(db.Model, SerializerMixin):
         '-user.organizations',
         '-organization.memberships',
         '-organization.users',
-        '-organization.assignments'
+        '-organization.assignments',
+        '-organization.requests'
     )
     
     __tablename__ = 'memberships'

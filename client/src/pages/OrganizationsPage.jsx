@@ -17,26 +17,20 @@ import StyledTitle from "../components/StyledTitle";
  * 
  * @returns 
  */
-export default function OrganizationsPage() {
-    const params = useParams();
-    const [user, setUser] = useState(null);
+export default function OrganizationsPage( {user, setUser} ) {
     const [organizations, setOrganizations] = useState([]);
     const [orgFilter, setOrgFilter] = useState(false);
 
+    // Takes on average 1.5 to 2 seconds to run.
     useEffect(() => {
-        if (!params) {
-            setUser(null);
-        } else {
-            fetch(`/api/users/${params.id}`)
-            .then((response) => response.json())
-            .then((data) => setUser(data));
-        }
-    }, [params])
-
-    useEffect(() => {
+        const timerName = "Execution Time - Fetch";
+        //console.time(timerName);
         fetch('/api/organizations')
         .then((response) => response.json())
-        .then((data) => setOrganizations(data));
+        .then((data) => {
+            setOrganizations(data)
+            //console.timeEnd(timerName);
+        });
     }, [])
 
     if (!user) {

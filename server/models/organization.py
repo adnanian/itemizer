@@ -11,6 +11,7 @@ class Organization(db.Model, SerializerMixin):
     serialize_rules = (
         #'-memberships.user',
         '-memberships.organization',
+        '-memberships.user.requests',
         '-users.memberships',
         '-users.organizations',
         '-assignments.organization',

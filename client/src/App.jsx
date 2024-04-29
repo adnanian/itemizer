@@ -33,7 +33,7 @@ function App() {
         <Route path="/" element={<Layout user={user} setUser={setUser} />}>
           <Route index element={<Home user={user}/>}/>
           <Route path="about" element={<About/>}/>
-          <Route path="organizations/user/:id" element={<OrganizationsPage/>}/>
+          <Route path="organizations" element={<OrganizationsPage user={user} setUser={setUser}/>}/>
           <Route path="organizations/:orgId/users/:userId" element={<Organization />}/>
           <Route exact path="login" element={<Login onLogin={setUser}/>}/>
           <Route path="signup" element={<Signup/>}/>

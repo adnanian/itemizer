@@ -40,6 +40,23 @@ function notify(text) {
     }
 }
 
+class DotProgress {
+    constructor(size) {
+        this.count = 0;
+        this.size = size;
+    }
+
+    track() {
+        if (++this.count <= this.size) {
+            console.log(`${this.count} / ${this.size}`);
+        }
+    }
+
+    reset() {
+        this.count = 0;
+    }
+}
+
 class ModalOpener {
     constructor(key, modal) {
         this.key = key;
@@ -47,4 +64,4 @@ class ModalOpener {
     }
 }
 
-export {navLinkClassName, tableRowClassName, hasNothingness, notify, itemImagePlaceholder, ModalOpener}
+export {navLinkClassName, tableRowClassName, hasNothingness, notify, itemImagePlaceholder, ModalOpener, DotProgress}

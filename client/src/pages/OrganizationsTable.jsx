@@ -1,5 +1,5 @@
 import StyledTitle from "../components/StyledTitle";
-import { hasNothingness, tableRowClassName, ModalOpener } from "../helpers";
+import { hasNothingness, tableRowClassName, ModalOpener, DotProgress } from "../helpers";
 import RequestForm from "../components/modal-children/RequestForm";
 import { useState } from "react";
 import Modal from "../components/Modal";
@@ -33,7 +33,7 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
     }
 
     function handleRequestClick(e, orgId, orgName) {
-        console.log(`${orgId} --- ${orgName}`);
+        //console.log(`${orgId} --- ${orgName}`);
         if (e.target.id.includes(modalButtonMap.request)) {
             setModalChild(
                 <RequestForm userId={user.id} orgId={orgId} orgName={orgName} onAdd={onAddRequest} onClose={closeModal}/>
@@ -48,17 +48,27 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
         request: "request-to-join"
     }
 
+    //const tableProgress = new DotProgress(organizations.length);
+
     const orgRows = organizations.map((organization, orgIndex) => {
-        const owner = organization.memberships.find((member) => member.role === "OWNER").user.username;
-        let adminCount = 0;
-        organization.memberships.forEach((membership) => {
-            if (membership.role === "ADMIN") {
-                adminCount++;
+        //tableProgress.track();
+        let owner, adminCount = 0, userMember;
+        for (let membership of organization.memberships) {
+            switch (membership.role) {
+                case "OWNER":
+                    owner = membership.user.username;
+                    break;
+                case "ADMIN":
+                    adminCount++;
+                    break;
+                default:
+                    break;
             }
-        });
-        //const userIsMember = organization.memberships.filter((member) => member.user_id === user.id).length;
+            if (membership.user_id === user.id) {
+                userMember = membership;
+            }
+        }
         const membershipStatus = () => {
-            const userMember = organization.memberships.find((membership) => membership.user_id === user.id);
             if (userMember) {
                 return <span className="is-member">You are a member!</span>
             }
@@ -75,8 +85,6 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
                 </button>
             );
         };
-        //console.log(owner);
-
         return (
           <tr key={organization.id} className={tableRowClassName(orgIndex + 1)}>
             <td>{orgIndex + 1}</td>
