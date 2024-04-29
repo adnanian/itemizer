@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import StyledTitle from "../components/StyledTitle";
 import { useEffect, useState } from "react";
-import { hasNothingness } from "../helpers";
+import { hasNothingness, useModal } from "../helpers";
 import AssignedItemCard from "../components/AssignedItemCard";
 import Grid from "../components/Grid";
 import MembersTable from "../components/modal-children/MembersTable";
@@ -9,11 +9,11 @@ import Modal from "../components/Modal";
 import ItemFormContainer from "../components/modal-children/ItemFormContainer";
 import ConfirmLeave from "../components/modal-children/ConfirmLeave";
 import ConfirmRemoveItem from "../components/modal-children/ConfirmRemoveItem";
+import RequestQueue from "../components/modal-children/RequestQueue";
 
 /**
  * Buttons TODO
  * 
- * Request Queue
  * Edit Org.
  * Delete Org.
  * 
@@ -23,8 +23,9 @@ export default function Organization() {
     const { orgId, userId } = useParams();
     const [organization, setOrganization] = useState(null);
     const [userMembership, setUserMembership] = useState(null);
-    const [modal, setModal] = useState(false);
+    //const [modal, setModal] = useState(false);
     const [modalKey, setModaKey] = useState("");
+    const [modalActive, toggle] = useModal();
     const [items, setItems] = useState([]);
     const navigate = useNavigate();
 
@@ -76,10 +77,6 @@ export default function Organization() {
         return <StyledTitle text="Loading..." />
     }
 
-    function closeModal() {
-        setModal(false);
-    }
-
     // CRUD for ASSIGNMENTS
 
 
@@ -120,6 +117,22 @@ export default function Organization() {
     // CRUD for MEMBERSHIPS
 
     /**
+     * Adds a new membership object to the organization, and removes a request object from it.
+     * This is a request being accepted, and a new user joining the organization.
+     * 
+     * @param {*} membership the membership to add.
+     * @param {*} acceptedRequest the request to remove.
+     */
+    function welcomeNewMember(membership, acceptedRequest) {
+        setOrganization((oldOrgData) => {
+            const updatedOrg = { ...oldOrgData }
+            updatedOrg["memberships"] = [...oldOrgData.memberships, membership];
+            updatedOrg["requests"] = oldOrgData.requests.filter((request) => request.id !== acceptedRequest.id);
+            return updatedOrg;
+        });
+    }
+
+    /**
      * 
      * @param {*} membershipToUpdate 
      */
@@ -137,6 +150,14 @@ export default function Organization() {
         setOrganization((oldOrgData) => {
             const updatedOrg = { ...oldOrgData }
             updatedOrg["memberships"] = oldOrgData.memberships.filter((membership) => membership.id !== membershipToDelete.id);
+            return updatedOrg;
+        });
+    }
+
+    function denyMembership(deniedRequest) {
+        setOrganization((oldOrgData) => {
+            const updatedOrg = { ...oldOrgData }
+            updatedOrg["requests"] = oldOrgData.requests.filter((request) => request.id !== deniedRequest.id);
             return updatedOrg;
         });
     }
@@ -180,10 +201,11 @@ export default function Organization() {
     }
 
     const modalOpeners = {
-        [buttonIds.leave]: <ConfirmLeave userMember={userMembership} admins={admins} onUpdate={updateMembership} onClose={closeModal}/>,
+        [buttonIds.leave]: <ConfirmLeave userMember={userMembership} admins={admins} onUpdate={updateMembership} onClose={toggle}/>,
         [buttonIds.viewMembers]: <MembersTable members={organization.memberships} userMember={userMembership} onDelete={deleteMembership} onUpdate={updateMembership} />,
-        [buttonIds.add]: <ItemFormContainer orgId={organization.id} items={nonAssignedItems()} onAdd={addAssignment} onClose={closeModal} />,
-        [buttonIds.remove]: <ConfirmRemoveItem assignments={organization.assignments} onDelete={deleteAssignment} onClose={closeModal} />
+        [buttonIds.add]: <ItemFormContainer orgId={organization.id} items={nonAssignedItems()} onAdd={addAssignment} onClose={toggle} />,
+        [buttonIds.remove]: <ConfirmRemoveItem assignments={organization.assignments} onDelete={deleteAssignment} onClose={toggle} />,
+        [buttonIds.requests]: <RequestQueue modalOpen={modalActive} requests={organization.requests} orgName={organization.name} onWelcome={welcomeNewMember} onDeny={denyMembership}/>
     }
 
     function handleClick(e) {
@@ -196,7 +218,7 @@ export default function Organization() {
                 break;
             default:
                 setModaKey(e.target.id);
-                setModal(true);
+                toggle();
                 break;
         }
     }
@@ -289,7 +311,7 @@ export default function Organization() {
             </Grid>
             {
                 modalKey ? (
-                    <Modal openModal={modal} closeModal={closeModal}>
+                    <Modal openModal={modalActive} closeModal={toggle}>
                         {modalOpeners[modalKey]}
                     </Modal>
                 ) :

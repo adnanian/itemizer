@@ -59,13 +59,6 @@ class DotProgress {
     }
 }
 
-class ModalOpener {
-    constructor(key, modal) {
-        this.key = key;
-        this.modal = modal;
-    }
-}
-
 /**
  * Reference: https://betterprogramming.pub/create-a-custom-usemodal-react-hook-449b5909cc09
  * 
@@ -78,4 +71,4 @@ const useModal = () => {
     return [modalActive, toggle];
 }
 
-export {navLinkClassName, tableRowClassName, hasNothingness, notify, itemImagePlaceholder, ModalOpener, DotProgress, useModal}
+export {navLinkClassName, tableRowClassName, hasNothingness, notify, itemImagePlaceholder, DotProgress, useModal}

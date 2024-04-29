@@ -639,6 +639,18 @@ table .access-control {
   color: silver;
 }
 
+table#request-queue button[id*="access-control-accept"]:hover {
+  background-color: none;
+  background: radial-gradient(lime, green);
+  color: darkblue;
+}
+
+table#request-queue button[id*="access-control-reject"]:hover {
+  background-color: none;
+  background: radial-gradient(orangered, maroon);
+  color: black;
+}
+
 dialog {
   width: fit-content;
   height: fit-content;
@@ -805,6 +817,14 @@ h2#org-subtitle {
 input[type="number"] {
   text-align: center;
   width: fit-content;
+}
+
+span.confirm {
+  display: inline-flex;
+}
+
+span.confirm button {
+  margin: 0 15px;
 }
 
 /*
