@@ -8,8 +8,6 @@ import Modal from "../components/Modal";
 /**
  * TODO
  * 
- * Request to join!
- * Create Organization
  * 
  */
 
