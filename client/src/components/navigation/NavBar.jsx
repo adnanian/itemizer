@@ -1,5 +1,6 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, /*useNavigate*/ } from "react-router-dom";
 import { navLinkClassName } from "../../helpers";
+//import { useEffect } from "react";
 
 /**
  * TODO
@@ -8,6 +9,13 @@ import { navLinkClassName } from "../../helpers";
  * @returns 
  */
 function NavBar({ user, setUser }) {
+    /*
+    const navigate = useNavigate();
+    async function automaticLogout() {
+        navigate("/login")
+    }
+    */
+    
 
     /**
      * TODO
@@ -20,6 +28,21 @@ function NavBar({ user, setUser }) {
             setUser(null);
         }
     }
+
+    /*
+    useEffect(() => {
+        if (user) {
+            const inactivityTime = 10000;
+            const timer = setTimeout(async () => {
+                await automaticLogout();
+                await handleLogoutClick();
+                alert(`You have been logged out after ${inactivityTime} ms of inactivity.`);
+            }, inactivityTime);
+
+            return () => clearTimeout(timer);
+        }
+    }, [user]);
+    */
 
     return (
         <nav className="navigation">
