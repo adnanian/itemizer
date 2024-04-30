@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import StyledTitle from "../components/StyledTitle";
 import { useEffect, useState } from "react";
-import { hasNothingness, useModal } from "../helpers";
+import { hasNothingness, updateMembershipKey, useModal } from "../helpers";
 import AssignedItemCard from "../components/AssignedItemCard";
 import Grid from "../components/Grid";
 import MembersTable from "../components/modal-children/MembersTable";
@@ -10,7 +10,8 @@ import ItemFormContainer from "../components/modal-children/ItemFormContainer";
 import ConfirmLeave from "../components/modal-children/ConfirmLeave";
 import ConfirmRemoveItem from "../components/modal-children/ConfirmRemoveItem";
 import RequestQueue from "../components/modal-children/RequestQueue";
-import ConfirmDeleteOrg from "../components/ConfirmDeleteOrg";
+import ConfirmDeleteOrg from "../components/modal-children/ConfirmDeleteOrg";
+import EditOrganizationForm from "../components/modal-children/EditOrganizationForm";
 
 /**
  * Buttons TODO
@@ -24,10 +25,11 @@ export default function Organization() {
     const { orgId, userId } = useParams();
     const [organization, setOrganization] = useState(null);
     const [userMembership, setUserMembership] = useState(null);
-    //const [modal, setModal] = useState(false);
-    const [modalKey, setModaKey] = useState("");
-    const [modalActive, toggle] = useModal();
+    const [orgUpdated, setOrgUpdated] = useState(false);
     const [items, setItems] = useState([]);
+    const [modalKey, setModalKey] = useState("");
+    const [modalActive, toggle] = useModal();
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -79,7 +81,6 @@ export default function Organization() {
     }
 
     // CRUD for ASSIGNMENTS
-
 
     function addAssignment(assignment, item = null) {
         if (item) {
@@ -163,7 +164,11 @@ export default function Organization() {
         });
     }
 
-    
+    // CRUD FOR UPDATING ORGANIZATION
+    function updateOrganization(updatedOrg) {
+        setOrganization(updatedOrg);
+        setOrgUpdated(true);
+    }
 
     const nonAssignedItems = () => {
         const assignedItemIds = organization.assignments.map(assignment => assignment.item.id);
@@ -242,10 +247,20 @@ export default function Organization() {
                 onDeny={denyMembership}
             />
         ),
+        [buttonIds.edit]: (
+            <EditOrganizationForm
+                orgId={organization.id}
+                orgName={organization.name}
+                orgDescription={organization.description}
+                onUpdate={updateOrganization}
+                onClose={toggle}
+            />
+        ),
         [buttonIds.delete]: (
             <ConfirmDeleteOrg
                 orgId={organization.id}
                 orgName={organization.name}
+                userMember={userMembership}
                 onClose={toggle}
             />
         )
@@ -254,13 +269,20 @@ export default function Organization() {
     function handleClick(e) {
         switch (e.target.id) {
             case buttonIds.back:
-                navigate(-1, { replace: true });
+                if (orgUpdated) {
+                    const objectToPass = {
+                        membership: userMembership,
+                        organization: organization
+                    }
+                    localStorage.setItem(updateMembershipKey, JSON.stringify(objectToPass));
+                }
+                navigate(-1);
                 break;
             case buttonIds.sendUpdate:
                 alert(`All members of ${organization.name} have been notified.`);
                 break;
             default:
-                setModaKey(e.target.id);
+                setModalKey(e.target.id);
                 toggle();
                 break;
         }

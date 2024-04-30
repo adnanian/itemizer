@@ -3,7 +3,9 @@ import { useState } from "react";
 const navLinkClassName = "nav-link";
 const oddRow = "odd-row-num";
 const evenRow = "even-row-num";
-const itemImagePlaceholder ='/placeholder-item-image.jpg';
+const itemImagePlaceholder = '/placeholder-item-image.jpg';
+const updateMembershipKey = "UPDATE MEMBERSHIP", updateKeyObjSize = 2;
+const removeMembershipKey = "REMOVE MEMBERSHIP";
 
 /**
  * TODO
@@ -26,20 +28,6 @@ function tableRowClassName(row) {
  */
 function hasNothingness(...values) {
     return values.some((value) => !value);
-}
-
-function notify(text) {
-    if ("Notification" in window) {
-        Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                new Notification(text);
-            } else {
-                console.log("Notification permission denied.");
-            }
-        });
-    } else {
-        console.log("Notification NOT in window! :(")
-    }
 }
 
 class DotProgress {
@@ -71,4 +59,14 @@ const useModal = () => {
     return [modalActive, toggle];
 }
 
-export {navLinkClassName, tableRowClassName, hasNothingness, notify, itemImagePlaceholder, DotProgress, useModal}
+export { 
+    navLinkClassName, 
+    tableRowClassName, 
+    hasNothingness,
+    itemImagePlaceholder, 
+    DotProgress, 
+    useModal, 
+    updateMembershipKey,
+    updateKeyObjSize,
+    removeMembershipKey 
+}

@@ -1,5 +1,5 @@
 import StyledTitle from "../components/StyledTitle";
-import { hasNothingness, tableRowClassName, ModalOpener, DotProgress } from "../helpers";
+import { hasNothingness, tableRowClassName, DotProgress, useModal } from "../helpers";
 import RequestForm from "../components/modal-children/RequestForm";
 import { useState } from "react";
 import Modal from "../components/Modal";
@@ -24,23 +24,14 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
     }
     const [orgId, setOrgId] = useState(null);
     const [orgName, setOrgName] = useState(null);
-    const [modal, setModal] = useState(false);
-    const [modalChild, setModalChild] = useState(null);
+    const [modalActive, toggle] = useModal();
     const requestForOrgIds = user.requests.map((request) => request.organization_id);
-
-    function openModal() {
-        setModal(true);
-    }
-
-    function closeModal() {
-        setModal(false);
-    }
 
     function handleRequestClick(newOrgId, newOrgName) {
         //console.log(`${orgId} --- ${orgName}`);
         setOrgId(newOrgId);
         setOrgName(newOrgName);
-        openModal();
+        toggle();
         console.log("State updated.");
     }
 
@@ -112,8 +103,8 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
                 {orgRows}
             </tbody>
             </table>
-            <Modal openModal={modal} closeModal={closeModal}>
-                <RequestForm userId={user.id} orgId={orgId} orgName={orgName} onAdd={onAddRequest} onClose={closeModal}/>
+            <Modal openModal={modalActive} closeModal={toggle}>
+                <RequestForm userId={user.id} orgId={orgId} orgName={orgName} onAdd={onAddRequest} onClose={toggle}/>
             </Modal>
         </div>
     );

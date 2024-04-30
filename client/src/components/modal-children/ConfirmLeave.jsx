@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { removeMembershipKey } from "../../helpers";
 
 export default function ConfirmLeave({ userMember, admins, onUpdate, onClose }) {
 
@@ -34,8 +35,7 @@ export default function ConfirmLeave({ userMember, admins, onUpdate, onClose }) 
         setSelectedAdmin(e.target.value);
     }
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    function handleSubmit() {
         fetch(`/api/memberships/${userMember.id}`, {
             method: "DELETE"
         })
@@ -57,8 +57,10 @@ export default function ConfirmLeave({ userMember, admins, onUpdate, onClose }) 
                 }
             })
             .finally(() => {
+                //console.log(userMember);
+                localStorage.setItem(removeMembershipKey, JSON.stringify(userMember));
+                navigate(-1);
                 onClose();
-                navigate(-1, { replace: true });
             })
     }
 

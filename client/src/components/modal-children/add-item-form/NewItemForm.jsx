@@ -4,6 +4,9 @@ import Input from "../../formik-reusable/Input";
 import TextAreaInput from "../../formik-reusable/TextArea";
 
 export default function NewItemForm({ onAdd }) {
+    const maxNameLength = 200;
+    const maxDescLength = 500;
+
     const initialValues = {
         name: "",
         description: "",
@@ -13,8 +16,8 @@ export default function NewItemForm({ onAdd }) {
     };
 
     const formSchema = yup.object().shape({
-        name: yup.string().required("Item name required").max(200),
-        description: yup.string().optional().max(500),
+        name: yup.string().required("Item name required").max(maxNameLength),
+        description: yup.string().optional().max(maxDescLength),
         partNumber: yup.string().optional(),
         imageUrl: yup.string().optional("RECOMMENDED"),
         count: yup.number().integer().min(0).required("Must be a non-negative integer.")
@@ -72,6 +75,7 @@ export default function NewItemForm({ onAdd }) {
                                 type="text"
                                 placeholder="Enter the name of the item. BE PRECISE!"
                             />
+                            <span>{`${props.values.name.length} / ${maxNameLength} characters`}</span>
                             <TextAreaInput
                                 label="Description"
                                 id="description"
@@ -80,6 +84,7 @@ export default function NewItemForm({ onAdd }) {
                                 cols="50"
                                 placeholder="Describe the item here. (Optional, but HIGHLY RECOMMENDED!)"
                             />
+                            <span>{`${props.values.description.length} / ${maxDescLength} characters`}</span>
                             <Input
                                 label="Part Number"
                                 id="partNumber"

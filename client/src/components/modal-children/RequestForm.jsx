@@ -62,8 +62,9 @@ export default function RequestForm({ userId, orgId, orgName, onAdd, onClose }) 
                                 name="reasonToJoin"
                                 rows="5"
                                 cols="50"
-                                placeholder="Type here why you would like to join this organization."
+                                placeholder="Type here why you would like to join this organization. (Min: 50 characters)"
                             />
+                            <span>{`${props.values.reasonToJoin.length} characters`}</span>
                             <button disabled={props.isSubmitting} type="submit">Submit</button>
                         </Form>
                     );

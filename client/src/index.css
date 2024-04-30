@@ -333,6 +333,8 @@ input.input-error, select.input-error {
   font-size: 16px;
   font-weight: bold;
   margin: 0;
+  background-color: white;
+  padding: 0 10px;
 }
 
 button:disabled {

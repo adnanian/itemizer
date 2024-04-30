@@ -1,7 +1,22 @@
-export default function ConfirmDeleteOrg({ orgId, orgName, onClose }) {
+import { useNavigate } from "react-router-dom";
+import { removeMembershipKey } from "../../helpers";
 
-    function handleDeletion(e) {
 
+export default function ConfirmDeleteOrg({ orgId, orgName, userMember, onClose }) {
+    const navigate = useNavigate();
+
+    function handleDeletion() {
+        fetch(`/api/organizations/${orgId}`, {
+            method: "DELETE"
+        })
+        .then(() => {
+            alert(`${orgName} has been deleted. All members will be notified.`);
+        })
+        .finally(() => {
+            localStorage.setItem(removeMembershipKey, JSON.stringify(userMember));
+            navigate(-1);
+            onClose();
+        })
     }
 
     const confirmButtonColor = 'yellow'

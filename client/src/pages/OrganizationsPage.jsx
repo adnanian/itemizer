@@ -4,7 +4,8 @@ import OrganizationsTable from "./OrganizationsTable"
 import StyledTitle from "../components/StyledTitle";
 import Modal from "../components/Modal";
 import OrganizationForm from "../components/modal-children/OrganizationForm";
-import { useModal } from "../helpers";
+import { removeMembershipKey, updateMembershipKey, updateKeyObjSize, useModal } from "../helpers";
+import { useLocation } from "react-router-dom";
 
 
 
@@ -24,18 +25,50 @@ export default function OrganizationsPage( {user, setUser} ) {
     const [organizations, setOrganizations] = useState([]);
     const [orgFilter, setOrgFilter] = useState(false);
     const [modalActive, toggle] = useModal();
+    const location = useLocation();
 
     // Takes on average 1.5 to 2 seconds to run.
     useEffect(() => {
         const timerName = "Execution Time - Fetch";
         //console.time(timerName);
+        const passedValue =  JSON.parse(localStorage.getItem(updateMembershipKey)) || JSON.parse(localStorage.getItem(removeMembershipKey));
+        console.log(passedValue);
+        if (typeof passedValue === 'object' && passedValue !== null) {
+            setUser((oldUserData) => {
+                const newUserData = {...oldUserData};
+                if (Object.keys(passedValue).length === updateKeyObjSize) {
+                    newUserData.memberships = oldUserData.memberships.map((membership) => {
+                        if (membership.id === passedValue.membership.id) {
+                            membership.organization = {};
+                            for (const key in passedValue.organization) {
+                                if (!Array.isArray(key)) {
+                                    membership.organization[key] = passedValue.organization[key];
+                                }
+                            }
+                        }
+                        return membership;
+                    });
+                    localStorage.removeItem(updateMembershipKey);
+                    console.log("Membership updated");
+                } else {
+                    newUserData.memberships = oldUserData.memberships.filter((membership) => membership.id !== passedValue.id);
+                    localStorage.removeItem(removeMembershipKey);
+                    console.log("Membership removed");
+                }
+                return newUserData;
+            });
+            
+            
+        }
         fetch('/api/organizations')
         .then((response) => response.json())
         .then((data) => {
-            setOrganizations(data)
+            setOrganizations(data);
+
             //console.timeEnd(timerName);
         });
-    }, [])
+        //console.log(passedValue);
+    }, []);
 
     if (!user) {
         return <StyledTitle text="Loading user..." />

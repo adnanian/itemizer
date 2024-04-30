@@ -50,7 +50,7 @@ class OrganizationById(Resource):
             db.session.commit()
             return organization.to_dict(), 200
         except ValueError as e:
-            return {"error": "Not Modified"}, 304
+            return {"message": "Not Modified"}, 304
 
     def delete(self, id):
         organization = g.record
