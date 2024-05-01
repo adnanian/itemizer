@@ -8,6 +8,7 @@ import { BrowserRouter, Routes as RouteList, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import OrganizationsPage from './pages/OrganizationsPage';
 import Organization from './pages/Organization';
+import ProfileSettings from './pages/ProfileSettings';
 
 /**
  * TODO
@@ -35,6 +36,7 @@ function App() {
           <Route path="about" element={<About/>}/>
           <Route path="organizations" element={<OrganizationsPage user={user} setUser={setUser}/>}/>
           <Route path="organizations/:orgId/users/:userId" element={<Organization />}/>
+          <Route path="settings" element={<ProfileSettings user={user}/>}/>
           <Route exact path="login" element={<Login onLogin={setUser}/>}/>
           <Route path="signup" element={<Signup/>}/>
         </Route>
