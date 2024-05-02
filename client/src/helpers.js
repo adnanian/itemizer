@@ -10,10 +10,11 @@ const confirmButtonColor = 'yellow'
 const confirmButtonTextColor = 'indigo';
 
 /**
- * TODO
+ * Returns the class name for a table row depending on
+ * the parity of the number
  * 
- * @param {*} row 
- * @returns 
+ * @param {number} row the row number.
+ * @returns {string} the even row class name if the number is even, the odd row class name otherwise.
  */
 function tableRowClassName(row) {
     if (!Number.isInteger(row)) {
@@ -23,15 +24,16 @@ function tableRowClassName(row) {
 }
 
 /**
- * TODO
+ * Evaluates the boolean of all given values.
  * 
  * @param  {...any} values 
- * @returns 
+ * @returns {boolean} true if all values have are falsy, false otherwise.
  */
 function hasNothingness(...values) {
     return values.some((value) => !value);
 }
 
+// Used for testing purposes.
 class DotProgress {
     constructor(size) {
         this.count = 0;
@@ -51,9 +53,9 @@ class DotProgress {
 
 /**
  * Reference: https://betterprogramming.pub/create-a-custom-usemodal-react-hook-449b5909cc09
+ * Custom hook for managing the use of dialogs and modals in React components.
  * 
- * 
- * @returns 
+ * @returns a destructured array of a boolean representing whether a modal is open, and a function to open/close the modal.
  */
 const useModal = () => {
     const [modalActive, setModalActive] = useState(false);
