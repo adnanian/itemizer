@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import OrganizationsPage from './pages/OrganizationsPage';
 import Organization from './pages/Organization';
 import ProfileSettings from './pages/ProfileSettings';
+import ForgotPassword from './pages/ForgotPassword';
 
 /**
  * TODO
@@ -51,6 +52,7 @@ function App() {
           <Route path="settings" element={<ProfileSettings user={user} onLogout={handleLogoutClick}/>}/>
           <Route exact path="login" element={<Login onLogin={setUser}/>}/>
           <Route path="signup" element={<Signup/>}/>
+          <Route path="forgot-password" element={<ForgotPassword/>}/>
         </Route>
       </RouteList>
     </BrowserRouter>
