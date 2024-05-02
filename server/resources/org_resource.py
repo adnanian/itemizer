@@ -1,4 +1,5 @@
 from flask import request, g
+from resources.rest_resource_template import RestResourceTemplate
 from flask_restful import Resource
 from config import db
 from models.organization import Organization
@@ -35,25 +36,7 @@ class OrganizationResource(Resource):
             return {"message": "422 Unprocessable Entity"}, 422
 
 
-class OrganizationById(Resource):
-    def get(self, id):
-        organization = g.record
-        return organization.to_dict(), 200
-
-    def patch(self, id):
-        try:
-            organization = g.record
-            json = request.get_json()
-            for attr in json:
-                setattr(organization, attr, json.get(attr))
-            db.session.add(organization)
-            db.session.commit()
-            return organization.to_dict(), 200
-        except ValueError as e:
-            return {"message": "Not Modified"}, 304
-
-    def delete(self, id):
-        organization = g.record
-        db.session.delete(organization)
-        db.session.commit()
-        return {"message": "Organization successfully deleted."}, 204
+class OrganizationById(RestResourceTemplate):
+    
+    def __init__(self):
+        super().__init__(Organization)

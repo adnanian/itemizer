@@ -1,12 +1,12 @@
-from flask import request, g
-from flask_restful import Resource
+from flask import request
+from resources.rest_resource_template import RestResourceTemplate
 from config import db
 from models.request import Request
 
-class RequestResource(Resource):
-    def get(self):
-        requests = [requestObj.to_dict() for requestObj in Request.query.all()]
-        return requests, 200
+class RequestResource(RestResourceTemplate):
+  
+    def __init__(self):
+        super().__init__(Request)
     
     def post(self): 
         try:
@@ -28,25 +28,7 @@ class RequestResource(Resource):
     request is a Flask object that processes communications between client and server.
 """        
         
-class RequestById(Resource):
-  def get(self, id):
-    requestObj = g.record
-    return requestObj.to_dict(), 200
+class RequestById(RestResourceTemplate):
   
-  def patch(self, id):
-    try:
-      requestObj = g.record
-      json = request.get_json()
-      for attr in json:
-        setattr(requestObj, attr, json.get(attr))
-      db.session.add(requestObj)
-      db.session.commit()
-      return requestObj.to_dict(), 200
-    except ValueError as e:
-      return {'error': 'Not Modified'}, 304
-
-  def delete(self, id):
-    request = g.record
-    db.session.delete(request)
-    db.session.commit()
-    return {'message': 'Request successfully deleted.'}, 204
+  def __init__(self):
+    super().__init__(Request)

@@ -1,13 +1,14 @@
 from flask import request, g
+from resources.rest_resource_template import RestResourceTemplate
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from config import db
 from models.models import Item
 
-class ItemResource(Resource):
-  def get(self):
-    items = [item.to_dict() for item in Item.query.all()]
-    return items, 200
+class ItemResource(RestResourceTemplate):
+  
+  def __init__(self):
+    super().__init__(Item)
   
   def post(self):
     try:
@@ -24,29 +25,10 @@ class ItemResource(Resource):
       print(e)
       return {'message': str(e)}, 422
     
-class ItemById(Resource):
-  def get(self, id):
-    item = g.record
-    return item.to_dict(), 200
+class ItemById(RestResourceTemplate):
   
-  def patch(self, id):
-    try:
-      item = g.record
-      json = request.get_json()
-      for attr in json:
-        setattr(item, attr, json.get(attr))
-      db.session.add(item)
-      db.session.commit()
-      return item.to_dict(), 200
-    except ValueError as e:
-      return {'error': 'Not Modified'}, 304
-    
-
-  def delete(self, id):
-    item = g.record
-    db.session.delete(item)
-    db.session.commit()
-    return {'message': 'Item successfully deleted.'}, 204
+  def __init__(self):
+    super().__init__(Item)
   
 class ItemByNameOrPartNo(Resource):
   def get(self, item_name):
