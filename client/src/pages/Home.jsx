@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import StyledTitle from "../components/StyledTitle";
 import ItemCard from "../components/ItemCard";
 import ReportForm from "../components/ReportForm";
+import "../styles/Home.css";
 
 /**
  * TODO

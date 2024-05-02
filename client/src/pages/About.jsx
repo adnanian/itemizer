@@ -1,4 +1,5 @@
 import StyledTitle from "../components/StyledTitle";
+import '../styles/About.css';
 
 /**
  * TODO

@@ -1,0 +1,34 @@
+#profile-table {
+    background-color: slategray;
+    margin-top: 50px;
+    height: fit-content;
+  }
+  
+  #profile-table button {
+    align-items: center;
+    justify-content: center;
+    margin: 15px auto !important;
+    display: flex;
+  }
+  
+  .borderless-table {
+    background: none;
+    color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  
+  #delete-account div {
+    width: 200px !important;
+  }
+  
+  #delete-account :not(div, form) {
+    width: fit-content;
+  }
+  
+  #edit-account-form {
+    width: 500px !important;
+  }
+  
+  #edit-account-form * {
+    margin: 5px 0 5px;
+  }

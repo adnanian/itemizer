@@ -12,6 +12,7 @@ import ConfirmRemoveItem from "../../components/modal-children/item-assignments/
 import RequestQueue from "../../components/modal-children/requests/RequestQueue";
 import ConfirmDeleteOrg from "../../components/modal-children/org-controls/ConfirmDeleteOrg";
 import EditOrganizationForm from "../../components/modal-children/org-controls/EditOrganizationForm";
+import "../../styles/Organization.css";
 
 /**
  * Buttons TODO

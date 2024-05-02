@@ -1,0 +1,210 @@
+h2#org-subtitle {
+    text-align: center;
+    background-color: skyblue;
+    color: black;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 5px 10px;
+    border-radius: 8px;
+  }
+  
+  #org-controls-grid {
+    display: grid ;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+  }
+  
+  #org-controls-grid button {
+    margin: 0 5px;
+    grid-row: 1 / 1 ;
+    grid-column: 1 / auto ;
+    width: max-content;
+  }
+  
+  #assigned-items-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    background: linear-gradient(to right bottom, black, white);
+    margin: 10px auto;
+    border: 10px double maroon;
+    border-radius: 8px;
+  }
+  
+  #assigned-item-list {
+    list-style: none;
+    overflow-y: scroll;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-count: 4;
+    width: 1500px;
+    height: 500px;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #assigned-item-list li {
+    margin: 5px 10px;
+    background-color: orchid;
+    text-align: center;
+    width: fit-content;
+    border-radius: 8px;
+    color: black;
+  }
+  
+  #assigned-item-list li * {
+    margin: 0 auto;
+  }
+  
+  .assigned-item {
+    padding: 8px;
+  }
+  
+  .assigned-item img {
+    background-color: silver;
+    width: 200px;
+    height: 200px;
+    
+    margin: 0 auto;
+  }
+  
+  .item-button-group {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .minus-button, .plus-button {
+    color: black;
+    font-weight: bolder;
+    font-size: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 10px !important;
+  }
+  
+  .minus-button {
+    background-color: red;
+  }
+  
+  .plus-button {
+    background-color: #0f0;
+  }
+
+  h2#org-subtitle {
+    text-align: center;
+    background-color: skyblue;
+    color: black;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 5px 10px;
+    border-radius: 8px;
+  }
+  
+  #org-controls-grid {
+    display: grid ;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+  }
+  
+  #org-controls-grid button {
+    margin: 0 5px;
+    grid-row: 1 / 1 ;
+    grid-column: 1 / auto ;
+    width: max-content;
+  }
+  
+  #assigned-items-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    background: linear-gradient(to right bottom, black, white);
+    margin: 10px auto;
+    border: 10px double maroon;
+    border-radius: 8px;
+  }
+  
+  #assigned-item-list {
+    list-style: none;
+    overflow-y: scroll;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-count: 4;
+    width: 1500px;
+    height: 500px;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #assigned-item-list li {
+    margin: 5px 10px;
+    background-color: orchid;
+    text-align: center;
+    width: fit-content;
+    border-radius: 8px;
+    color: black;
+  }
+  
+  #assigned-item-list li * {
+    margin: 0 auto;
+  }
+  
+  .assigned-item {
+    padding: 8px;
+  }
+  
+  .assigned-item img {
+    background-color: silver;
+    width: 200px;
+    height: 200px;
+    
+    margin: 0 auto;
+  }
+  
+  .item-button-group {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .minus-button, .plus-button {
+    color: black;
+    font-weight: bolder;
+    font-size: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 10px !important;
+  }
+  
+  .minus-button {
+    background-color: red;
+  }
+  
+  .plus-button {
+    background-color: #0f0;
+  }
+
+  .minus-button:hover {
+    background: linear-gradient(red, yellow);
+  }
+  
+  .minus-button:disabled:hover {
+    background: inherit;
+    background-color: red;
+  }
+  
+  .plus-button:hover {
+    background: linear-gradient(#0f0, cyan);
+  }

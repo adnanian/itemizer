@@ -4,6 +4,7 @@ import { useModal } from "../helpers";
 import ConfirmDeleteAccount from "../components/modal-children/profile-settings/ConfirmDeleteAccount";
 import Modal from "../components/Modal";
 import EditAccount from "../components/modal-children/profile-settings/EditAccount";
+import "../styles/Settings.css";
 
 export default function ProfileSettings({ user, onLogout }) {
 
