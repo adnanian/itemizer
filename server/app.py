@@ -76,11 +76,25 @@ class CheckSession(Resource):
     if user := User.query.filter_by(id=session.get('user_id')).first():
       return user.to_dict(), 200
     return {'message': '401 Unauthorized'}, 401
+  
+class Authenticate(Resource):
+  """
+      This resource is dedicated for handling changes in user information
+      or account deletion altogether.
+  Args:
+      Resource (_type_): _description_
+  """
+  def post(self):
+    user = User.query.filter_by(id=session.get('user_id')).first()
+    if user and user.authenticate(request.get_json().get('password')):
+      return {}, 204
+    return {'message': '401 Unauthorized'}, 401
 
 api.add_resource(Signup, '/api/signup', endpoint='signup')
 api.add_resource(Login, '/api/login', endpoint='login')
 api.add_resource(Logout, '/api/logout', endpoint='logout')
 api.add_resource(CheckSession, '/api/check_session', endpoint='check_session')
+api.add_resource(Authenticate, '/api/authenticate', endpoint='authenticate')
 api.add_resource(UserResource, '/api/users', endpoint='users')
 api.add_resource(UserById, '/api/users/<int:id>', endpoint='user_by_id')
 api.add_resource(ItemResource, '/api/items', endpoint='items')

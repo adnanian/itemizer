@@ -6,6 +6,8 @@ const evenRow = "even-row-num";
 const itemImagePlaceholder = '/placeholder-item-image.jpg';
 const updateMembershipKey = "UPDATE MEMBERSHIP", updateKeyObjSize = 2;
 const removeMembershipKey = "REMOVE MEMBERSHIP";
+const confirmButtonColor = 'yellow'
+const confirmButtonTextColor = 'indigo';
 
 /**
  * TODO
@@ -68,5 +70,7 @@ export {
     useModal, 
     updateMembershipKey,
     updateKeyObjSize,
-    removeMembershipKey 
+    removeMembershipKey,
+    confirmButtonColor,
+    confirmButtonTextColor
 }

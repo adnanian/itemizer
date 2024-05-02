@@ -26,17 +26,29 @@ function App() {
     })
   }, [])
 
+  /**
+     * TODO
+     */
+  async function handleLogoutClick() {
+    const response = await fetch("/api/logout", {
+        method: "DELETE"
+    });
+    if (response.ok) {
+        setUser(null);
+    }
+}
+
   //console.log(`${user ? user.id : null} -- printed at ${new Date()}`);
 
   return (
     <BrowserRouter>
       <RouteList>
-        <Route path="/" element={<Layout user={user} setUser={setUser} />}>
+        <Route path="/" element={<Layout user={user} onLogout={handleLogoutClick} />}>
           <Route index element={<Home user={user}/>}/>
           <Route path="about" element={<About/>}/>
           <Route path="organizations" element={<OrganizationsPage user={user} setUser={setUser}/>}/>
           <Route path="organizations/:orgId/users/:userId" element={<Organization />}/>
-          <Route path="settings" element={<ProfileSettings user={user}/>}/>
+          <Route path="settings" element={<ProfileSettings user={user} onLogout={handleLogoutClick}/>}/>
           <Route exact path="login" element={<Login onLogin={setUser}/>}/>
           <Route path="signup" element={<Signup/>}/>
         </Route>

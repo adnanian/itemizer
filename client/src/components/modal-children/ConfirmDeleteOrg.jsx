@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { removeMembershipKey } from "../../helpers";
+import { removeMembershipKey, confirmButtonColor, confirmButtonTextColor } from "../../helpers";
 
 
 export default function ConfirmDeleteOrg({ orgId, orgName, userMember, onClose }) {
@@ -19,8 +19,7 @@ export default function ConfirmDeleteOrg({ orgId, orgName, userMember, onClose }
         })
     }
 
-    const confirmButtonColor = 'yellow'
-    const confirmButtonTextColor = 'indigo';
+    
 
     return (
         <div >

@@ -8,7 +8,7 @@ import { navLinkClassName } from "../../helpers";
  * @param {*} param0 
  * @returns 
  */
-function NavBar({ user, setUser }) {
+function NavBar({ user, onLogout }) {
     /*
     const navigate = useNavigate();
     async function automaticLogout() {
@@ -16,18 +16,6 @@ function NavBar({ user, setUser }) {
     }
     */
     
-
-    /**
-     * TODO
-     */
-    async function handleLogoutClick() {
-        const response = await fetch("/api/logout", {
-            method: "DELETE"
-        });
-        if (response.ok) {
-            setUser(null);
-        }
-    }
 
     /*
     useEffect(() => {
@@ -70,7 +58,7 @@ function NavBar({ user, setUser }) {
                         <NavLink
                             to="/login"
                             className={navLinkClassName}
-                            onClick={handleLogoutClick}
+                            onClick={onLogout}
                         >
                             Logout
                         </NavLink>

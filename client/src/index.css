@@ -848,6 +848,14 @@ span.confirm button {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+#delete-account div {
+  width: 200px !important;
+}
+
+#delete-account :not(div, form) {
+  width: fit-content;
+}
+
 /*
 @media screen and (max-width: 1366px) {
 

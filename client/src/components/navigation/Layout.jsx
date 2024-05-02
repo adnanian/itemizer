@@ -7,7 +7,7 @@ import NavBar from "./NavBar";
  * @param {*} param0 
  * @returns 
  */
-export default function Layout( {user, setUser} ) {
+export default function Layout( {user, onLogout} ) {
     return (
         <>
             <header>
@@ -17,7 +17,7 @@ export default function Layout( {user, setUser} ) {
                         <span className="logo">ITEMIZER</span>
                     </div>
                 </Link>
-                <NavBar user={user} setUser={setUser} />
+                <NavBar user={user} onLogout={onLogout} />
             </header>
             <Outlet/>
             <footer><b>&#169; 2024 #ITEMIZER</b></footer>
