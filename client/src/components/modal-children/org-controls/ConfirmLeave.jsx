@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { removeMembershipKey } from "../../helpers";
+import { removeMembershipKey } from "../../../helpers";
 
 export default function ConfirmLeave({ userMember, admins, onUpdate, onClose }) {
 

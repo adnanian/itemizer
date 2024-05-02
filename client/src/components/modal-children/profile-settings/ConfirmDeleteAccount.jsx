@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { confirmButtonColor, confirmButtonTextColor } from "../../helpers";
+import { confirmButtonColor, confirmButtonTextColor } from "../../../helpers";
 import { useNavigate } from "react-router-dom";
 
 export default function ConfirmDeleteAccount({ user, onLogout, onClose }) {

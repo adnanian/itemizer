@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Memberships from "./Memberships";
 import OrganizationsTable from "./OrganizationsTable"
-import StyledTitle from "../components/StyledTitle";
-import Modal from "../components/Modal";
-import OrganizationForm from "../components/modal-children/OrganizationForm";
-import { removeMembershipKey, updateMembershipKey, updateKeyObjSize, useModal } from "../helpers";
+import StyledTitle from "../../components/StyledTitle";
+import Modal from "../../components/Modal";
+import OrganizationForm from "../../components/modal-children/org-controls/OrganizationForm";
+import { removeMembershipKey, updateMembershipKey, updateKeyObjSize, useModal } from "../../helpers";
 import { useLocation } from "react-router-dom";
 
 

@@ -1,17 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom";
-import StyledTitle from "../components/StyledTitle";
+import StyledTitle from "../../components/StyledTitle";
 import { useEffect, useState } from "react";
-import { hasNothingness, updateMembershipKey, useModal } from "../helpers";
-import AssignedItemCard from "../components/AssignedItemCard";
-import Grid from "../components/Grid";
-import MembersTable from "../components/modal-children/MembersTable";
-import Modal from "../components/Modal";
-import ItemFormContainer from "../components/modal-children/ItemFormContainer";
-import ConfirmLeave from "../components/modal-children/ConfirmLeave";
-import ConfirmRemoveItem from "../components/modal-children/ConfirmRemoveItem";
-import RequestQueue from "../components/modal-children/RequestQueue";
-import ConfirmDeleteOrg from "../components/modal-children/ConfirmDeleteOrg";
-import EditOrganizationForm from "../components/modal-children/EditOrganizationForm";
+import { hasNothingness, updateMembershipKey, useModal } from "../../helpers";
+import AssignedItemCard from "../../components/AssignedItemCard";
+import Grid from "../../components/Grid";
+import MembersTable from "../../components/modal-children/org-controls/MembersTable";
+import Modal from "../../components/Modal";
+import ItemFormContainer from "../../components/modal-children/item-assignments/ItemFormContainer";
+import ConfirmLeave from "../../components/modal-children/org-controls/ConfirmLeave";
+import ConfirmRemoveItem from "../../components/modal-children/item-assignments/ConfirmRemoveItem";
+import RequestQueue from "../../components/modal-children/requests/RequestQueue";
+import ConfirmDeleteOrg from "../../components/modal-children/org-controls/ConfirmDeleteOrg";
+import EditOrganizationForm from "../../components/modal-children/org-controls/EditOrganizationForm";
 
 /**
  * Buttons TODO

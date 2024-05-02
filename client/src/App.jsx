@@ -6,8 +6,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { BrowserRouter, Routes as RouteList, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react';
-import OrganizationsPage from './pages/OrganizationsPage';
-import Organization from './pages/Organization';
+import OrganizationsPage from './pages/org-page-components/OrganizationsPage';
+import Organization from './pages/org-page-components/Organization';
 import ProfileSettings from './pages/ProfileSettings';
 import ForgotPassword from './pages/ForgotPassword';
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ExistingItemForm from "./add-item-form/ExistingItemForm";
-import NewItemForm from "./add-item-form/NewItemForm";
+import ExistingItemForm from "./ExistingItemForm";
+import NewItemForm from "./NewItemForm";
 
 export default function ItemFormContainer( { orgId, items, onAdd, onClose } ) {
 

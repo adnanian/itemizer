@@ -1,4 +1,4 @@
-import { tableRowClassName } from "../../helpers";
+import { tableRowClassName } from "../../../helpers";
 
 
 export default function MembersTable({ members, userMember, onDelete, onUpdate }) {

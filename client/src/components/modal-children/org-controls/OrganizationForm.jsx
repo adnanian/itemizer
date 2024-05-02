@@ -1,7 +1,7 @@
 import { Form, Formik } from "formik";
 import * as yup from "yup";
-import Input from "../formik-reusable/Input";
-import TextArea from "../formik-reusable/TextArea";
+import Input from "../../formik-reusable/Input";
+import TextArea from "../../formik-reusable/TextArea";
 
 export default function OrganizationForm( {userId, onAdd, onclose} ) {
     const initialValues = {

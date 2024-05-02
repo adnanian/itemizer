@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { removeMembershipKey, confirmButtonColor, confirmButtonTextColor } from "../../helpers";
+import { removeMembershipKey, confirmButtonColor, confirmButtonTextColor } from "../../../helpers";
 
 
 export default function ConfirmDeleteOrg({ orgId, orgName, userMember, onClose }) {

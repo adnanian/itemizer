@@ -1,4 +1,4 @@
-import JoinedOrgTile from "../components/JoinedOrgTile";
+import JoinedOrgTile from "../../components/JoinedOrgTile";
 
 /**
  * TODO

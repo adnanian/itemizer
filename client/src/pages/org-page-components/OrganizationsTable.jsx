@@ -1,8 +1,8 @@
-import StyledTitle from "../components/StyledTitle";
-import { hasNothingness, tableRowClassName, DotProgress, useModal } from "../helpers";
-import RequestForm from "../components/modal-children/RequestForm";
+import StyledTitle from "../../components/StyledTitle";
+import { hasNothingness, tableRowClassName, DotProgress, useModal } from "../../helpers";
+import RequestForm from "../../components/modal-children/requests/RequestForm";
 import { useState } from "react";
-import Modal from "../components/Modal";
+import Modal from "../../components/Modal";
 
 
 /**

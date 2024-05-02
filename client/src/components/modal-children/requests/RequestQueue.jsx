@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { tableRowClassName } from "../../helpers";
+import { tableRowClassName } from "../../../helpers";
 
 export default function RequestQueue({ modalOpen, requests, orgName, onWelcome, onDeny }) {
 
