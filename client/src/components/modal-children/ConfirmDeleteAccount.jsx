@@ -48,8 +48,8 @@ export default function ConfirmDeleteAccount({ user, onLogout, onClose }) {
                         method: "DELETE"
                     })
                         .then(() => {
-                            onLogout();
                             navigate("/login");
+                            onLogout();
                             alert("Your account has been deleted! You will now be returned to the login screen!");
                         });
                 } else {

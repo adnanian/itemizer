@@ -856,6 +856,14 @@ span.confirm button {
   width: fit-content;
 }
 
+#edit-account-form {
+  width: 500px !important;
+}
+
+#edit-account-form * {
+  margin: 5px 0 5px;
+}
+
 /*
 @media screen and (max-width: 1366px) {
 

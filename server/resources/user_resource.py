@@ -18,11 +18,19 @@ class UserById(Resource):
             user = g.record
             json = request.get_json()
             for attr in json:
-                setattr(user, attr, json.get(attr))
-                db.session.add(user)
-                db.session.commit()
-                return user.to_dict(), 200
+                value = json.get(attr)
+                print(f"{attr} - {value}")
+                if (attr == 'new_password' and value != ""):
+                    user.password_hash = value
+                    print("New password set.")
+                else:
+                    if (getattr(user, attr) != value):
+                        setattr(user, attr, value)
+            db.session.add(user)
+            db.session.commit()
+            return user.to_dict(), 200
         except ValueError as e:
+            print(e)
             return {'error': 'Not Modified'}, 304
         
     def delete(self, id):

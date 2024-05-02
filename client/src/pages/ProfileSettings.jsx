@@ -20,7 +20,7 @@ export default function ProfileSettings({ user, onLogout }) {
     }
 
     const modals = {
-        [buttonIds.edit]: <EditAccount user={user} onClose={toggle}/>,
+        [buttonIds.edit]: <EditAccount user={user} onLogout={onLogout} onClose={toggle}/>,
         [buttonIds.delete]: <ConfirmDeleteAccount user={user} onLogout={onLogout} onClose={toggle} />
     }
 
