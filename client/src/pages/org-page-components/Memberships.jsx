@@ -1,4 +1,5 @@
 import JoinedOrgTile from "../../components/JoinedOrgTile";
+import StyledTitle from "../../components/StyledTitle";
 
 /**
  * TODO
@@ -7,7 +8,6 @@ import JoinedOrgTile from "../../components/JoinedOrgTile";
  * @returns 
  */
 export default function Memberships( {memberships} ) {
-
     // TODO
     const usersOrganizations = memberships.map((membership) => {
         return (
@@ -28,7 +28,7 @@ export default function Memberships( {memberships} ) {
     return (
         <div id="user-orgs-div">
             <ul id="users-org-list">
-                {usersOrganizations}
+                {memberships.length ? usersOrganizations : <StyledTitle text="You currently have no memberships!"/>}
             </ul>
         </div>
     )

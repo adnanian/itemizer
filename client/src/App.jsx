@@ -45,7 +45,7 @@ function App() {
   return (
     <BrowserRouter>
       <RouteList>
-        <Route path="/" element={<Layout user={user} onLogout={handleLogoutClick} />} errorElement={<ErrorPage/>}>
+        <Route path="/" element={<Layout user={user} onLogout={handleLogoutClick} />}>
           <Route index element={<Home user={user}/>}/>
           <Route path="about" element={<About/>}/>
           <Route path="organizations" element={<OrganizationsPage user={user} setUser={setUser}/>}/>
@@ -55,6 +55,7 @@ function App() {
           <Route path="signup" element={<Signup/>}/>
           <Route path="forgot-password" element={<ForgotPassword/>}/>
         </Route>
+        <Route path="*" element={<ErrorPage/>}/>
       </RouteList>
     </BrowserRouter>
   );
