@@ -2,7 +2,7 @@ from config import app, db
 from models.models import *
 from faker import Faker
 from seeds.item_seed import item_seed
-from helpers import print_starting_seed, print_progress
+from helpers import print_starting_seed, print_ending_seed, print_progress, execute_to_success
 import random
 import traceback
 
@@ -26,6 +26,9 @@ ITEM_SEED_SIZE = 30
 ORG_SEED_SIZE = 53
 """Number of organizations that will be generated."""
 
+MAX_COUNT = 10
+"""Maximum count of an assigned item for the seed."""
+
 REQUEST_SEED_LIMIT = 10
 """ Maximum number of requests that will be generated per organization.
     This is only for the seed. This limit is not applied in actual run time of
@@ -35,6 +38,8 @@ REQUEST_SEED_LIMIT = 10
 PASSWORD = "Green+1234"
 """All seeded users will have the same password for the purposes of testing this application in the development phase."""
 
+ATTEMPT_LIMIT = 5
+"""The number of times that the execute_to_success helper function will execute."""
 
 def clear_tables():
     """
@@ -55,34 +60,36 @@ def seed_users():
     """
     #User.query.delete()
     users = []
-    print_starting_seed("users")
+    print_starting_seed("users")   
     for i in range(USER_SEED_SIZE):
-        first_name = fake.first_name()
-        last_name = fake.last_name()
-        username = (initials := (first_name[0] + last_name).lower()) + (
-            number := str(
-                fake.random_number(
-                    digits=(
-                        DEFAULT_NUMBER_LENGTH
-                        if len(initials) >= DEFAULT_NUMBER_LENGTH
-                        else MIN_USERNAME_LENGTH - len(initials)
-                    )
-                )
-            ).rjust(DEFAULT_NUMBER_LENGTH, '0')
-        )
-        email = (first_name + "." + last_name).lower() + number + "@itemizer.com"
-        user = User(
-            first_name=first_name, last_name=last_name, username=username, email=email
-        )
-        user.password_hash = PASSWORD
+        user = execute_to_success(create_user, i < USER_SEED_SIZE - 1, ATTEMPT_LIMIT)
         users.append(user)
         # print(user)
-        print_progress(i < USER_SEED_SIZE - 1)
-
+        
     db.session.add_all(users)
     db.session.commit()
-    print("User seed complete.")
-
+    print_ending_seed("users")
+    
+def create_user():
+    first_name = fake.first_name()
+    last_name = fake.last_name()
+    username = (initials := (first_name[0] + last_name).lower()) + (
+        number := str(
+            fake.random_number(
+                digits=(
+                    DEFAULT_NUMBER_LENGTH
+                    if len(initials) >= DEFAULT_NUMBER_LENGTH
+                    else MIN_USERNAME_LENGTH - len(initials)
+                )
+            )
+        ).rjust(DEFAULT_NUMBER_LENGTH, '0')
+    )
+    email = (first_name + "." + last_name).lower() + number + "@itemizer.com"
+    user = User(
+        first_name=first_name, last_name=last_name, username=username, email=email
+    )
+    user.password_hash = PASSWORD
+    return user
 
 def seed_items():
     """
@@ -91,26 +98,28 @@ def seed_items():
     #Item.query.delete()
     items = []
     print_starting_seed("items")
-    for key, value in (my_items := item_seed.items()):
-        part_number = (
-            "".join([fake.random_uppercase_letter() for n in range(4)])
-            + "-"
-            + str(fake.random_number(digits=5))
-        )
-        item = Item(
-            name=key,
-            description=value["description"],
-            part_number=part_number,
-            image_url=value["image_url"],
-        )
+    for key, value in item_seed.items():
+        item = execute_to_success(create_item, True, ATTEMPT_LIMIT, key, value)
         # print(item)
         items.append(item)
-        print(".", end="")
     print()
     db.session.add_all(items)
     db.session.commit()
-    print("Item seed complete.")
-
+    print_ending_seed("items")
+    
+def create_item(key, value):
+    part_number = (
+        "".join([fake.random_uppercase_letter() for n in range(4)])
+        + "-"
+        + str(fake.random_number(digits=5))
+    )
+    item = Item(
+        name=key,
+        description=value["description"],
+        part_number=part_number,
+        image_url=value["image_url"],
+    )
+    return item
 
 def seed_orgs():
     """
@@ -120,15 +129,82 @@ def seed_orgs():
     orgs = []
     print_starting_seed("organizations")
     for n in range(ORG_SEED_SIZE):
-        name = fake.company()
-        description = fake.sentence()
-        org = Organization(name=name, description=description)
+        org = execute_to_success(create_org, n < ORG_SEED_SIZE - 1, ATTEMPT_LIMIT)
         orgs.append(org)
-        print_progress(n < ORG_SEED_SIZE - 1)
 
     db.session.add_all(orgs)
     db.session.commit()
-    print("Organization seed complete.")
+    print_ending_seed("organizations")
+    
+def create_org():
+    name = fake.company()
+    description = fake.sentence()
+    org = Organization(name=name, description=description)
+    return org
+
+def seed_relational_models():
+    users = User.query.all()
+    items = Item.query.all()
+    orgs = Organization.query.all()
+    roles = ["owner", "admin", "regular"]
+    for org in orgs:
+        # Memberships
+        membership_size = random.randint(1, len(users))
+        memberships = []
+        # Assignments
+        assignment_size = random.randint(1, len(items))
+        assignments = []
+        # Requests
+        non_member_size = len(users) - membership_size
+        max_request_size = non_member_size if non_member_size < REQUEST_SEED_LIMIT else REQUEST_SEED_LIMIT
+        request_size = random.randint(0, max_request_size)
+        requests = []
+        # Randomization
+        user_selection = users[:]
+        item_selection = items[:]
+        
+        print_starting_seed("memberships")
+        for n in range(membership_size):
+            user = random.choice(user_selection)
+            user_selection.remove(user)
+            role = roles[0] if n == 0 else roles[random.randint(1, (len(roles) - 1))]
+            membership = Membership(user_id=user.id, organization_id=org.id, role=role)
+            memberships.append(membership)
+            db.session.add(membership)
+            print_progress(n < membership_size - 1)
+        #db.session.add_all(memberships)
+        print_ending_seed("memberships")
+        
+        print_starting_seed("assignments")
+        for n in range(assignment_size):
+            item = random.choice(item_selection)
+            item_selection.remove(item)
+            count = random.randint(0, MAX_COUNT)
+            assignment = Assignment(
+                item_id=item.id, organization_id=org.id, count=count
+            )
+            assignments.append(assignment)
+            db.session.add(assignment)
+            print_progress(n < assignment_size - 1)
+        #db.session.add_all(assignments)
+        print_ending_seed("assignments")
+        
+        print_starting_seed("requests")
+        for n in range(request_size):
+            user = random.choice(user_selection)
+            user_selection.remove(user)
+            request = Request(
+                user_id=user.id,
+                organization_id=org.id,
+                reason_to_join=fake.sentence()
+            )
+            requests.append(request)
+            db.session.add(request)
+            print_progress(n < request_size - 1)
+        #db.session.add_all(requests)
+        print_ending_seed("requests")
+
+    db.session.commit()
 
 
 def seed_memberships():
@@ -159,7 +235,6 @@ def seed_memberships():
             finally:
                 print_progress(n < membership_size - 1)
     print("Membership seed complete.")
-
 
 def seed_assignments():
     """
@@ -234,19 +309,27 @@ if __name__ == "__main__":
         done = False
         limit = 1
         attempt_number = 0
+        clear_tables()
+        seed_users()
+        seed_items()
+        seed_orgs()
+        seed_relational_models()
+        """
         while (not done and attempt_number < limit):
             try:
                 clear_tables()
                 seed_users()
                 seed_items()
                 seed_orgs()
-                seed_memberships()
-                seed_assignments()
-                seed_requests()
+                seed_relational_models()
+                #seed_memberships()
+                #seed_assignments()
+                #seed_requests()
                 done = True
             except Exception as e:
                 traceback.print_exc()
                 print("An error occurred.")
             finally:
                 attempt_number += 1
+        """
         print("Seeding complete!")
