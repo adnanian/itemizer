@@ -40,3 +40,6 @@ class OrganizationById(RestResourceTemplate):
     
     def __init__(self):
         super().__init__(Organization)
+        
+    def get(self, id):
+        return super().get(id)

@@ -40,6 +40,7 @@ export default function Organization() {
             fetch(`/api/organizations/${orgId}`)
                 .then((response) => response.json())
                 .then((data) => {
+                    console.log(organization);
                     setOrganization(data);
                 });
         }
@@ -49,7 +50,7 @@ export default function Organization() {
         if (hasNothingness(orgId, userId, organization)) {
             setUserMembership(null);
         } else {
-            //console.log(organization.memberships);
+            console.log(organization.memberships);
             const userMember = organization.memberships.find((membership) => {
                 //const superbool = membership.organization_id == orgId && membership.user_id == userId;
                 //console.log(`Type Member O: ${typeof membership.organization_id}, Type O: ${typeof orgId}`);

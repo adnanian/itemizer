@@ -44,7 +44,7 @@ export default function ReportForm() {
                 if (status == 200) {
                     alert("Thank you for your submission. We'll look into it.");
                 } else {
-                    throw new error(`Item name/part #, ${formData.itemName}, does not exist in our system. Please try again.`);
+                    throw new Error(`Item name/part #, ${formData.itemName}, does not exist in our system. Please try again.`);
                 }
             })
             .catch((error) => {

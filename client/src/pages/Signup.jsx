@@ -1,7 +1,7 @@
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import Input from "../components/formik-reusable/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 /*
 * Video Reference: https://www.youtube.com/watch?v=7Ophfq0lEAY&list=PLsBCPpptQcroC7NxdpGNJTIG8x5jv_66G&index=2
@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
  * @returns 
  */
 function Signup() {
+    const navigate = useNavigate();
 
     const initialValues = {
         firstName: '',
@@ -59,6 +60,7 @@ function Signup() {
             .then(({ data, status }) => {
                 console.log('Response status:', status);
                 if (status === 201) {
+                    navigate("/login");
                     console.log('New user successfully created.');
                     alert('New user successfully created.');
                 } else {

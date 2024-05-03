@@ -10,6 +10,7 @@ import OrganizationsPage from './pages/org-page-components/OrganizationsPage';
 import Organization from './pages/org-page-components/Organization';
 import ProfileSettings from './pages/ProfileSettings';
 import ForgotPassword from './pages/ForgotPassword';
+import ErrorPage from './pages/ErrorPage';
 
 /**
  * TODO
@@ -44,7 +45,7 @@ function App() {
   return (
     <BrowserRouter>
       <RouteList>
-        <Route path="/" element={<Layout user={user} onLogout={handleLogoutClick} />}>
+        <Route path="/" element={<Layout user={user} onLogout={handleLogoutClick} />} errorElement={<ErrorPage/>}>
           <Route index element={<Home user={user}/>}/>
           <Route path="about" element={<About/>}/>
           <Route path="organizations" element={<OrganizationsPage user={user} setUser={setUser}/>}/>

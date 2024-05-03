@@ -1,5 +1,4 @@
 from flask import request, g
-from flask_restful import Resource
 from resources.rest_resource_template import RestResourceTemplate
 from config import db
 from models.models import User

@@ -11,8 +11,8 @@ class RestResourceTemplate(Resource):
         self.model = model
         
     
-    def get(self, id = None):        
-        if id is int:
+    def get(self, id = None):     
+        if type(id) is int:
             record = g.record
             return record.to_dict(), 200
         else:
