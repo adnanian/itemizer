@@ -38,9 +38,14 @@ export default function Organization() {
             setOrganization(null);
         } else {
             fetch(`/api/organizations/${orgId}`)
-                .then((response) => response.json())
+                .then((response) => {
+                    if (!response.ok) {
+                        navigate("/unauthorized");
+                    }
+                    return response.json();
+                })
                 .then((data) => {
-                    console.log(organization);
+                    console.log(data);
                     setOrganization(data);
                 });
         }

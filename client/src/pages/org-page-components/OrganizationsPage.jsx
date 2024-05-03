@@ -5,7 +5,7 @@ import StyledTitle from "../../components/StyledTitle";
 import Modal from "../../components/Modal";
 import OrganizationForm from "../../components/modal-children/org-controls/OrganizationForm";
 import { removeMembershipKey, updateMembershipKey, updateKeyObjSize, useModal } from "../../helpers";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -25,7 +25,7 @@ export default function OrganizationsPage( {user, setUser} ) {
     const [organizations, setOrganizations] = useState([]);
     const [orgFilter, setOrgFilter] = useState(false);
     const [modalActive, toggle] = useModal();
-    const location = useLocation();
+    const navigate = useNavigate();
 
     // Takes on average 1.5 to 2 seconds to run.
     useEffect(() => {
@@ -61,7 +61,12 @@ export default function OrganizationsPage( {user, setUser} ) {
             
         }
         fetch('/api/organizations')
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok) {
+                navigate("/unauthorized");
+            }
+            return response.json();
+        })
         .then((data) => {
             setOrganizations(data);
 

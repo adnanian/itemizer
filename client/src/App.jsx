@@ -10,7 +10,8 @@ import OrganizationsPage from './pages/org-page-components/OrganizationsPage';
 import Organization from './pages/org-page-components/Organization';
 import ProfileSettings from './pages/ProfileSettings';
 import ForgotPassword from './pages/ForgotPassword';
-import ErrorPage from './pages/ErrorPage';
+import ErrorPage from './pages/error-handling/ErrorPage';
+import AccessBlocker from './pages/error-handling/AccessBlocker';
 
 /**
  * TODO
@@ -19,6 +20,7 @@ import ErrorPage from './pages/ErrorPage';
  */
 function App() {
   const [user, setUser] = useState(null);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     fetch("/api/check_session").then((response) => {
@@ -26,7 +28,7 @@ function App() {
         response.json().then((user) => setUser(user));
       } 
     })
-  }, [])
+  }, []);
 
   /**
      * TODO
@@ -54,6 +56,7 @@ function App() {
           <Route exact path="login" element={<Login onLogin={setUser}/>}/>
           <Route path="signup" element={<Signup/>}/>
           <Route path="forgot-password" element={<ForgotPassword/>}/>
+          <Route path="unauthorized" element={<AccessBlocker/>}/>
         </Route>
         <Route path="*" element={<ErrorPage/>}/>
       </RouteList>

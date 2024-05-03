@@ -16,8 +16,18 @@ function Home({ user }) {
 
     useEffect(() => {
         fetch('/api/items')
-            .then((response) => response.json())
-            .then((data) => setItems(data))
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Currently not logged in");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                console.log("User", user);
+                setItems(data);
+            })
+            .catch(() => console.error("Currently not logged in"));
     }, []);
 
     const itemList = items.map((item) => {

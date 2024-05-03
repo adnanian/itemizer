@@ -1,15 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StyledTitle from "../components/StyledTitle";
 import { useModal } from "../helpers";
 import ConfirmDeleteAccount from "../components/modal-children/profile-settings/ConfirmDeleteAccount";
 import Modal from "../components/Modal";
 import EditAccount from "../components/modal-children/profile-settings/EditAccount";
 import "../styles/Settings.css";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileSettings({ user, onLogout }) {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+            console.log("Setting timer");
+            const loadingTimeLimit = 2000;
+            const timer = setTimeout(() => {
+                
+                navigate("/unauthorized");
+            }, loadingTimeLimit);
+            return () => clearTimeout(timer);
+        }
+    }, [user, navigate]);
 
     if (!user) {
-        return <StyledTitle text="loading" />
+        return <StyledTitle text="Loading..." />
     }
 
     const [modalActive, toggle] = useModal();

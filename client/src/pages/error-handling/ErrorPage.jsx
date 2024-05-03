@@ -1,12 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
-import StyledTitle from "../components/StyledTitle";
-import '../styles/ErrorPage.css';
+import StyledTitle from "../../components/StyledTitle";
+import '../../styles/Error.css';
 
 export default function ErrorPage() {
     const location = useLocation();
     console.error("Ree! Invalid route: ", location.pathname);
     return (
-        <div id="error-page">
+        <div className="error-page">
             <StyledTitle text="Ree! Invalid Route!"/>
             <p>
                 The page that you have navigated to does

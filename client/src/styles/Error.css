@@ -1,17 +1,17 @@
-#error-page {
+.error-page {
     background: linear-gradient(to bottom right, black, slategray, black);
     width: fit-content;
     margin: 0 auto;
     border: 10px double black;
 }
 
-#error-page * {
+.error-page * {
     display: block;
     width: fit-content;
     margin: 0 auto 80px;
 }
 
-#error-page p {
+.error-page p {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 40px;
     padding: 20px;
