@@ -72,7 +72,7 @@ body {
       var(--c4),
       var(--c3),
       var(--c2),
-      var(--c1)), url('itemizer-background.jpg?v=1234') no-repeat center center;
+      var(--c1)), url('/images/itemizer-background.jpg?v=1234') no-repeat center center;
   background-size: cover;
 }
 

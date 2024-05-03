@@ -20,7 +20,7 @@ export default function ConfirmDeleteAccount({ user, onLogout, onClose }) {
                     You currently own {ownerships} {orgGrammaticalForm}. Please delete&nbsp;
                     {pronoun} or transfer {pronoun} to {adminGrammaticalForm}. You won't be
                     able to delete your account until all organizations you own have been
-                    either deleted or transferred to someone else.
+                    either deleted or transferred to other users.
                 </p>
             </div>
         );

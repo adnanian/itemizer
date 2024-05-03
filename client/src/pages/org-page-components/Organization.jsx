@@ -34,10 +34,46 @@ export default function Organization() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        async function fetchOrg() {
+            const promise = await fetch(`/api/organizations/${orgId}`)
+                .then((response) => {
+                    //console.log(response.ok);
+                    if (!response.ok) {
+                        navigate("/unauthorized");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    setOrganization(data);
+                    return data;
+                });
+            const userMember = promise.memberships.find((membership) => {
+                return membership.organization_id == orgId && membership.user_id == userId;
+            });
+            if (!userMember) {
+                // A user who attempts to access an organization without being a member of it, will be redirected to the error page.
+                navigate("/error");
+            }
+            setUserMembership(userMember);
+        }
+
+        if (hasNothingness(orgId, userId)) {
+            setOrganization(null);
+            userMembership(null);
+        } else {
+            //console.log(orgId);
+            fetchOrg();
+        }
+        //console.log("Use Effect Run");
+    }, [orgId, userId]);
+
+    /*
+    useEffect(() => {
+        let promise = null;
         if (!orgId) {
             setOrganization(null);
         } else {
-            fetch(`/api/organizations/${orgId}`)
+            promise = await fetch(`/api/organizations/${orgId}`)
                 .then((response) => {
                     if (!response.ok) {
                         navigate("/unauthorized");
@@ -45,17 +81,26 @@ export default function Organization() {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log(data);
+                    //console.log(data);
                     setOrganization(data);
+                    return data;
                 });
         }
+        if (hasNothingness(userId, promise)) {
+            setUserMembership(null);
+        } else {
+            console.log(promise);
+            console.log(promise.data);
+        }
     }, [orgId]);
+    */
 
+    /*
     useEffect(() => {
         if (hasNothingness(orgId, userId, organization)) {
             setUserMembership(null);
         } else {
-            console.log(organization.memberships);
+            //console.log(organization.memberships);
             const userMember = organization.memberships.find((membership) => {
                 //const superbool = membership.organization_id == orgId && membership.user_id == userId;
                 //console.log(`Type Member O: ${typeof membership.organization_id}, Type O: ${typeof orgId}`);
@@ -68,6 +113,7 @@ export default function Organization() {
             setUserMembership(userMember);
         }
     }, [orgId, userId, organization]);
+    */
 
     useEffect(() => {
         fetch('/api/items')
@@ -79,10 +125,11 @@ export default function Organization() {
         setItems([...items, item]);
     }
 
-    //console.log(organization);
-    //console.log(userMembership);
+    console.log(organization);
+    console.log(userMembership);
     //console.log(!(organization && userMembership))
 
+    
     if (hasNothingness(organization, userMembership)) {
         return <StyledTitle text="Loading..." />
     }

@@ -3,7 +3,7 @@ import { useState } from "react";
 const navLinkClassName = "nav-link";
 const oddRow = "odd-row-num";
 const evenRow = "even-row-num";
-const itemImagePlaceholder = '/placeholder-item-image.jpg';
+const itemImagePlaceholder = '/images/placeholder-item-image.jpg';
 const updateMembershipKey = "UPDATE MEMBERSHIP", updateKeyObjSize = 2;
 const removeMembershipKey = "REMOVE MEMBERSHIP";
 const confirmButtonColor = 'yellow'

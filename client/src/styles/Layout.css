@@ -17,7 +17,7 @@ header {
         var(--c8),
         var(--c7),
         var(--c6),
-        var(--c5)), url('itemizer-banner.jpg?v=1234') no-repeat center center;
+        var(--c5)), url('/images/itemizer-banner.jpg?v=1234') no-repeat center center;
     background-size: cover;
   }
   

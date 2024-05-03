@@ -30,6 +30,7 @@ def get_record_by_id():
       g.record = record
     else:
       return {'error': f'{model.__name__} record of id, {id}, does not exist. Please try again later.'}, 404
+  #print(request.endpoint)
   
 
 class Signup(Resource):
