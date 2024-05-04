@@ -29,12 +29,15 @@ def get_model_invoker():
 def print_starting_seed(model_name):
     print(f"Seeding {model_name}: ", end="", flush=True)
     
+def println_starting_seed(model_name):
+    print(f"Seeding {model_name}: ")
+    
 def print_ending_seed(model_name):
     print(f"{model_name.title()} seeding complete.")
 
 
-def print_progress(condition):
-    print(".", end="" if condition else "\n", flush=True)
+def print_progress(condition, progress_mark="."):
+    print(progress_mark, end="" if condition else "\n", flush=True)
 
 # Specifically for python seed.py - All callback functions must return something.
 def execute_to_success(callback, progress_condition, limit=sys.maxsize, *args):

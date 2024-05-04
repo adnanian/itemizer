@@ -30,6 +30,7 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String)
     created = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
+    last_updated = db.Column(db.DateTime, onupdate=db.func.now())
     
     # Memberships
     memberships = db.relationship('Membership', back_populates='user', cascade='all, delete-orphan')
