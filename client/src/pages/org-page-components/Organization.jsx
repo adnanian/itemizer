@@ -19,12 +19,11 @@ import "../../styles/Organization.css";
  * 
  */
 
-export default function Organization() {
+export default function Organization( {items, onAddItem} ) {
     const { orgId, userId } = useParams();
     const [organization, setOrganization] = useState(null);
     const [userMembership, setUserMembership] = useState(null);
     const [orgUpdated, setOrgUpdated] = useState(false);
-    const [items, setItems] = useState([]);
     const [modalKey, setModalKey] = useState("");
     const [modalActive, toggle] = useModal();
 
@@ -64,66 +63,8 @@ export default function Organization() {
         //console.log("Use Effect Run");
     }, [orgId, userId]);
 
-    /*
-    useEffect(() => {
-        let promise = null;
-        if (!orgId) {
-            setOrganization(null);
-        } else {
-            promise = await fetch(`/api/organizations/${orgId}`)
-                .then((response) => {
-                    if (!response.ok) {
-                        navigate("/unauthorized");
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    //console.log(data);
-                    setOrganization(data);
-                    return data;
-                });
-        }
-        if (hasNothingness(userId, promise)) {
-            setUserMembership(null);
-        } else {
-            console.log(promise);
-            console.log(promise.data);
-        }
-    }, [orgId]);
-    */
-
-    /*
-    useEffect(() => {
-        if (hasNothingness(orgId, userId, organization)) {
-            setUserMembership(null);
-        } else {
-            //console.log(organization.memberships);
-            const userMember = organization.memberships.find((membership) => {
-                //const superbool = membership.organization_id == orgId && membership.user_id == userId;
-                //console.log(`Type Member O: ${typeof membership.organization_id}, Type O: ${typeof orgId}`);
-                //console.log(`Type Member O: ${typeof membership.user_id}, Type O: ${typeof userId}`);
-                //console.log(`O: ${membership.organization_id}, U: ${membership.user_id} ==> ${superbool}`);
-                //return superbool;
-                return membership.organization_id == orgId && membership.user_id == userId;
-            });
-            //console.log(userMember);
-            setUserMembership(userMember);
-        }
-    }, [orgId, userId, organization]);
-    */
-
-    useEffect(() => {
-        fetch('/api/items')
-            .then((response) => response.json())
-            .then((data) => setItems(data))
-    }, []);
-
-    const addItem = (item) => {
-        setItems([...items, item]);
-    }
-
-    console.log(organization);
-    console.log(userMembership);
+    //console.log(organization);
+    //console.log(userMembership);
     //console.log(!(organization && userMembership))
 
     
@@ -135,35 +76,29 @@ export default function Organization() {
 
     function addAssignment(assignment, item = null) {
         if (item) {
-            addItem(item);
+            onAddItem(item);
         }
-        const newAssignments = [...organization.assignments, assignment];
-        setOrganization(oldOrganization => {
-            const newOrganization = {...oldOrganization}
-            newOrganization["assignments"] = newAssignments;
-            return newOrganization;
-        });
-    }
+        setOrganization({
+            ...organization,
+            assignments: [...organization.assignments, assignment]
+        })
+}
 
     function updateAssignment(updatedItemAssignment) {
-        const updatedAssignments = organization.assignments.map((assignment) => {
-            return assignment.id === updatedItemAssignment.id ? updatedItemAssignment : assignment
-        });
-        //alert(updatedItemAssignment.count);
-        setOrganization((oldOrganization) => {
-            const newOrganization = { ...oldOrganization };
-            newOrganization["assignments"] = updatedAssignments;
-            return newOrganization;
-        });
+        setOrganization({
+            ...organization,
+            assignments: organization.assignments.map((assignment) => {
+                return assignment.id !== updatedItemAssignment.id ? assignment : updatedItemAssignment;
+            })
+        })
     }
 
     function deleteAssignment(assignmentToDelete) {
-        setOrganization((oldOrgData) => {
-            const newOrgData = {...oldOrgData};
-            newOrgData["assignments"] = organization.assignments.filter((assignment) => {
+        setOrganization({
+            ...organization,
+            assignments: organization.assignments.filter((assignment) => {
                 return assignment.id !== assignmentToDelete.id;
-            });
-            return newOrgData;
+            })
         });
     }
 

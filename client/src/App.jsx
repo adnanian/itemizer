@@ -30,6 +30,20 @@ function App() {
     })
   }, []);
 
+  useEffect(() => {
+    fetch('/api/items')
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Currently not logged in");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            setItems(data);
+        })
+        .catch((error) => console.log(error));
+}, [user]);
+
   /**
      * TODO
      */
@@ -40,18 +54,22 @@ function App() {
     if (response.ok) {
         setUser(null);
     }
-}
+  }
 
   //console.log(`${user ? user.id : null} -- printed at ${new Date()}`);
+
+  function addItem(item) {
+    setItems([...items]);
+  }
 
   return (
     <BrowserRouter>
       <RouteList>
         <Route path="/" element={<Layout user={user} onLogout={handleLogoutClick} />}>
-          <Route index element={<Home user={user}/>}/>
+          <Route index element={<Home user={user} items={items}/>}/>
           <Route path="about" element={<About/>}/>
           <Route path="organizations" element={<OrganizationsPage user={user} setUser={setUser}/>}/>
-          <Route path="organizations/:orgId/users/:userId" element={<Organization />}/>
+          <Route path="organizations/:orgId/users/:userId" element={<Organization items={items} onAddItem={addItem}/>}/>
           <Route path="settings" element={<ProfileSettings user={user} onLogout={handleLogoutClick}/>}/>
           <Route exact path="login" element={<Login onLogin={setUser}/>}/>
           <Route path="signup" element={<Signup/>}/>
