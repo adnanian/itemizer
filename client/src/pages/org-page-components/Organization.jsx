@@ -15,10 +15,7 @@ import EditOrganizationForm from "../../components/modal-children/org-controls/E
 import "../../styles/Organization.css";
 
 /**
- * Buttons TODO
  * 
- * Edit Org.
- * Delete Org.
  * 
  */
 

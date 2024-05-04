@@ -20,9 +20,10 @@ class UserById(RestResourceTemplate):
             for attr in json:
                 value = json.get(attr)
                 print(f"{attr} - {value}")
-                if (attr == 'new_password' and value != ""):
-                    user.password_hash = value
-                    print("New password set.")
+                if (attr == 'new_password'):
+                    if (value != ""):
+                        user.password_hash = value
+                        print("New password set.")
                 else:
                     if (getattr(user, attr) != value):
                         setattr(user, attr, value)

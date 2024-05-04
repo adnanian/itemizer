@@ -66,6 +66,10 @@ export default function ProfileSettings({ user, onLogout }) {
                             <th>Created: </th>
                             <td>{user.created}</td>
                         </tr>
+                        <tr>
+                            <th>Last Updated: </th>
+                            <td>{user.last_updated || "N/A"}</td>
+                        </tr>
                     </tbody>
                 </table>
                 <button
