@@ -14,9 +14,9 @@ import ErrorPage from './pages/error-handling/ErrorPage';
 import AccessBlocker from './pages/error-handling/AccessBlocker';
 
 /**
- * TODO
+ * Root for all components in this application.
  * 
- * @returns 
+ * @returns all the routes in this application.
  */
 function App() {
   const [user, setUser] = useState(null);
@@ -45,8 +45,8 @@ function App() {
   }, [user]);
 
   /**
-     * TODO
-     */
+   * Logs the user out of his/her account and redirects to Login page.
+   */
   async function handleLogoutClick() {
     const response = await fetch("/api/logout", {
       method: "DELETE"
@@ -56,6 +56,11 @@ function App() {
     }
   }
 
+  /**
+   * Adds a new item to the items array.
+   * 
+   * @param {*} item the item to add.
+   */
   function addItem(item) {
     setItems([...items, item]);
   }

@@ -2,7 +2,10 @@ import { useField } from "formik";
 import InputErrorMessage from "./InputErrorMessage";
 
 /**
- * TODO
+ * Creates a drop down list, using Formik functionality.
+ * 
+ * @param {*} param0 input attributes, must include a label, id, and a list of <option> elements.
+ * @returns a fully customized <select> elements with its options.
  */
 const Select = ({label, id, ...props}) => {
     // field - info about the input fields

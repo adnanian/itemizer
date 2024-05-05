@@ -7,6 +7,11 @@ from resources.resources import *
 
 @app.before_request
 def check_if_logged_in():
+  """This view will be run to check if there's a logged in user before attempting to access other data.
+
+  Returns:
+      JSON: if a user is not logged in, then an "Unauthorized" message will be returned.
+  """
   endpoint_whitelist = ['signup', 'login', 'check_session']
   #endpoints_for_postman = ['signup', 'login', 'check_session', 'items', 'item_by_id', 'organizations', 'organization_by_id','users', 'user_by_id', 'requests', 'request_by_id', 'membership_by_id']
   #print(request.endpoint)
@@ -16,6 +21,12 @@ def check_if_logged_in():
     
 @app.before_request
 def get_record_by_id():
+  """If accessing a model record, this view will run to get the model by id. The correct model will be matched by
+    the endpoint.
+
+  Returns:
+      any: if the model record does not exist, then a "not found" message will be returned; otherwise, returns nothing. 
+  """
   endpoint_model_map = {
     'user_by_id': User,
     'item_by_id': Item,
@@ -34,8 +45,14 @@ def get_record_by_id():
   
 
 class Signup(Resource):
+  """Create a new user."""
   
   def post(self):
+    """Creates a new instance of User.
+
+    Returns:
+        dict: a JSONified dictionary of the created User and its attributes, if creation successful, otherwise an error message.
+    """
     # Retrieve form inputs
     try:
       new_user = User(
@@ -54,7 +71,13 @@ class Signup(Resource):
       return {'message': str(e)}, 422
 
 class Login(Resource):
+  """Logs user into the account."""
   def post(self):
+    """Sets the session's user_id, so that the user has authorization to access appropriate data.
+
+    Returns:
+        JSON: the JSONified user object, if entered password is correct; an "Unauthorized" message otherwise.
+    """
     login_name = request.get_json().get('username_or_email')
     print(login_name)
     if login_name:
@@ -66,14 +89,28 @@ class Login(Resource):
     return {'message': '401 Unauthorized'}, 401
   
 class Logout(Resource):
+  """Logs user out of the webiste."""
   def delete(self):
+    """_summary_
+
+    Returns:
+        _type_: _description_
+    """
     print("About to log out.")
     session['user_id'] = None
     print("Logging out")
     return {}, 204
   
 class CheckSession(Resource):
+  """Check if user is logged in."""
   def get(self):
+    """
+    Checks if there is a user id for the session object.
+    In other words, checks if a user is logged in.
+
+    Returns:
+      type (dict): the JSONified user object, if there's an id for the session object, the message "Unauthorized" otherwise.
+    """
     if user := User.query.filter_by(id=session.get('user_id')).first():
       return user.to_dict(), 200
     return {'message': '401 Unauthorized'}, 401

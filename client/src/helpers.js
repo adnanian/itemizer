@@ -1,13 +1,28 @@
 import { useState } from "react";
 
+// Class name for navigational links.
 const navLinkClassName = "nav-link";
+
+// Class name to set table row to if the row number is odd.
 const oddRow = "odd-row-num";
+
+// Class name to set the table row to if the row number is even.
 const evenRow = "even-row-num";
+
+// Placeholder image for items if there is not a valid URL provided.
 const itemImagePlaceholder = '/images/placeholder-item-image.jpg';
+
+// For redirecting users from Organization.jsx to OrganizationsPage.jsx. Membership will update.
 const updateMembershipKey = "UPDATE MEMBERSHIP", updateKeyObjSize = 2;
+
+// For redirecting users from Organization.jsx to OrganizationsPage.jsx. Membership will be removed.
 const removeMembershipKey = "REMOVE MEMBERSHIP";
+
+// confirmButton properties are for inline styling of critical warnings.
 const confirmButtonColor = 'yellow'
 const confirmButtonTextColor = 'indigo';
+
+// Minus and Plus buttons are for styling the buttons in AssignedItemCards.
 const minusButtonClassName = "minus-button";
 const plusButtonClassName = "plus-button";
     

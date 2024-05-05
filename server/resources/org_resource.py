@@ -4,9 +4,20 @@ from flask_restful import Resource
 from config import db
 from models.organization import Organization
 
-
 class OrganizationResource(Resource):
+    """Resource tied to the Organization model. Handles fetch requests for all Organization instances.
+
+    Args:
+        RestResourceTemplate (RestResourceTemplate): simplify RESTFul API building.
+    """
     def get(self):
+        """Returns all organization instances.
+        Serialized contents are: id, name, description, created, and
+        the user_id, id, role, and username of memberships.
+
+        Returns:
+            list: a list of serialized organization objects.
+        """
         orgs = [
             org.to_dict(only=(
               'id',
@@ -23,6 +34,11 @@ class OrganizationResource(Resource):
         return orgs, 200
 
     def post(self):
+        """Creates a new instance of Organization.
+
+        Returns:
+            dict: a JSONified dictionary of the created Organization and its attributes, if creation successful, otherwise an error message.
+        """
         try:
             new_org = Organization(
                 name=request.get_json().get("name"),
@@ -37,6 +53,11 @@ class OrganizationResource(Resource):
 
 
 class OrganizationById(RestResourceTemplate):
+    """Resource tied to the Organization model. Handles fetch requests for single Organization instances.
+
+    Args:
+        RestResourceTemplate (RestResourceTemplate): simplify RESTFul API building.
+    """
     
     def __init__(self):
         super().__init__(Organization)

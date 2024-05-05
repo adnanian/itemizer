@@ -4,16 +4,35 @@ from config import db
 from models.models import User
 
 class UserResource(RestResourceTemplate):
+    """Resource tied to the User model. Handles fetch requests for all User instances.
+
+    Args:
+        RestResourceTemplate (RestResourceTemplate): simplify RESTFul API building.
+    """
     
     def __init__(self):
         super().__init__(User)
     
 class UserById(RestResourceTemplate):
+    """Resource tied to the User model. Handles fetch requests for single User instances.
+
+    Args:
+        RestResourceTemplate (RestResourceTemplate): simplify RESTFul API building.
+    """
     
     def __init__(self):
         super().__init__(User)
     
     def patch(self, id):
+        """Updates a user's information.
+        DO NOT CALL THIS METHOD UNTIL YOU RUN AUTHENTICATE FIRST!
+
+        Args:
+            id (int): the user id.
+
+        Returns:
+            dict: a JSONified dictionary of the created User and its attribute, if update successful, otherwise an error message.
+        """
         try:
             user = g.record
             json = request.get_json()

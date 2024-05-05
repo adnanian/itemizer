@@ -3,12 +3,22 @@ from resources.rest_resource_template import RestResourceTemplate
 from config import db
 from models.assignment import Assignment
 
-
 class AssignmentResource(RestResourceTemplate):
+    """Resource tied to the Assignment model. Handles fetch requests for all Assignment instances.
+
+    Args:
+        RestResourceTemplate (RestResourceTemplate): simplify RESTFul API building.
+    """
+    
     def __init__(self):
         super().__init__(Assignment)
 
     def post(self):
+        """Creates a new instance of Assignment.
+
+        Returns:
+            dict: a JSONified dictionary of the created assignment and its attributes, if creation successful, otherwise an error message.
+        """
         try:
             new_org = Assignment(
                 item_id=request.get_json().get("item_id"),
@@ -24,5 +34,11 @@ class AssignmentResource(RestResourceTemplate):
 
 
 class AssignmentById(RestResourceTemplate):
+    """Resource tied to the Assignment model. Handles fetch requests for single Assignment instances.
+
+    Args:
+        RestResourceTemplate (RestResourceTemplate): simplify RESTFul API building.
+    """
+    
     def __init__(self):
         super().__init__(Assignment)

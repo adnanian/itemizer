@@ -3,13 +3,22 @@ from resources.rest_resource_template import RestResourceTemplate
 from config import db
 from models.membership import Membership
 
-
 class MembershipResource(RestResourceTemplate):
+    """Resource tied to the Membership model. Handles fetch requests for all Membership instances.
+
+    Args:
+        RestResourceTemplate (RestResourceTemplate): simplify RESTFul API building.
+    """
 
     def __init__(self):
         super().__init__(Membership)
 
     def post(self):
+        """Creates a new instance of Membership.
+
+        Returns:
+            dict: a JSONified dictionary of the created Membership and its attributes, if creation successful, otherwise an error message.
+        """
         try:
             new_membership = Membership(
                 user_id=request.get_json().get("user_id"),
@@ -25,6 +34,11 @@ class MembershipResource(RestResourceTemplate):
 
 
 class MembershipById(RestResourceTemplate):
+    """Resource tied to the Membership model. Handles fetch requests for single Membership instances.
+
+    Args:
+        RestResourceTemplate (RestResourceTemplate): simplify RESTFul API building.
+    """
 
     def __init__(self):
         super().__init__(Membership)

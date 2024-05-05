@@ -2,7 +2,10 @@ import { useField } from "formik";
 import InputErrorMessage from "./InputErrorMessage";
 
 /**
- * TODO
+ * Creates a text area, using Formik functionality.
+ * 
+ * @param {*} param0 input attributes, must include a label and id, and can include other <textarea> attributes.
+ * @returns a fully customized <textarea> element.
  */
 const TextArea = ({label, id, ...props}) => {
     // field - info about the input fields

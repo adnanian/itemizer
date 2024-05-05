@@ -4,11 +4,21 @@ from config import db
 from models.request import Request
 
 class RequestResource(RestResourceTemplate):
+    """Resource tied to the Request model. Handles fetch requests for all Request instances.
+
+    Args:
+        RestResourceTemplate (RestResourceTemplate): simplify RESTFul API building.
+    """
   
     def __init__(self):
         super().__init__(Request)
     
-    def post(self): 
+    def post(self):
+        """Creates a new instance of Request.
+
+        Returns:
+            dict: a JSONified dictionary of the created Request and its attributes, if creation successful, otherwise an error message.
+        """ 
         try:
             new_request = Request(
                 user_id=request.get_json().get('user_id'),
@@ -29,6 +39,11 @@ class RequestResource(RestResourceTemplate):
 """        
         
 class RequestById(RestResourceTemplate):
+    """Resource tied to the Request model. Handles fetch requests for single Request instances.
+
+    Args:
+        RestResourceTemplate (RestResourceTemplate): simplify RESTFul API building.
+    """
   
-  def __init__(self):
-    super().__init__(Request)
+    def __init__(self):
+        super().__init__(Request)

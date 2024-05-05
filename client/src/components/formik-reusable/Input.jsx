@@ -2,7 +2,10 @@ import { useField } from "formik";
 import InputErrorMessage from "./InputErrorMessage";
 
 /**
- * TODO
+ * Creates an input with Formik functionality. Can be of type text, number, or checkbox.
+ * 
+ * @param {*} param0 input attributes. Must include at least a label, and an id.
+ * @returns a fully customized <input/> element.
  */
 const Input = ({label, id, ...props}) => {
     // field - info about the input fields
