@@ -122,8 +122,8 @@ export default function Organization() {
         setItems([...items, item]);
     }
 
-    console.log(organization);
-    console.log(userMembership);
+    //console.log(organization);
+    //console.log(userMembership);
     //console.log(!(organization && userMembership))
 
     

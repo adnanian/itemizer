@@ -10,11 +10,18 @@ export default function AdjustQuantityForm({
 }) {
     const [adjustment, setAdjustment] = useState(1);
     const labelName = className === minusButtonClassName ? "Items Used" : "New Received";
-    const maxAdjustment = className === minusButtonClassName ? currentQuantity : (Number.MIN_SAFE_INTEGER - currentQuantity);
+    const maxAdjustment = className === minusButtonClassName ? currentQuantity : (Number.MAX_SAFE_INTEGER - currentQuantity);
+
+    //console.log(adjustment);
 
     function handleSubmit(e) {
         e.preventDefault();
-        const newQuantity = className === minusButtonClassName ? (currentQuantity - adjustment) : (quantity + adjustment);
+        let newQuantity = currentQuantity;
+        if (className === minusButtonClassName) {
+            newQuantity -= adjustment;
+        } else {
+            newQuantity += adjustment;
+        }
         fetch(`/api/assignments/${assignmentId}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
@@ -44,7 +51,7 @@ export default function AdjustQuantityForm({
                     min="0"
                     max={maxAdjustment}
                     value={adjustment}
-                    onChange={(e) => setAdjustment(e.target.value)}
+                    onChange={(e) => setAdjustment(Number.parseInt(e.target.value))}
                 />
                 <input type="submit" />
             </form>
