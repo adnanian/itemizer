@@ -7,6 +7,11 @@ from helpers import *
 from models.membership import Membership
 
 class User(db.Model, SerializerMixin):
+    """
+    Person that is physically using Itemizer.
+    A user can join organizations, make requests,
+    add/remove items, and manage inventory.
+    """
     
     serialize_rules = (
         '-_password_hash',
@@ -42,18 +47,56 @@ class User(db.Model, SerializerMixin):
     
     @validates('first_name', 'last_name')
     def validate_name(self, key, name):
+        """Validates that the name is a non-empty, non-unique string.
+
+        Args:
+            key (str): the attribute name.
+            name (str): the name attribute value.
+
+        Raises:
+            ValueError: if name is NOT a non-empty string.
+
+        Returns:
+            str: the value of name..
+        """
         if not is_non_empty_string(name):
             raise ValueError(f"{key.title()} must be a non-empty string.")
         return name
     
     @validates('username')
     def validate_username(self, key, username):
+        """Validates that the username is a non-empty, non-unique string.
+
+        Args:
+            key (str): the attribute name.
+            name (str): the username attribute value.
+
+        Raises:
+            ValueError: if username is NOT a non-empty string.
+            ValueError: if username is not unique.
+
+        Returns:
+            str: the value of name..
+        """
         if not(is_non_empty_string(username) and User.query.filter_by(username=username).first() is None):
             raise ValueError(f"{key.title()} must be a unique, non-empty string.")
         return username
         
     @validates('email')
     def validate_email(self, key, email):
+        """Validates that the email is unique and valid.
+
+        Args:
+            key (str): the attribute name.
+            email (str): the attribute value.
+
+        Raises:
+            ValueError: if entered input is NOT already a validemail.
+            ValueError: if entered email is already tied to another user.
+
+        Returns:
+            str: the value of email.
+        """
         if ("@" not in email):
             raise ValueError(f"{key.title()} must be a valid email address.")
         elif User.query.filter_by(email=email).first():
@@ -65,12 +108,30 @@ class User(db.Model, SerializerMixin):
     
     @hybrid_property
     def password_hash(self):
+        """Restriction for user. Prevents user from accessing password hash.
+
+        Raises:
+            AttributeError: if an attempt to access the password hash has been made.
+        """
         raise AttributeError("Password hash cannot be viewed.")
     
     @password_hash.setter
     def password_hash(self, password):
+        """Sets a new password for user and rehashes it.
+
+        Args:
+            password (str): the new password.
+        """
         password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
         self._password_hash = password_hash.decode('utf-8')
         
     def authenticate(self, password):
+        """Check if user entered the correct password.
+
+        Args:
+            password (str): the password
+
+        Returns:
+            bool: if user entered the correct password; False otherwise.
+        """
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))

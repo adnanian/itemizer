@@ -7,6 +7,14 @@ from models.membership import Membership
 from models.assignment import Assignment
 
 class Organization(db.Model, SerializerMixin):
+    """
+    A group of related users managing a collection of items.
+    An organization can have many requests to join.
+    An organization has many memberships (users as members).
+    An organization has many assignments (items asigned specifically for that org).
+    A user can belong to many organizations.
+    A membership, assignment, and request, can each belong to one user.
+    """
     
     serialize_rules = (
         #'-memberships.user',
@@ -45,6 +53,19 @@ class Organization(db.Model, SerializerMixin):
     
     @validates('name')
     def validate_name(self, key, name):
+        """Validates that the name is a non-empty, non-unique string.
+
+        Args:
+            key (str): the attribute name.
+            name (str): the name attribute value.
+
+        Raises:
+            ValueError: if name is NOT a non-empty string.
+            ValueError: if name is not unique.
+
+        Returns:
+            str: the value of name..
+        """
         if not(is_non_empty_string(name) and Organization.query.filter_by(name=name).first() is None):
             raise ValueError(f"{key.title()} must be a unique, non-empty string.")
         return name

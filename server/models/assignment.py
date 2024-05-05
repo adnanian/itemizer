@@ -4,6 +4,14 @@ from sqlalchemy.orm import validates
 from helpers import *
 
 class Assignment(db.Model, SerializerMixin):
+    """
+    Connects an organization and item together.
+    An organization can have many items.
+    An item can be used in many organizations.
+    An assignment belongs to one organization and one item.
+    Purpose of this model is to ensure that an item type locally used in an organization would
+    have an accurately different quantity than that of another organization.
+    """
     
     serialize_rules = (
         '-organization.assignments',
@@ -29,6 +37,18 @@ class Assignment(db.Model, SerializerMixin):
     
     @validates('count')
     def validate_count(self, key, count):
-        if count < 0:
-            raise ValueError(f"{key} - Item count must be non-negative.")
+        """Validates that the count attribute is a non-negative integer.
+
+        Args:
+            key (_type_): the attribute name. (Must be key)
+            count (int): the count attribute value.
+
+        Raises:
+            ValueError: if count is a NOT a non-negative integer.
+
+        Returns:
+            int: the value of count.
+        """
+        if count is not int or count < 0:
+            raise ValueError(f"{key} - Item count must be a non-negative integer.")
         return count
