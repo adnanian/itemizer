@@ -8,6 +8,9 @@ const updateMembershipKey = "UPDATE MEMBERSHIP", updateKeyObjSize = 2;
 const removeMembershipKey = "REMOVE MEMBERSHIP";
 const confirmButtonColor = 'yellow'
 const confirmButtonTextColor = 'indigo';
+const minusButtonClassName = "minus-button";
+const plusButtonClassName = "plus-button";
+    
 
 /**
  * Returns the class name for a table row depending on
@@ -74,5 +77,7 @@ export {
     updateKeyObjSize,
     removeMembershipKey,
     confirmButtonColor,
-    confirmButtonTextColor
+    confirmButtonTextColor,
+    minusButtonClassName,
+    plusButtonClassName
 }

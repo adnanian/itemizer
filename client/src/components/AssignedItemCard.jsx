@@ -1,22 +1,16 @@
-import { itemImagePlaceholder } from "../helpers";
+import { useState } from "react";
+import { itemImagePlaceholder, minusButtonClassName, plusButtonClassName, useModal } from "../helpers";
+import AdjustQuantityForm from "./modal-children/item-assignments/AdjustQuantityForm";
 
 export default function AssignedItemCard( {item, addedAt, lastUpdated, quantity, assignmentId, onUpdate} ) {
-    const minusButtonClassName = "minus-button";
-    const plusButtonClassName = "plus-button";
-    
+    const [modalActive, toggle] = useModal();
+    const [className, setClassName] = useState("");
+
     function handleClick(e) {
-        const newQuantity = e.target.className === minusButtonClassName ? (quantity - 1) : (quantity + 1);
-        fetch(`/api/assignments/${assignmentId}`, {
-            method: "PATCH",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                count: newQuantity
-            })
-        })
-        .then((response) => response.json())
-        .then((data) => onUpdate(data));
+        setClassName(e.target.className);
+        toggle();
     }
-    
+
     return (
         <div className="assigned-item">
             <img src={item.image_url || itemImagePlaceholder} alt={item.name}/>
@@ -40,6 +34,15 @@ export default function AssignedItemCard( {item, addedAt, lastUpdated, quantity,
                 >-</button>
                 <button className={plusButtonClassName} onClick={handleClick}>+</button>
             </div>
+            <Modal modalOpen={modalActive} closeModal={toggle}>
+                <AdjustQuantityForm
+                    className={className}
+                    currentQuantity={quantity}
+                    assignmentId={assignmentId}
+                    onUpdate={onUpdate}
+                    onClose={toggle}
+                />
+            </Modal>
         </div>
     )
 }
