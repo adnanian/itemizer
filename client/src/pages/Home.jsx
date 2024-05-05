@@ -10,8 +10,25 @@ import "../styles/Home.css";
  * @param {*} param0 
  * @returns 
  */
-function Home({ user, items }) {
+function Home({ user }) {
+    const [items, setItems] = useState([])
     const welcomeTitle = user ? `Welcome, ${user.first_name}!` : "Welcome to Itemizer!";
+
+    useEffect(() => {
+        fetch('/api/items')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Currently not logged in");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                console.log("User", user);
+                setItems(data);
+            })
+            .catch(() => console.error("Currently not logged in"));
+    }, []);
 
     const itemList = items.map((item) => {
         return (
