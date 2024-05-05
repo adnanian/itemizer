@@ -26,21 +26,39 @@ function App() {
     fetch("/api/check_session").then((response) => {
       if (response.ok) {
         response.json().then((user) => setUser(user));
-      } 
+      }
     })
   }, []);
+
+  useEffect(() => {
+    fetch('/api/items')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Currently not logged in");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setItems(data);
+      })
+      .catch((error) => console.log(error));
+  }, [user]);
 
   /**
      * TODO
      */
   async function handleLogoutClick() {
     const response = await fetch("/api/logout", {
-        method: "DELETE"
+      method: "DELETE"
     });
     if (response.ok) {
-        setUser(null);
+      setUser(null);
     }
-}
+  }
+
+  function addItem(item) {
+    setItems([...items]);
+  }
 
   //console.log(`${user ? user.id : null} -- printed at ${new Date()}`);
 
@@ -48,17 +66,17 @@ function App() {
     <BrowserRouter>
       <RouteList>
         <Route path="/" element={<Layout user={user} onLogout={handleLogoutClick} />}>
-          <Route index element={<Home user={user}/>}/>
-          <Route path="about" element={<About/>}/>
-          <Route path="organizations" element={<OrganizationsPage user={user} setUser={setUser}/>}/>
-          <Route path="organizations/:orgId/users/:userId" element={<Organization />}/>
-          <Route path="settings" element={<ProfileSettings user={user} onLogout={handleLogoutClick}/>}/>
-          <Route exact path="login" element={<Login onLogin={setUser}/>}/>
-          <Route path="signup" element={<Signup/>}/>
-          <Route path="forgot-password" element={<ForgotPassword/>}/>
-          <Route path="unauthorized" element={<AccessBlocker/>}/>
+          <Route index element={<Home user={user} items={items} />} />
+          <Route path="about" element={<About />} />
+          <Route path="organizations" element={<OrganizationsPage user={user} setUser={setUser} />} />
+          <Route path="organizations/:orgId/users/:userId" element={<Organization items={items} onAddItem={addItem}/>} />
+          <Route path="settings" element={<ProfileSettings user={user} onLogout={handleLogoutClick} />} />
+          <Route exact path="login" element={<Login onLogin={setUser} />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="unauthorized" element={<AccessBlocker />} />
         </Route>
-        <Route path="*" element={<ErrorPage/>}/>
+        <Route path="*" element={<ErrorPage />} />
       </RouteList>
     </BrowserRouter>
   );

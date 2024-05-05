@@ -15,16 +15,16 @@ export default function About() {
                 <section>
                     <h2>Introduction</h2>
                     <p>
-                        Itemizer is a simple tool for allowing organizations to&nbsp;
+                        Itemizer is a simple tool for allowing organizations to
                         manage their inventories of non-stock items. Each member
                         of an organization can add items in their local system
                         to track their quantities. This is to ensure that when
-                        an item is running low in terms of quantity, organizations&nbsp;
+                        an item is running low in terms of quantity, organizations
                         are prepared in advance, so that they can order more, and
                         expect more items to arrive before depleting their supplies.
                     </p>
                     <p>
-                        There are numerous examples of real world applications for a&nbsp;
+                        There are numerous examples of real world applications for a
                         scenario like this. One example is tracking how many rolls of
                         toilet paper you have in your bathroom. You would never want to
                         be in a situation where you discover, while using the toilet,
@@ -32,13 +32,13 @@ export default function About() {
                         quite embarrassing.
                     </p>
                     <p>
-                        With Itemizer, you will always know the exact count. The&nbsp;
+                        With Itemizer, you will always know the exact count. The
                         intended idea is that you would have to physically 
                         count each type of item only once. Once you have done so,
                         you could record that information in the system; Then,
                         from that point forward, when you completely use up an
                         item, all you would have to do is click the minus button,
-                        so that it automatically subtracks your current stock by 1.
+                        so that it automatically subtracts your current stock by 1.
                         When you receive more items, you can simply click the plus
                         button to add more.
                     </p>
@@ -46,7 +46,7 @@ export default function About() {
                 <section>
                     <h2>Background</h2>
                     <p>
-                        The idea for Itemizer started in October 2023. At that&nbsp;
+                        The idea for Itemizer started in October 2023. At that
                         time, I was noticing the need for having an easily available
                         system for a visual, numerical system for all items that I,
                         or my organization uses. Whenever we finish an item, we don't

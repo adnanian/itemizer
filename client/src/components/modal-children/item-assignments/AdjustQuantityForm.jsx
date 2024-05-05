@@ -40,7 +40,7 @@ export default function AdjustQuantityForm({
     }
 
     return (
-        <div>
+        <div id="adjust-quantity-modal">
             <form onSubmit={handleSubmit}>
                 <label htmlFor="adjustment">{labelName}</label>
                 <input
