@@ -32,7 +32,7 @@ export default function OrganizationsPage( {user, setUser} ) {
         const timerName = "Execution Time - Fetch";
         //console.time(timerName);
         const passedValue =  JSON.parse(localStorage.getItem(updateMembershipKey)) || JSON.parse(localStorage.getItem(removeMembershipKey));
-        console.log(passedValue);
+        //console.log(passedValue);
         if (typeof passedValue === 'object' && passedValue !== null) {
             setUser((oldUserData) => {
                 const newUserData = {...oldUserData};

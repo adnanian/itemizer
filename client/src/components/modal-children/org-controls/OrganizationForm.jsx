@@ -62,7 +62,7 @@ export default function OrganizationForm( {userId, onAdd, onclose} ) {
                     .then(() => console.log(`${orgData.name} creation failed!`));
                 })
             } else {
-                throw new Error(`Organization Creation failed: ${orgData.message}`);
+                throw new Error(`Organization Creation failed: name must be unique.`);
             }
         })
         .catch((error) => {

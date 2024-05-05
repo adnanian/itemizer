@@ -57,7 +57,7 @@ function App() {
   }
 
   function addItem(item) {
-    setItems([...items]);
+    setItems([...items, item]);
   }
 
   //console.log(`${user ? user.id : null} -- printed at ${new Date()}`);
