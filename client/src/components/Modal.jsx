@@ -1,5 +1,18 @@
 import { useEffect, useRef } from "react";
 
+/**
+ * Generates a reusable popup dialog.
+ * 
+ * NOTE: To effectively use this, you need to declare the useModal() hook on the
+ * parent component and pass the modalActive state to openModal and the toggle
+ * function to closeModal.
+ * 
+ * @param {Object} param0 
+ * @param {Boolean} param0.openModal if true, then the popup will show.
+ * @param {Function} param0.closeModal 
+ * @param {*} param0.children the child elements and components.
+ * @returns a popup and any children rendered under it.
+ */
 export default function Modal( { openModal, closeModal, children } ) {
     const ref = useRef();
     //console.log(console.log(`Open Modal: ${openModal}`));

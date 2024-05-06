@@ -8,9 +8,9 @@ import { Link, useNavigate } from "react-router-dom";
 */
 
 /**
- * TODO
+ * Renders a signup page where users can create new accounts.
  * 
- * @returns 
+ * @returns the signup page.
  */
 function Signup() {
     const navigate = useNavigate();
@@ -35,10 +35,14 @@ function Signup() {
     });
 
     /**
-     * TODO
+     * If the user entered valid information, then an attempt will be made
+     * to add that new information to the server. If successful, then a message
+     * will be displayed to the user that his/her account was successfully created,
+     * and will be rerouted to the login page. Otherwise, an error message will
+     * be displayed to the user showing him/her the errors in input.
      * 
-     * @param {*} values 
-     * @param {*} actions 
+     * @param {*} values the values from Formik.
+     * @param {*} actions Formik actions.
      */
     function handleSubmit(values, actions) {
         fetch("/api/signup", {

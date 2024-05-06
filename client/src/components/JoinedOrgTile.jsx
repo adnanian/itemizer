@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
 
 /**
- * TODO
+ * Creates a linkable tile that consists of the basic information
+ * about an organization that the current user belongs to as well as
+ * the users membership information.
  * 
- * @param {*} props 
- * @returns 
+ * When the link is clicked, the user is navigated to the Organization page,
+ * where he/she can access the orgnaization information, such as viewing
+ * inventory, and other members.
+ * 
+ * @param {*} props the user's membership information.
+ * @returns A tile of a user's membership informaiton.
  */
 export default function JoinedOrgTile(props) {
     return (

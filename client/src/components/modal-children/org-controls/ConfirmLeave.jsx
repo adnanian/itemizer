@@ -2,6 +2,20 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { removeMembershipKey } from "../../../helpers";
 
+/**
+ * Displays a modal view prompting a user to confirm his/her decision
+ * to leave an organization. If the user leaving is the owner, then
+ * he/she will be prompted to transfer ownership to an admin. If
+ * there are no admins in the organization, then the owner could not
+ * leave until another member is promoted from REGULAR to admin.
+ * 
+ * @param {Object} props 
+ * @param {Object} param0.userMember the user requesting to leave.
+ * @param {Array} param0.admins the admins of the organization to leave.
+ * @param {Function} param0.onUpdate the callback function to execute when the user has left.
+ * @param {Function} param0.onClose the callback function to execute to close the modal.
+ * @returns the modal view prompting the user to confirm the decision to leave the organization.
+ */
 export default function ConfirmLeave({ userMember, admins, onUpdate, onClose }) {
 
     if (userMember.role === "OWNER" && !admins.length) {
@@ -31,10 +45,21 @@ export default function ConfirmLeave({ userMember, admins, onUpdate, onClose }) 
         )
     });
 
+    /**
+     * Sets the selectedAdmin's state value to the value of the selected opetion.
+     * 
+     * @param {*} e the event.
+     */
     function handleChange(e) {
         setSelectedAdmin(e.target.value);
     }
 
+    /**
+     * Deletes the user's membership from the organization from the server side.
+     * Then, if the deleted membership was the owner, sets the new owner to the
+     * admin that the owner selected, retrieved from selectedAdmin.
+     * Finally, closes the modal.
+     */
     function handleSubmit() {
         fetch(`/api/memberships/${userMember.id}`, {
             method: "DELETE"

@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 /**
- * TODO
+ * Renders a login page.
  * 
- * @param {*} param0 
- * @returns 
+ * @param {Function} onLogin the callback function to execute when logging in. 
+ * @returns the login page.
  */
 function Login( {onLogin} ) {
     const [username, setUsername] = useState("");
@@ -13,9 +13,12 @@ function Login( {onLogin} ) {
     const navigate = useNavigate();
 
     /**
-     * TODO
+     * Attempts to instantiate a session with the user's id.
+     * If credentials are valid, then the user is logged in and is redirected to the Home page.
+     * Otherwise, an error message will be displayed saying that the user has entered
+     * invalid credentials.
      * 
-     * @param {*} e 
+     * @param {*} e the event.
      */
     function handleSubmit(e) {
         e.preventDefault();

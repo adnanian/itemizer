@@ -1,9 +1,10 @@
 import { useState } from "react";
 
 /**
- * TODO
+ * A mock form for submitting anything suspicious about an item.
+ * No actual changes take effect upon successful submission.
  * 
- * @returns 
+ * @returns a mock form to report suspicious items.
  */
 export default function ReportForm() {
     const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ export default function ReportForm() {
     })
 
     /**
-     * TODO
+     * Updates formData state value.
      * 
      * @param {*} e 
      */
@@ -24,10 +25,13 @@ export default function ReportForm() {
     }
 
     /**
-     * TODO
+     * Mocks form submission of a reported item.
+     * No changes take effect on submission.
+     * For now, client will simply send request to server to check if an item
+     * with an item with a given name or part number exists. An alert message
+     * will display the result.
      * 
-     * @param {*} e 
-     * @returns 
+     * @param {*} e the event.
      */
     function handleSubmit(e) {
         e.preventDefault();

@@ -7,19 +7,16 @@ import OrganizationForm from "../../components/modal-children/org-controls/Organ
 import { removeMembershipKey, updateMembershipKey, updateKeyObjSize, useModal } from "../../helpers";
 import { useNavigate } from "react-router-dom";
 
-
-
 /**
- * TODO
+ * Displays basic information for all organizations and user's memberships that exist in the system.
+ * This page is divided into two views which are accessed through radio button selection.
+ * The left view is the OrganizationsTable, which shows all the organizations in the system.
+ * The right view is the Memberships, which shows all the organization that the current user belongs to.
  * 
- * Create an Organization
- * 
- */
-
-/**
- * TODO
- * 
- * @returns 
+ * @param {Object} props 
+ * @param {*} props.user the current user.
+ * @param {*} props.setUser the callback function to execute to update the user's information.
+ * @returns A page of radio buttons to navigate between OrganizationsTable and Memberships.
  */
 export default function OrganizationsPage( {user, setUser} ) {
     const [organizations, setOrganizations] = useState([]);
@@ -79,6 +76,11 @@ export default function OrganizationsPage( {user, setUser} ) {
         return <StyledTitle text="Loading user..." />
     }
 
+    /**
+     * Adds a new request to a user's requests array.
+     * 
+     * @param {Object} request the request to add.
+     */
     function addRequest(request) {
         setUser((oldUserData) => {
             const newUserData = {...oldUserData}
@@ -87,6 +89,14 @@ export default function OrganizationsPage( {user, setUser} ) {
         });
     }
 
+    /**
+     * Adds a new organization to the organizations array.
+     * Then adds a membership to the user's membership array,
+     * where the user is the owner of that newly created organization.
+     * 
+     * @param {Object} org the organization to add.
+     * @param {Object} membership the membership to add.
+     */
     function addOrganization(org, membership) {
         org.memberships = [membership];
         setOrganizations([...organizations, org]);

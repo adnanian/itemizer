@@ -10,8 +10,8 @@ import { hasNothingness, itemImagePlaceholder } from "../../../helpers";
  * used by the user's organization.
  * 
  * @param {Object} param0 
- * @param {*} param0.items all items not yet in the organizaiton.
- * @param {*} param0.onAdd the callback function to execute when an item is added.
+ * @param {Array} param0.items all items not yet in the organizaiton.
+ * @param {Function} param0.onAdd the callback function to execute when an item is added.
  * @returns a view allowing users to select an item to add.
  */
 export default function ExistingItemForm( { items, onAdd } ) {

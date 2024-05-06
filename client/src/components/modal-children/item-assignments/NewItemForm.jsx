@@ -8,7 +8,7 @@ import TextAreaInput from "../../formik-reusable/TextArea";
  * to add a new item to an organization AND the system itself.
  * 
  * @param {Function} onAdd the callback function to execute when adding an item.
- * @returns a form allowing users to manually add information about an item to the system.
+ * @returns a modal form allowing users to manually add information about an item to the system.
  */
 export default function NewItemForm({ onAdd }) {
     const maxNameLength = 200;

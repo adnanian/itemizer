@@ -8,9 +8,15 @@ import { useNavigate } from "react-router-dom";
 */
 
 /**
- * TODO
+ * Creates a modal form that allows a user to edit his/her profile information, including
+ * resetting the password. Note: the user will be required to enter his/her current password
+ * to save any changes made.
  * 
- * @returns 
+ * @param {Object} props 
+ * @param {Object} props.user the current user.
+ * @param {Function} props.onLogout the callback function execute after a successful update of user info.
+ * @param {Function} props.onClose the callback function to execute to close the modal.
+ * @returns a modal form for a user to edit his/her information.
  */
 export default function EditAccount({ user, onLogout, onClose }) {
 
@@ -37,10 +43,12 @@ export default function EditAccount({ user, onLogout, onClose }) {
     });
 
     /**
-     * TODO
+     * Updates the user's information on the server and then logs the user out,
+     * if the user entered his/her password correctly. Otherwise, displays
+     * an error message to the user with all the errors in input.
      * 
-     * @param {*} values 
-     * @param {*} actions 
+     * @param {*} values the values from Formik.
+     * @param {*} actions Formik actions.
      */
     function handleSubmit(values, actions) {
         fetch('/api/authenticate', {

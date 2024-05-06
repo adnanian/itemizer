@@ -15,10 +15,13 @@ import EditOrganizationForm from "../../components/modal-children/org-controls/E
 import "../../styles/Organization.css";
 
 /**
+ * Renders all information of a single organization in one page.
  * 
- * 
+ * @param {Object} props 
+ * @param {*} props.items all items in the system.
+ * @param {*} props.onAddItem  the callback function to execute after adding a new item to the server.
+ * @returns a page for an organization.
  */
-
 export default function Organization({ items, onAddItem }) {
     const { orgId, userId } = useParams();
     const [organization, setOrganization] = useState(null);
@@ -74,6 +77,14 @@ export default function Organization({ items, onAddItem }) {
 
     // CRUD for ASSIGNMENTS
 
+    /**
+     * Adds an assignment to the current organization's array of assignments.
+     * Also adds a new item to the system if the assigned item isn't for an
+     * already existing item.
+     * 
+     * @param {Object} assignment the assignment to add. 
+     * @param {Object} item the item to add.
+     */
     function addAssignment(assignment, item = null) {
         if (item) {
             onAddItem(item);
@@ -84,6 +95,11 @@ export default function Organization({ items, onAddItem }) {
         });
     }
 
+    /**
+     * Updates an assignment's information on the frontend.
+     * 
+     * @param {Object} updatedItemAssignment the assignment to update.
+     */
     function updateAssignment(updatedItemAssignment) {
         setOrganization({
             ...organization,
@@ -93,6 +109,11 @@ export default function Organization({ items, onAddItem }) {
         });
     }
 
+    /**
+     * Removes an assignment from the organization's assignments array.
+     * 
+     * @param {Object} assignmentToDelete the assignment to delete.
+     */
     function deleteAssignment(assignmentToDelete) {
         setOrganization({
             ...organization,
@@ -108,8 +129,8 @@ export default function Organization({ items, onAddItem }) {
      * Adds a new membership object to the organization, and removes a request object from it.
      * This is a request being accepted, and a new user joining the organization.
      * 
-     * @param {*} membership the membership to add.
-     * @param {*} acceptedRequest the request to remove.
+     * @param {Object} membership the membership to add.
+     * @param {Object} acceptedRequest the request to remove.
      */
     function welcomeNewMember(membership, acceptedRequest) {
         setOrganization({
@@ -120,8 +141,9 @@ export default function Organization({ items, onAddItem }) {
     }
 
     /**
+     * Updates a membership for a user and applies it to the organization's membership array.
      * 
-     * @param {*} membershipToUpdate 
+     * @param {Object} membershipToUpdate the membership to update.
      */
     function updateMembership(membershipToUpdate) {
         setOrganization({
@@ -132,6 +154,11 @@ export default function Organization({ items, onAddItem }) {
         });
     }
 
+    /**
+     * Removes a membership from the organization's memberships array.
+     * 
+     * @param {Object} membershipToDelete the membership to delete.
+     */
     function deleteMembership(membershipToDelete) {
         setOrganization({
             ...organization,
@@ -139,6 +166,12 @@ export default function Organization({ items, onAddItem }) {
         });
     }
 
+    /**
+     * Removes a request object from the organization's requests array.
+     * This is a request being denied for a user.
+     * 
+     * @param {*} deniedRequest the request object to remove.
+     */
     function denyMembership(deniedRequest) {
         setOrganization({
             ...organization,
@@ -147,6 +180,12 @@ export default function Organization({ items, onAddItem }) {
     }
 
     // CRUD FOR UPDATING ORGANIZATION
+
+    /**
+     * Updates the organization's basic information.
+     * 
+     * @param {Object} updatedOrg the updated organization. 
+     */
     function updateOrganization(updatedOrg) {
         setOrganization(updatedOrg);
         setOrgUpdated(true);
@@ -248,6 +287,12 @@ export default function Organization({ items, onAddItem }) {
         )
     }
 
+    /**
+     * Opens the appropriate modal, or executes the appropriate function, based
+     * on the button clicked.
+     * 
+     * @param {*} e the event
+     */
     function handleClick(e) {
         switch (e.target.id) {
             case buttonIds.back:

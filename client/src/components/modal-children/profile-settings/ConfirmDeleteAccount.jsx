@@ -2,6 +2,16 @@ import { useState } from "react";
 import { confirmButtonColor, confirmButtonTextColor } from "../../../helpers";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Creates a modal view that displays to the user a message about the consequences
+ * of deleting his/her account, and a button to proceed with account deletion.
+ * 
+ * @param {Object} props 
+ * @param {Object} props.user the current user.
+ * @param {Function} props.onLogout the callback function to execute after the account has been successfully deleted.
+ * @param {Function} props.onClose the callback function to execute to close the modal.
+ * @returns a modal view with a confirmation message and a button to confirm deletion.
+ */
 export default function ConfirmDeleteAccount({ user, onLogout, onClose }) {
 
     const ownerships = user.memberships.reduce((accumulator, membership) => {
@@ -30,6 +40,14 @@ export default function ConfirmDeleteAccount({ user, onLogout, onClose }) {
     const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
 
+    /**
+     * Deletes a user and all its information from the server.
+     * Then, reroutes current user to login information.
+     * 
+     * Note: deletion will fail if user enters incorrect password.
+     * 
+     * @param {*} e the event.
+     */
     function handleDeletion(e) {
         e.preventDefault();
         fetch('/api/authenticate', {

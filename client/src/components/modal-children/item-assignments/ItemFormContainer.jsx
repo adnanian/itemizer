@@ -25,7 +25,7 @@ export default function ItemFormContainer( { orgId, items, onAdd, onClose } ) {
     /**
      * Sets the form to display, given the selected radio button's value.
      * 
-     * @param {*} e the event listener.
+     * @param {*} e the event.
      */
     function handleChange(e) {
         setForm(e.target.value);

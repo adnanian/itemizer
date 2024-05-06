@@ -5,9 +5,15 @@ import ReportForm from "../components/ReportForm";
 import "../styles/Home.css";
 
 /**
- * TODO
+ * The first page that a user sees, whether logged in or not.
+ * If the user is logged in, the user will see all the items in the 
+ * system and the ReportForm, along with all the navigational links.
  * 
- * @param {*} param0 
+ * Otherwise, a welcome message will be displayed on this page instead.
+ * 
+ * @param {Object} props 
+ * @param {Object} props.user the current user
+ * @param {Array} props.items the array of items.
  * @returns 
  */
 function Home({ user, items }) {

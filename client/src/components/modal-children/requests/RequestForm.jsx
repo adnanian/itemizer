@@ -2,6 +2,19 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import TextArea from "../../formik-reusable/TextArea";
 
+/**
+ * Creates a modal form allowing a user to submit a request to join an organization.
+ * All the user would have to do is explain in at least 50 characters, why he/she wishes
+ * to be part of the organization.
+ * 
+ * @param {Object} props 
+ * @param {Integer} props.userId the current user's id.
+ * @param {Integer} props.orgId the id of the organization that the user is requesting to join.
+ * @param {String} props.orgName the name of the organization that the user is requesting to join.
+ * @param {Function} props.onAdd the callback function to execute after a request to join the organization has been added to the server.
+ * @param {Function} props.onClose the callback function to execute to close the modal.
+ * @returns a modal form for the user to request joining.
+ */
 export default function RequestForm({ userId, orgId, orgName, onAdd, onClose }) {
     //console.log(`OrgId = ${orgId}, OrgName = ${orgName}`);
 
@@ -13,6 +26,13 @@ export default function RequestForm({ userId, orgId, orgName, onAdd, onClose }) 
         reasonToJoin: yup.string().required("Reason required").min(50)
     });
 
+    /**
+     * Creates a new request and adds it to the system.
+     * 
+     * @param {*} values the values from Formik.
+     * @param {*} actions Formik actions.
+     * @returns false so that the web app does not refresh.
+     */
     function handleSubmit(values, actions) {
         fetch("/api/requests", {
             method: "POST",

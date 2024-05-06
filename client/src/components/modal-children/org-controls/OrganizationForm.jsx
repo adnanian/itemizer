@@ -3,6 +3,16 @@ import * as yup from "yup";
 import Input from "../../formik-reusable/Input";
 import TextArea from "../../formik-reusable/TextArea";
 
+/**
+ * Creates a form that allows user to create a new organiztaion
+ * by entering a name and description.
+ * 
+ * @param {Object} props 
+ * @param {Integer} props.userId the current user's id.
+ * @param {Function} props.onAdd the callback function to execute upon creating the organization and membership on the server side.
+ * @param {Function} props.onclose the callback function to execute to close the modal.
+ * @returns a modal form prompting users to create a new organization.
+ */
 export default function OrganizationForm( {userId, onAdd, onclose} ) {
     const initialValues = {
         name: "",
@@ -14,6 +24,19 @@ export default function OrganizationForm( {userId, onAdd, onclose} ) {
         description: yup.string().min(50).required("Describe your organization with at least 50 characters.")
     });
 
+    /**
+     * Attempts to create a new organization on the server side.
+     * Then if successful, creates a new membership with the current
+     * user as the owner. Finally, displays the new organization
+     * on the OrganizationsPage.
+     * 
+     * If creation fails on the server side, than an error message
+     * will be displayed to the user.
+     * 
+     * @param {*} values the values from Formik.
+     * @param {*} actions Formik actions.
+     * @returns false so that the web app does not refresh.
+     */
     function handleSubmit(values, actions) {
         fetch("/api/organizations", {
             method: "POST",

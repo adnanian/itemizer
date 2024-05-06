@@ -1,10 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import { removeMembershipKey, confirmButtonColor, confirmButtonTextColor } from "../../../helpers";
 
-
+/**
+ * Creates a modal that displays information to an owner, seeking to delete
+ * an organization on the consequences of the action that he/she would like
+ * to take. If the user would like to proceed, then there is a button to click
+ * that would delete an organization.
+ * 
+ * @param {Object} props 
+ * @param {Integer} props.orgId the id of the organization to delete.
+ * @param {String} props.orgName the name of the organization to delete.
+ * @param {Object} props.userMember the membership to remove when returning to the organization.
+ * @param {Function} props.onClose  the callback function to execute when closing the modal.
+ * @returns a modal view asking the user to confirm organization deletion.
+ */
 export default function ConfirmDeleteOrg({ orgId, orgName, userMember, onClose }) {
     const navigate = useNavigate();
 
+    /**
+     * Deletes an organization and all its data from the server.
+     * Then navigates the user back to the organizations page.
+     * The deleted organization would no longer show on that page.
+     */
     function handleDeletion() {
         fetch(`/api/organizations/${orgId}`, {
             method: "DELETE"
@@ -18,8 +35,6 @@ export default function ConfirmDeleteOrg({ orgId, orgName, userMember, onClose }
             onClose();
         })
     }
-
-    
 
     return (
         <div >
@@ -38,5 +53,4 @@ export default function ConfirmDeleteOrg({ orgId, orgName, userMember, onClose }
             </button>
         </div>
     )
-
 }

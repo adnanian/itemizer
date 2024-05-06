@@ -2,10 +2,12 @@ import JoinedOrgTile from "../../components/JoinedOrgTile";
 import StyledTitle from "../../components/StyledTitle";
 
 /**
- * TODO
+ * Displays all the organization and membership details that the current user belongs to.
+ * Note: to use this component properly, ensure that you pass the membership array from
+ * the user instead of ALL memberships to organizations that exist on the server.
  * 
- * @param {*} param0 
- * @returns 
+ * @param {Array} memberships THE USER'S MEMBERSHIPS.
+ * @returns the user's membership details rendered in JoinedOrgTile components.
  */
 export default function Memberships( {memberships} ) {
     // TODO

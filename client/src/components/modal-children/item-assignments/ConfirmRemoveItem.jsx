@@ -28,7 +28,7 @@ export default function ConfirmRemoveItem( {assignments, onDelete, onClose } ) {
     /**
      * Deletes an item assignment from an organization.
      * 
-     * @param {*} e event listener.
+     * @param {*} e event.
      */
     function handleSubmit(e) {
         e.preventDefault();

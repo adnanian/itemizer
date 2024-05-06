@@ -7,6 +7,14 @@ import EditAccount from "../components/modal-children/profile-settings/EditAccou
 import "../styles/Settings.css";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Renders a table of the user's non-relational information and options to edit or delete the account.
+ * 
+ * @param {Object} props 
+ * @param {Object} props.user the current user.
+ * @param {Function} props.onLogout the callback function to execute when logging out.
+ * @returns the user's profile.
+ */
 export default function ProfileSettings({ user, onLogout }) {
     const navigate = useNavigate();
 
@@ -39,6 +47,11 @@ export default function ProfileSettings({ user, onLogout }) {
         [buttonIds.delete]: <ConfirmDeleteAccount user={user} onLogout={onLogout} onClose={toggle} />
     }
 
+    /**
+     * Toggles the modal open and displays the correct view depending on the button clicked.
+     * 
+     * @param {*} e the event.
+     */
     function openModal(e) {
         setModalKey(e.target.id);
         toggle();

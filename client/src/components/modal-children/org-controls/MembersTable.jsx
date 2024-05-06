@@ -1,8 +1,30 @@
 import { tableRowClassName } from "../../../helpers";
 
-
+/**
+ * Displays a modal table of all the members in the organization currently
+ * being viewed. If the current use is a non-REGULAR, then he/she will be
+ * able to manage user access.
+ * 
+ * Each row in the table includes their name, username, email address, the date they joined,
+ * and their role.
+ * 
+ * @param {Object} props 
+ * @param {Array} props.members the members of the organization.
+ * @param {Object} props.userMember the current user viewing the organization.
+ * @param {Function} props.onDelete the callback function to execute upon deleting the user from the organization on the server side.
+ * @param {Function} props.onUpdate the callback function to execute to update a user's role in the organization on the server side.
+ * @returns a modal table of all members of the organization.
+ */
 export default function MembersTable({ members, userMember, onDelete, onUpdate }) {
 
+    /**
+     * Removes a user from the organization.
+     * An ADMIN can remove either a REGULAR or another ADMIN, but never the OWNER.
+     * An OWNER can only be removed by choosing to leave the organization.
+     * @see ConfirmLeave component for more details.
+     * 
+     * @param {Integer} id the id of the user's membership.
+     */
     async function handleExpel(id) {
         const memberToDelete = members.find((member) => member.id === id);
         const response = await fetch(`/api/memberships/${id}`, {
@@ -16,6 +38,16 @@ export default function MembersTable({ members, userMember, onDelete, onUpdate }
         }
     }
 
+    /**
+     * Updates a user's role in the organization.
+     * A user can either be promoted to ADMIN or demoted to REGULAR.
+     * A user can never be promoted to an OWNER, unless the current OWNER leaves the organization and transfers ownership to that user.
+     * An OWNER can never be demoted
+     * 
+     * @param {Integer} id the user's membership id.
+     * @param {String} oldRole the user's current role in the organization.
+     * @param {String} newRole the user's new role in the organization.
+     */
     function handleRoleChange(id, oldRole, newRole) {
         const verb = newRole === "ADMIN" ? "promoted" : "demoted";
         fetch(`/api/memberships/${id}`, {

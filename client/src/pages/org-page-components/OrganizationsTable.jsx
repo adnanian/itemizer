@@ -4,18 +4,22 @@ import RequestForm from "../../components/modal-children/requests/RequestForm";
 import { useState } from "react";
 import Modal from "../../components/Modal";
 
-
 /**
- * TODO
+ * Renders a table of all the organizations and its basic information to the current user.
+ * For each row, the information to display are: the name, the owner's username, the number
+ * of admins, the total number of members, the organizaiton's description, and one of three
+ * elements for the last column.
  * 
+ * If you are a member of that organization, the column will render a text saying "You're a member."
+ * If you are NOT a member, then the column will render a button for you to click to submit a request to join.
+ * If you already requested to join and an admin hasn't processed your request yet, then the
+ * column will render a text saying "Membership Request Pending".
  * 
- */
-
-/**
- * TODO
- * 
- * @param {*} param0 
- * @returns 
+ * @param {Object} param0 
+ * @param {Object} param0.user the current user.
+ * @param {Array} param0.organizations the organizations array.
+ * @param {Function} param0.onAddRequest the callback function to execute when a request has been submitted to join an organization.
+ * @returns a table of all the organizations.
  */
 export default function OrganizationsTable( {user, organizations, onAddRequest} ) {
 
@@ -27,12 +31,20 @@ export default function OrganizationsTable( {user, organizations, onAddRequest} 
     const [modalActive, toggle] = useModal();
     const requestForOrgIds = user.requests.map((request) => request.organization_id);
 
+    /**
+     * When a request button is clicked, the name and id will
+     * be passed to their respective state values, and toggle
+     * the RequestForm modal open.
+     * 
+     * @param {*} newOrgId 
+     * @param {*} newOrgName 
+     */
     function handleRequestClick(newOrgId, newOrgName) {
         //console.log(`${orgId} --- ${orgName}`);
         setOrgId(newOrgId);
         setOrgName(newOrgName);
         toggle();
-        console.log("State updated.");
+        //console.log("State updated.");
     }
 
     //const tableProgress = new DotProgress(organizations.length);

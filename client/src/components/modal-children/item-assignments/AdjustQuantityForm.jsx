@@ -29,7 +29,7 @@ export default function AdjustQuantityForm({
     /**
      * Updates the assigned item's quantity.
      * 
-     * @param {*} e event listener.
+     * @param {*} e event.
      */
     function handleSubmit(e) {
         e.preventDefault();

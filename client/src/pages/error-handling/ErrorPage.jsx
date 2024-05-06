@@ -2,6 +2,18 @@ import { Link, useLocation } from "react-router-dom";
 import StyledTitle from "../../components/StyledTitle";
 import '../../styles/Error.css';
 
+/**
+ * Page to redirect a user to when a user attempts to naviagte to a URL
+ * that does not exist in this application.
+ * 
+ * NOTE: IF A USER IS LOGGED IN AND ATTEMPTS TO ACCESS AN ORGANIZATION THAT 
+ * HE/SHE DOES NOT BELONG TO, THIS PAGE WILL BE DISPLAYED! THIS IS TO PREVENT
+ * ANYBODY FROM BREAKING INTO THAT ORGANIZATION REGARDLESS OF WHETHER AN
+ * ORGANIZATION OF ENTERED ID ACTUALLY EXISTS OR NOT, THAT INFORMATION WOULD
+ * NOT BE ENTIRELY CONFIRMED TO THE UNAUTHORIZED USER.
+ * 
+ * @returns 
+ */
 export default function ErrorPage() {
     const location = useLocation();
     console.error("Ree! Invalid route: ", location.pathname);

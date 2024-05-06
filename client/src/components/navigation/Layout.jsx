@@ -3,10 +3,16 @@ import NavBar from "./NavBar";
 import '../../styles/Layout.css';
 
 /**
- * TODO
+ * The header and the component tied to the route clicked.
+ * The header contains all the navigational links and whatever page the user is currently viewing.
+ * The page viewed is being rendered with an outlet context.
+ * Also includes a footer, that needs further development.
+ * Note: the home link is rendered DIRECTLY under the header element instead of in the NavBar component.
  * 
- * @param {*} param0 
- * @returns 
+ * @param {Object} props 
+ * @param {Object} props.user the current user.
+ * @param {Function} props.onLogout the callback function to execute when logging out.
+ * @returns the navigatinal header and the outlet page (the current page).
  */
 export default function Layout( {user, onLogout} ) {
     return (

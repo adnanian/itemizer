@@ -2,9 +2,9 @@ import StyledTitle from "../components/StyledTitle";
 import '../styles/About.css';
 
 /**
- * TODO
+ * Displays a simple page of information about Itemizer.
  * 
- * @returns 
+ * @returns an about page.
  */
 export default function About() {
     return (
