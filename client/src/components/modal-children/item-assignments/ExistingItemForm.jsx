@@ -4,6 +4,16 @@ import Select from "../../formik-reusable/Select";
 import Input from "../../formik-reusable/Input";
 import { hasNothingness, itemImagePlaceholder } from "../../../helpers";
 
+/**
+ * Creates a radio-selected view inside the item modal form,
+ * where a user can add an existing item from the system not yet being
+ * used by the user's organization.
+ * 
+ * @param {Object} param0 
+ * @param {*} param0.items all items not yet in the organizaiton.
+ * @param {*} param0.onAdd the callback function to execute when an item is added.
+ * @returns a view allowing users to select an item to add.
+ */
 export default function ExistingItemForm( { items, onAdd } ) {
     const initialValues = {
         selectedItemId: "", // Selected item index
@@ -21,6 +31,13 @@ export default function ExistingItemForm( { items, onAdd } ) {
         )
     });
 
+    /**
+     * Creates a new item assignment and establishes a relationship between the item and the organization.
+     * 
+     * @param {*} values the values from Formik.
+     * @param {*} actions Formik actions.
+     * @returns false so that the web app does not refresh.
+     */
     function handleSubmit(values, actions) {
         onAdd(items.find(item => item.id == values.selectedItemId), values.eCount, false);
         alert("Item has been added to the organization.");

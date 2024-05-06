@@ -1,6 +1,18 @@
 import { useState } from "react";
 import { minusButtonClassName } from "../../../helpers";
 
+/**
+ * Creates a modal form for updating the quantity of an assigned item.
+ * 
+ * 
+ * @param {Object} props - the props.
+ * @param {String} props.className - the class name of the clicked button.
+ * @param {Integer} props.currentQuantity - the current quantity for the assigned item.
+ * @param {Integer} props.assignmentId - the assignment's id.
+ * @param {Function} props.onUpdate - the callback function to execute when the quantity has been adjusted.
+ * @param {Function} props.onClose - the callback function to execute to close the modal.
+ * @returns the modal form for adjusting the assigned item's quantity.
+ */
 export default function AdjustQuantityForm({
     className,
     currentQuantity,
@@ -14,6 +26,11 @@ export default function AdjustQuantityForm({
 
     //console.log(adjustment);
 
+    /**
+     * Updates the assigned item's quantity.
+     * 
+     * @param {*} e event listener.
+     */
     function handleSubmit(e) {
         e.preventDefault();
         let newQuantity = currentQuantity;

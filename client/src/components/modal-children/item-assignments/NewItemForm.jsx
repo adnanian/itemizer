@@ -3,6 +3,13 @@ import * as yup from "yup";
 import Input from "../../formik-reusable/Input";
 import TextAreaInput from "../../formik-reusable/TextArea";
 
+/**
+ * Creates a form that allows users to manually enter item information
+ * to add a new item to an organization AND the system itself.
+ * 
+ * @param {Function} onAdd the callback function to execute when adding an item.
+ * @returns a form allowing users to manually add information about an item to the system.
+ */
 export default function NewItemForm({ onAdd }) {
     const maxNameLength = 200;
     const maxDescLength = 500;
@@ -23,6 +30,13 @@ export default function NewItemForm({ onAdd }) {
         count: yup.number().integer().min(0).required("Must be a non-negative integer.")
     });
 
+    /**
+     * Creates a new item and adds it to the system.
+     * 
+     * @param {*} values the values from Formik.
+     * @param {*} actions Formik actions.
+     * @returns false so that the web app does not refresh.
+     */
     function handleSubmit(values, actions) {
         fetch("/api/items", {
             method: "POST",

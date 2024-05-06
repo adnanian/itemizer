@@ -1,10 +1,14 @@
 import { useState } from "react";
 
 /**
+ * Modal form for removing an item from an organization.
  * Note: Submitting will only remove the item from the organization. The item itself will still be saved into the global system.
  * 
- * @param {*} param0 
- * @returns 
+ * @param {Object} props the props.
+ * @param {Array} props.assignments the array of assignments
+ * @param {Function} props.onDelete the ca;;bacl function to execute when an item has been removed.
+ * @param {Function} props.onClose  the callback function to execute to close the modal.
+ * @returns the modal form for deleting assigned items.
  */
 export default function ConfirmRemoveItem( {assignments, onDelete, onClose } ) {
     const [selectedIndex, setSelectedIndex] = useState("");
@@ -21,6 +25,11 @@ export default function ConfirmRemoveItem( {assignments, onDelete, onClose } ) {
         )
     });
 
+    /**
+     * Deletes an item assignment from an organization.
+     * 
+     * @param {*} e event listener.
+     */
     function handleSubmit(e) {
         e.preventDefault();
         const assignmentId = Number.parseInt(selectedIndex);
