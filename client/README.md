@@ -1,8 +1,176 @@
-# React + Vite
+# Itemizer
+Author: Adnan Wazwaz
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Version: 1.0
 
-Currently, two official plugins are available:
+Original Date: 2024 May 7
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Current Version Date: 2024 May 7
+
+Adnanian Application #3
+
+## Table of Contents
+
+1. [Overview](#overview)
+    1. [What This Application Does](#what-this-application-does)
+    2. [Why This Application was Created](#why-this-application-was-created)
+    3. [Technologies](#technologies)
+    4. [Limitations](#limitations)
+2. [Installation & Execution](#installation--execution)
+    1. [Installation](#installation)
+    2. [Execution](#execution)
+3. [Usage](#usage)
+4. [Future Plans](#future-plans)
+5. [Credits](#credits)
+
+## Overview
+
+### What This Application Does
+
+Itemizer is a full-stack web application that helps organizations and individual
+users keep track of their inventories. The idea is to only count their items of
+each type only once, and they can adjust the quantities of their non-stock items
+after each usage, to avoid having to count everything again. The goal is to have
+members of an organization identify shortages of items as soon as possible, instead
+of noticing when such an item has been depleted. 
+
+When identifying when an item will be depleted, versus when an item is actually
+depleted, managers are able to purchase more of that item and will be received
+to the organization sooner, or less waiting time to be brief. In fact, the idea
+is to make it appear that members don't have to wait at all. When there are
+still items left, members of organizations don't have to hold off on any
+projects that they were working on that required the item.
+
+### Why This Application was Created
+
+In an an organization that I was previously a part of, we did not have an
+efficient system for keeping track of our inventories. We have tried
+many ways to do it, such as using spreadsheet and writing numbers on
+each item. Finally, the idea was proposed to create an application, powered
+by a database to manage invnetory. This solution has many of the following 
+benefits that other solutions did not:
+
+- It's much more GUI-friendly
+- This solution is long-term. Even if the creator leaves, the website could still
+function.
+- No formatting required.
+- Informtion is accessed and correctly updated within seconds.
+- Has the ability to notify other members about the status of their inventory.
+- Data is stored in a more efficient and secure way, versus on a spreadsheet.
+Spreadsheets are not meant for data storage, but for accounting or data analysis.
+
+By taking advantage of the benefits that a web application would offer, I was
+able to create a minimum viable product that any company, organization, or
+even family home can use to keep track of their items in a easy, convenient,
+manner.
+
+The purpose of organizations is to ensure that one organization's item count
+is local to that organization and likewise for another organization. This is
+to prevent two organizations from showing the same item count in their database
+when in reality they have different quantities. For example, I live in my house
+and you live in yours. We would definitely have different numbers of toilet
+paper rolls that we have left. The counts would always need to be local instead
+of global.
+
+This is also part of my Flatrion School Phase 4 project, where I've been
+tasked to create a full stack web application using everything that I learned in
+this phase and the other phases.
+
+### Technologies
+
+With this being a full stack web application, several technologies have been used
+to power it. On the frontend, the languages used were HTML, CSS, and JavaScript,
+with JavaScript being simplified with the framework ReactJS. In this
+application, you could navigate to ten different pages. This was made possible
+with React Router DOM v6.
+
+On the backend, the technologies used were Python, Flask, and SQLite. With Flask,
+I was able to simplify the use of SQLite by creating SQL commands using Flask
+SQL Alchemy, instead of having to write all my queries manually. I was also
+able to use Flask Restful to create a DRY RESTFul API for all my resources.
+The SQLite database consists of six tables:
+
+![Itemizer Table Relations](/client/public/images/Itemizer%20Schema.png)
+
+One last technology used to power the development of this application is
+[Vite](https://vitejs.dev/guide/). Vite is, according to the website, is a build
+tool for faster and leaner development for modern web projects. I would like to
+give my instructor, Enoch Griffith, for providing me with the Vite template to
+develop my app on.
+
+### Limitations
+
+Currently, the users' accounts are not real. All the emails and users are fake
+information, generated by Python's faker library. This application is 
+not in deployment, which means that you would have to fork and clone this
+repository, and run both the frontend and backend using two different terminals.
+Also, since there is no API that allows users to send notifications, when a user
+clicks the *Send Update* button, nothing would really happen. And it goes without
+saying that users would not be notified of anything that pertains to them.
+All these limitations will hopefully be corrected in the next iteration of
+this project.
+
+## Installation & Execution
+
+### Installation
+
+The good news is that installing this application is quite easy. But before proceeding
+to install, ensure that you have Node v16.20.2 and Python v3.9.2 installed on your local
+machine (if that's where you intend to install to). This project is saved in my
+[Flatiron School Phase 4 Project on Github](https://github.com/adnanian/itemizer).
+Once you open the repository, you then fork and clone your own instance on your machine.
+
+
+### Execution
+
+Open the project on VS Code. Once VS Code is loaded, open a second terminal. On the
+first terminal you will run `pipenv install && pipenv shell`. You would need to wait
+for about a minute or two to install all the necessary python extensions on your
+machine. Once you're in the python shell, navigate to the server directory by
+typing `cd server`. An optional step that you can take from there is to re-seed
+the database by running `python seed.py`. This will create a full database of 
+users, items, and organizations, and populate them with members, assigned items,
+in an organization, and requests for certain users to join an organization.
+Finally, to power the backend, while still in the server directory, run
+`python app.py`. The terminal would show all requests made by the frontend
+to the API. Take not of them.
+
+**Note: Make sure you run the backend while in pipenv shell**.
+
+On the other terminal, do not navigate to any directory. Instead, you will run
+`npm install` to install all JS and React-related extensions. Once that is finished,
+you will run `npm run dev --prefix client` to start the frontend process of the application.
+The terminal will then show a Vite logo, and a link to open the web application.
+Clickin on the link, you should see the application:
+
+![The home page of Itemizer when a user opens up the app.](/client/public/images/README/Welcome%20to%20Itemizer.png)
+
+## Usage
+
+## Future Plans
+
+## Credits
+MIT License
+
+Copyright (c) 2023 Adnan Wazwaz
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Once again, shoutout to [Enoch Griffith](https://www.linkedin.com/in/enochgriffith/)
+for letting me use his Flatiron Flask Project Generator.
