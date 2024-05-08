@@ -45,6 +45,7 @@ class RestResourceTemplate(Resource):
             record = g.record
             json = request.get_json()
             for attr in json:
+                #print(f"Attrname: {attr}, Type: {type(json.get(attr))}")
                 setattr(record, attr, json.get(attr))
             db.session.add(record)
             db.session.commit()

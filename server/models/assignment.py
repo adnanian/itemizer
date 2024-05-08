@@ -49,6 +49,6 @@ class Assignment(db.Model, SerializerMixin):
         Returns:
             int: the value of count.
         """
-        if count is not int or count < 0:
+        if type(count) is not int or count < 0:
             raise ValueError(f"{key} - Item count must be a non-negative integer.")
         return count

@@ -39,6 +39,8 @@ export default function AdjustQuantityForm({
         } else {
             newQuantity += adjustment;
         }
+        // console.log(newQuantity);
+        // console.log(Number.isInteger(newQuantity));
         fetch(`/api/assignments/${assignmentId}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
