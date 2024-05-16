@@ -66,4 +66,4 @@ class RestResourceTemplate(Resource):
         record = g.record
         db.session.delete(record)
         db.session.commit()
-        return {'message': f'{self.model.__name__} successfully deleted.'}
+        return {'message': f'{self.model.__name__} successfully deleted.'}, 204
